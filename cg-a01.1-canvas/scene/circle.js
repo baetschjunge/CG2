@@ -27,7 +27,7 @@ define(["util","vec2","Scene","PointDragger"],
 
 				// set color for stroke Style
                 context.strokeStyle = this.circleStyle.color;
-				context.lineWidth = this.circleStyle.width;
+				context.lineStyle = this.circleStyle.width;
 				
 				context.arc(this.p0[0],this.p0[1],this.circleStyle.radius, 0,Math.PI*2, true);
 
@@ -56,7 +56,7 @@ define(["util","vec2","Scene","PointDragger"],
                 var d = vec2.length(vec2.sub(p,pos));
 
                 // allow 2 pixels extra "sensitivity"
-                return d<=(this.lineStyle.width/2)+2;
+                return d<=(this.circleStyle.width/2)+2;
 
             };
 
