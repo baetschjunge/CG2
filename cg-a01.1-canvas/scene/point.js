@@ -33,9 +33,6 @@ define(["util","vec2","Scene","PointDragger"],
 
                 // actually start drawing
 				context.fill();
-				
-                
-				
 
             };
 

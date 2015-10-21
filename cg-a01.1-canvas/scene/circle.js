@@ -27,11 +27,14 @@ define(["util","vec2","Scene","PointDragger"],
 
 				// set color for stroke Style
                 context.strokeStyle = this.circleStyle.color;
+				context.lineWidth = this.circleStyle.width;
 				
 				context.arc(this.p0[0],this.p0[1],this.circleStyle.radius, 0,Math.PI*2, true);
 
                 // actually start drawing
-                context.stroke();
+				context.stroke();
+                
+				
 
             };
 

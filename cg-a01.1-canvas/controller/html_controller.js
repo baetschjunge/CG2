@@ -77,7 +77,8 @@ define(["jquery", "Line","Circle","Point"],
 			
 				//create the circle and add it to the scene
 				var style = {
-                    radius: Math.floor(Math.random()*10)+1,
+					width:  Math.floor(Math.random()*3)+1,
+                    radius: Math.floor(Math.random()*20)+1,
                     color: randomColor()
                 };
 				
@@ -95,7 +96,7 @@ define(["jquery", "Line","Circle","Point"],
 			
 				//create the circle and add it to the scene
 				var style = {
-                    radius: Math.floor(Math.random()*10)+1,
+                    radius: 3,
                     color: randomColor()
                 };
 				
