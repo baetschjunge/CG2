@@ -269,7 +269,7 @@ define(["util", "Scene"],
             };
 
         };
-
+		
 
         // this module exposes only the constructor function
         return SceneController;

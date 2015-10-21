@@ -50,6 +50,8 @@ define(["jquery", "Line","Circle","Point"],
                 // convert to hex notation
                 return "#"+toHex2(r)+toHex2(g)+toHex2(b);
             };
+			
+			
 
             /*
              * event handler for "new line button".
@@ -107,8 +109,18 @@ define(["jquery", "Line","Circle","Point"],
                 sceneController.deselect();
                 sceneController.select(point); // this will also redraw
 				
+				
 			
 			}));
+			
+		/*	
+			$("#submit").click( (function() {
+				var width = sceneController.getSelectedObject.getLineStyle();
+				var color = point.strokeStyle;
+				document.getElementById("width").value=width;
+				document.getElementById("color").value=color;
+			}));
+		*/
 
 
         };

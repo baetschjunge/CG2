@@ -33,8 +33,6 @@ define(["util","vec2","Scene","PointDragger"],
 
                 // actually start drawing
 				context.stroke();
-                
-				
 
             };
 
@@ -77,7 +75,7 @@ define(["util","vec2","Scene","PointDragger"],
 				return draggers;
 
             };
-			
+						
 		
 		
 		};
