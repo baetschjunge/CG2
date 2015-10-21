@@ -59,7 +59,7 @@ define([],
         return t;
                 
     };
-    
+	    
     // this module exports an object defining a number of functions
     return vec2;
 

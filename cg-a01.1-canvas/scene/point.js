@@ -39,8 +39,8 @@ define(["util","vec2","Scene","PointDragger"],
             // test whether the mouse position is on this line segment
             this.isHit = function(context,pos) {
 
-                // project point on line, get parameter of that projection point
-                var t = vec2.projectPointOnLine(pos, this.p0, this.p1);
+                // project point on point, get parameter of that projection point
+                var t = vec2.projectPointOnLine(pos, this.p0, this.p0);
 
                 // outside the line segment?
                 if(t<0.0 || t>1.0) {
@@ -48,13 +48,13 @@ define(["util","vec2","Scene","PointDragger"],
                 }
 
                 // coordinates of the projected point
-                var p = vec2.add(this.p0, vec2.mult( vec2.sub(this.p1,this.p0), t ));
+                var p = this.p0;
 
-                // distance of the point from the line
+                // distance of the point from the point
                 var d = vec2.length(vec2.sub(p,pos));
 
                 // allow 2 pixels extra "sensitivity"
-                return d<=(this.lineStyle.width/2)+2;
+                return d<=(this.pointStyle.radius/2)+2;
 
             };
 
