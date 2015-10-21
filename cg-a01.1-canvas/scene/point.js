@@ -25,16 +25,16 @@ define(["util","vec2","Scene","PointDragger"],
                 // draw actual point
                 context.beginPath();
 
-                // set point to be drawn
-                context.moveTo(this.p0[0],this.p0[1]);
-                
+
 				// set color for stroke Style
                 context.strokeStyle = this.pointStyle.color;
 				
 				context.arc(this.p0[0],this.p0[1],this.pointStyle.radius, 0,Math.PI*2);
 
                 // actually start drawing
-                context.fill();
+				context.fill();
+				
+                
 				
 
             };
