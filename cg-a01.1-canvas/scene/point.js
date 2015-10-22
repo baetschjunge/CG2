@@ -14,7 +14,7 @@ define(["util","vec2","Scene","PointDragger"],
 		var Point = function (point0, pointStyle){
 		
 		// draw style for drawing the point
-		this.pointStyle = pointStyle || { radius: "3", color: "#0000AA"};
+		this.pointStyle = pointStyle || { width: "3" ,radius: "3", color: "#0000AA"};
 		
 		// initial values in case the point is undefined
 		this.p0 = point0 || [25,25];
@@ -25,20 +25,22 @@ define(["util","vec2","Scene","PointDragger"],
                 // draw actual point
                 context.beginPath();
 
-		
-			// set color for stroke Style
-		    context.strokeStyle = this.pointStyle.color;
-		    
-		    // set color for fill Style
-		    context.fillStyle = this.pointStyle.color;
-		    
-		    //set width for line
-		    context.lineStyle = this.pointStyle.width;
-		    
-		    context.arc(this.p0[0],this.p0[1],this.pointStyle.radius, 0,Math.PI*2);
-		
-		                // actually start drawing
-		    context.fill();
+
+				// set color for stroke Style
+				context.strokeStyle = this.pointStyle.color;
+				context.lineWidth = this.pointStyle.width;
+				
+				// set color for fill Style
+                context.fillStyle = this.pointStyle.color;
+				
+				//set width for line
+				context.lineStyle = this.pointStyle.width;
+				
+				context.arc(this.p0[0],this.p0[1],this.pointStyle.radius, 0,Math.PI*2);
+
+                // actually start drawing
+				context.fill();
+				
 
             };
 
@@ -81,6 +83,22 @@ define(["util","vec2","Scene","PointDragger"],
 				return draggers;
 
             };
+			
+			Point.prototype.getColor = function() {
+				return this.pointStyle.color;
+			};
+			
+			Point.prototype.setColor = function(color){
+				this.pointStyle.color = color;
+			};
+			
+			Point.prototype.getWidth = function() {
+				return this.pointStyle.width;
+			};
+			
+			Point.prototype.setWidth = function(width) {
+				this.pointStyle.width = width;
+			};
 			
 		
 		

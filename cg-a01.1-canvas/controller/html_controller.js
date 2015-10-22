@@ -51,6 +51,37 @@ define(["jquery", "Line","Circle","Point"],
                 return "#"+toHex2(r)+toHex2(g)+toHex2(b);
             };
 			
+		/*
+		 * event handler for "change radius".
+		 */
+			$("#color").change((function() {
+				var selObj = sceneController.getSelectedObject();
+				selObj.setColor(this.value);
+				sceneController.deselect();
+				sceneController.select(selObj);
+			}));
+		
+		/*
+		 * event handler for "change width".
+		 */		 
+			$("#width").change((function() {
+				var selObj = sceneController.getSelectedObject();
+				selObj.setWidth(this.value);
+				sceneController.deselect();
+				sceneController.select(selObj);
+			}));
+		
+		/*
+		 * event handler for "change radius".
+		 */
+			$("#radius").change((function() {
+            var selObj = sceneController.getSelectedObject();
+            if (selObj.pointOnCircle)
+                selObj.setRadius(parseInt(this.value));
+				scene.draw(context);
+        }));
+			
+			
 			
 
             /*
@@ -79,12 +110,12 @@ define(["jquery", "Line","Circle","Point"],
 			
 				//create the circle and add it to the scene
 				var style = {
-					width:  Math.floor(Math.random()*3)+1,
-                    radius: Math.floor(Math.random()*20)+1,
+					width: Math.floor(Math.random()*3)+1,
                     color: randomColor()
                 };
 				
-				var circle = new Circle( [randomX(),randomY()],style );
+				var circle = new Circle( [randomX(),randomY()],[randomX(),randomY()],
+				style );
                 scene.addObjects([circle]);
 
                 // deselect all objects, then select the newly created object
@@ -98,6 +129,7 @@ define(["jquery", "Line","Circle","Point"],
 			
 				//create the circle and add it to the scene
 				var style = {
+					width: Math.floor(Math.random()*3)+1 ,
                     radius: 3,
                     color: randomColor()
                 };
@@ -112,16 +144,6 @@ define(["jquery", "Line","Circle","Point"],
 				
 			
 			}));
-			
-		/*	
-			$("#submit").click( (function() {
-				var width = sceneController.getSelectedObject.getLineStyle();
-				var color = point.strokeStyle;
-				document.getElementById("width").value=width;
-				document.getElementById("color").value=color;
-			}));
-		*/
-
 
         };
 

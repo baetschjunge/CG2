@@ -83,6 +83,33 @@ define(["jquery", "gl-matrix", "util",
 
             // create SceneController to process and map events
             var sceneController = new SceneController(context,scene);
+			
+			sceneController.onSelection(function() {
+            var selObj = sceneController.getSelectedObject();
+			
+			$("#color").val(selObj.getColor());
+			
+			var point = selObj.pointOnCircle;
+			var point2 =selObj.p1;
+            if (point || point2) {
+                $("#divWidth").fadeIn();
+                $("#width").val(selObj.getWidth());
+            } else {
+                $("#divWidth").fadeOut();
+            }
+           
+            // is circle
+            var point = selObj.pointOnCircle;
+            if (point) {
+                $("#divRadius").fadeIn();
+                $("#radius").val(Math.round(selObj.getRadius()));
+            } else {
+                $("#divRadius").fadeOut();
+            }
+			
+			
+			
+			});
 
             // callbacks for the various HTML elements (buttons, ...)
             var htmlController = new HtmlController(context,scene,sceneController);

@@ -85,7 +85,12 @@ define(["util", "vec2", "Scene", "PointDragger"],
             // return list of draggers to manipulate this line
             this.createDraggers = function() {
 
-                var draggerStyle = { radius:4, color: this.lineStyle.color, width:0, fill:true }
+                var draggerStyle = { 
+					radius : 4,
+					color: this.lineStyle.color, 
+					width:0, 
+					fill:true 
+					}
                 var draggers = [];
 
                 // create closure and callbacks for dragger
@@ -100,6 +105,22 @@ define(["util", "vec2", "Scene", "PointDragger"],
                 return draggers;
 
             };
+			
+			Line.prototype.getColor = function() {
+				return this.lineStyle.color;
+			};
+			
+			Line.prototype.setColor = function(color){
+				this.lineStyle.color = color;
+			};
+		
+			Line.prototype.getWidth = function() {
+				return this.lineStyle.width;
+			};
+			
+			Line.prototype.setWidth = function(width) {
+				this.lineStyle.width = width;
+			};
 
 
         };
