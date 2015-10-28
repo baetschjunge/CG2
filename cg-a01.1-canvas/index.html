@@ -47,7 +47,10 @@
 			<div id="divWidth">
 				Breite:
 				<label>
-					<input type="range" id="width" min="1" max="11" size="25" maxlength="30">
+				 	<form oninput="amount.value=width.value">
+						<input type="range" id="width" min="1" max="11" size="25" maxlength="30">
+						<output name="amount" for="width"></output>
+				 	</form>
 				</label>
 			</div>
 			<br>
@@ -57,10 +60,14 @@
 			</label>
 			<br>
 			<div id="divRadius">
-				Radius:	
-				<label>
-					<input type="range" id="radius" min="1" max="500" size="25" maxlength="30">
-				</label>
+				Radius:
+				<form oninput="amount.value=radius.value">	
+					<label>
+						<input type="range" id="radius" min="1" max="500" size="25" maxlength="30">
+					</label>
+				<output name="amount" for="radius"></output>
+				 	</form>
+
 			</div>
 		
 
