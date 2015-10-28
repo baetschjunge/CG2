@@ -110,6 +110,18 @@ define(["jquery", "gl-matrix", "util",
 			
 			
 			});
+			
+			 // react if object was changed
+        sceneController.onObjChange(function() {
+
+            var selObj = sceneController.getSelectedObject();
+            var point = selObj.pointOnCircle;
+            if (point)
+                $("#radius").val(Math.round(selObj.getRadius()));
+
+        });
+		
+		
 
             // callbacks for the various HTML elements (buttons, ...)
             var htmlController = new HtmlController(context,scene,sceneController);
