@@ -77,7 +77,7 @@ define(["jquery", "Line","Circle","Point"],
 			$("#radius").change((function() {
             var selObj = sceneController.getSelectedObject();
             if (selObj.pointOnCircle)
-                selObj.setRadius(parseInt(this.value));
+                selObj.setRadius(this.value);
 				scene.draw(context);
         }));
 			

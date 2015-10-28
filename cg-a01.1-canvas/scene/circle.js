@@ -93,7 +93,7 @@ define(["util","vec2","Scene","PointDragger"],
 			  var vecBetween = vec2.sub(this.pointOnCircle, this.p0);
 			  vecBetween = vec2.mult(vecBetween, radius / vec2.length(vecBetween));
 			  this.pointOnCircle = vec2.add(this.p0, vecBetween);
-			  document.getElementByID("#radius").value=this.getRadius();
+			  $("#radius").value=radius;
 			};
 			
 			Circle.prototype.getWidth = function() {
