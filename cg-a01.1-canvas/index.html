@@ -47,7 +47,10 @@
 			<div id="divWidth">
 				Breite:
 				<label>
-					<input type="range" id="width" min="1" max="11" size="25" maxlength="30">
+				 	<form oninput="amount.value=width.value">
+						<input type="range" id="width" min="1" max="11" size="25" maxlength="30">
+						<output name="amount" for="width">0</output>
+				 	</form>
 				</label>
 			</div>
 			<br>
