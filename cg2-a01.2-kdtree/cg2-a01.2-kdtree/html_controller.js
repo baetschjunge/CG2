@@ -21,8 +21,8 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
          * and provide them with a closure defining context and scene
          */
         var HtmlController = function(context,scene,sceneController) {
-			
-			var kdTree;
+
+            var kdTree;
             var pointList = [];
 
             // generate random X coordinate within the canvas
@@ -52,8 +52,9 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
                 // convert to hex notation
                 return "#"+toHex2(r)+toHex2(g)+toHex2(b);
             };
-			
-			// public method: show parameters for selected object
+
+
+            // public method: show parameters for selected object
             this.showParamsForObj = function(obj) {
 
                 if(!obj) {
@@ -89,40 +90,7 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
 
                 scene.draw(context);
             }));
-			
-			
-		/*
-		 * event handler for "change radius".
-		 */
-			$("#color").change((function() {
-				var selObj = sceneController.getSelectedObject();
-				selObj.setColor(this.value);
-				sceneController.deselect();
-				sceneController.select(selObj);
-			}));
-		
-		/*
-		 * event handler for "change width".
-		 */		 
-			$("#width").change((function() {
-				var selObj = sceneController.getSelectedObject();
-				selObj.setWidth(this.value);
-				sceneController.deselect();
-				sceneController.select(selObj);
-			}));
-		
-		/*
-		 * event handler for "change radius".
-		 */
-			$("#radius").change((function() {
-            var selObj = sceneController.getSelectedObject();
-            if (selObj.pointOnCircle)
-                selObj.setRadius(this.value);
-				scene.draw(context);
-        }));
-			
-			
-			
+
 
             /*
              * event handler for "new line button".
@@ -145,47 +113,31 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
                 sceneController.select(line); // this will also redraw
 
             }));
-			
-			$("#btnNewCircle").click( (function() {
-			
-				//create the circle and add it to the scene
-				var style = {
-					width: Math.floor(Math.random()*3)+1,
+
+
+
+            $("#btnNewPointList").click( (function() {
+
+                // create the actual line and add it to the scene
+                var style = {
+                    width: Math.floor(Math.random()*3)+1,
                     color: randomColor()
                 };
-				
-				var circle = new Circle( [randomX(),randomY()],[randomX(),randomY()],
-				style );
-                scene.addObjects([circle]);
+
+                var numPoints = parseInt($("#numPoints").attr("value"));;
+                for(var i=0; i<numPoints; ++i) {
+                    var point = new Point([randomX(), randomY()], 5,
+                        style);
+                    scene.addObjects([point]);
+                    pointList.push(point);
+                }
 
                 // deselect all objects, then select the newly created object
                 sceneController.deselect();
-                sceneController.select(circle); // this will also redraw
-				
-			
-			}));
-			
-			$("#btnNewPoint").click( (function() {
-			
-				//create the circle and add it to the scene
-				var style = {
-					width: Math.floor(Math.random()*3)+1 ,
-                    radius: 3,
-                    color: randomColor()
-                };
-				
-				var point = new Point( [randomX(),randomY()],style );
-                scene.addObjects([point]);
 
-                // deselect all objects, then select the newly created object
-                sceneController.deselect();
-                sceneController.select(point); // this will also redraw
-				
-				
-			
-			}));
-			
-			 $("#visKdTree").click( (function() {
+            }));
+
+            $("#visKdTree").click( (function() {
 
                 var showTree = $("#visKdTree").attr("checked");
                 if(showTree && kdTree) {

@@ -24,12 +24,13 @@ requirejs.config({
         "gl-matrix": "../lib/gl-matrix-1.3.7",
 
         "util" : "./utils/util",
-
+		
         "Scene" : "./scene/scene",
         "Line" : "./scene/line",
 		"Circle": "./scene/circle",
 		"Point": "./scene/point",
         "PointDragger" : "./scene/point_dragger",
+		
 
         "vec2" : "./math/vec2",
 
