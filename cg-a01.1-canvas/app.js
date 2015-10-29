@@ -37,10 +37,10 @@ requirejs.config({
         "SceneController" : "./controller/scene_controller",
         "HtmlController" : "./controller/html_controller",
         
-        "BoundingBox" : "./kdtree/boundingbox.js",
-        "KdNode" :"./kdtree/kdnode.js",
-        "KdTree" : "./kdtree/kdtree.js",
-        "KdUtil" : "./kdtree/kdutil.js"
+        "BoundingBox" : "./kdtree/boundingbox",
+        "KdNode" :"./kdtree/kdnode",
+        "KdTree" : "./kdtree/kdtree",
+        "KdUtil" : "./kdtree/kdutil"
     }
 });
 
