@@ -10,16 +10,16 @@ define(["util", "vec2", "Scene", "PointDragger"],
         this.lineStyle = lineStyle || {
             width : "2",
             color : "#0000AA"
-        };
 		
-		this.xFormel = vec2.makeFunction(xFormel) || vec2.makeFunction("40*7");
-        this.yFormel = vec2.makeFunction(yFormel) || vec2.makeFunction("40*7");
-        this.xFormelString = xFormel || "40*7";
-        this.yFormelString = yFormel || "40*7";
+        };
+		this.xFormel = vec2.makeFunction(xFormel) || vec2.makeFunction("40*t");
+        this.yFormel = vec2.makeFunction(yFormel) || vec2.makeFunction("40*t");
+        this.xFormelString = xFormel || "40*t";
+        this.yFormelString = yFormel || "40*t";
         this.minT = minT || 0;
-        this.maxT = maxT || 1;
+        this.maxT = maxT || 20;
         this.segments = segments || 20;
-        this.ticks = ticks || true;
+        this.ticks = ticks || false;
         this.points = [];
 		
 		console.log("creating parametric curve with [x(t): " + this.xFormelString + ", y(t): " + this.yFormelString + "] from t="+this.minT+" to t=" + this.maxT + " with " + this.segments + " segments and show ticks: " +this.ticks);
@@ -215,10 +215,12 @@ define(["util", "vec2", "Scene", "PointDragger"],
         return this.ticks;
     };
 
+	}; // function ParametricCurve
+	
     // this module only exports the constructor for ParametricCurve objects
     return ParametricCurve;
 		
-	}
+	
 	
 }));
 	//define

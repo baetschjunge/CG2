@@ -42,10 +42,10 @@ define([], (function() {
         sceneController.deselect();
         var nextDim = (dim === 0) ? 1 : 0;
         if (node.rightChild) {
-            kdutil.visualizeKdTree(sceneController, scene, node.rightChild, nextDim, node.point.center[dim], end, left);
+            kdutil.visualizeKdTree(sceneController, scene, node.rightChild, nextDim, node.point.p0[dim], end, left);
         }
         if (node.leftChild) {
-            kdutil.visualizeKdTree(sceneController, scene, node.leftChild, nextDim, start, node.point.center[dim], left);
+            kdutil.visualizeKdTree(sceneController, scene, node.leftChild, nextDim, start, node.point.p0[dim], left);
         }
 
     };
@@ -60,7 +60,7 @@ define([], (function() {
         var minDist = 100000;
         var minIdx = -1;
         for( var i=0; i<pointList.length; ++i) {
-            var dist = kdutil.distance(pointList[i].center, queryPoint.center);
+            var dist = kdutil.distance(pointList[i].p0, queryPoint.p0);
             if( dist < minDist ) {
                 minIdx = i;
                 minDist = dist;

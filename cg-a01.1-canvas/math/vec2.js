@@ -73,6 +73,16 @@ define([],
             };
         }
     };
+	
+	 // get angle between 2 vec
+    vec2.angle = function(v0, v1) {
+
+        var t = this.dot(v0, v1);
+        t /= (this.length(v0)*this.length(v1));
+
+        return Math.abs((Math.acos(t)*180/Math.PI)%360);
+
+    };
 	    
     // this module exports an object defining a number of functions
     return vec2;

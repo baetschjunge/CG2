@@ -47,12 +47,13 @@ define(["util", "vec2", "Scene"],
                 // draw actual line
                 context.beginPath();
                 // set points to be drawn
+				
                 if( this.dim == 0 ) {
-                    context.moveTo(this.point.center[0], this.ymin);
-                    context.lineTo(this.point.center[0], this.ymax);
+                    context.moveTo(this.point.p0[0], this.ymin);
+                    context.lineTo(this.point.p0[0], this.ymax);
                 } else {
-                    context.moveTo(this.xmin, this.point.center[1]);
-                    context.lineTo(this.xmax, this.point.center[1]);
+                    context.moveTo(this.xmin, this.point.p0[1]);
+                    context.lineTo(this.xmax, this.point.p0[1]);
                 }
 
                 context.lineWidth = 1;

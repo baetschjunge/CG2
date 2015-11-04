@@ -30,6 +30,7 @@ requirejs.config({
 		"Circle": "./scene/circle",
 		"Point": "./scene/point",
 		"ParametricCurve": "./scene/parametricCurve",
+		"BezierCurve": "./scene/bezierCurve",
         "PointDragger" : "./scene/point_dragger",
 		
 
@@ -98,7 +99,7 @@ define(["jquery", "gl-matrix", "util",
 			
 			var point = selObj.pointOnCircle;
 			var point2 =selObj.p1;
-            if (point || point2) {
+            if (point || point2 || minT) {
                 $("#divWidth").fadeIn();
                 $("#width").val(selObj.getWidth());
             } else {
@@ -115,6 +116,18 @@ define(["jquery", "gl-matrix", "util",
             }
 			
 			
+			var ticks = selObj.ticks;
+						
+            if (!(ticks === undefined)) { // is curve
+                $("#divTicks").fadeIn();
+                $("#checkTicks").attr('checked', selObj.ticks);
+			 }else{
+				//$("#divPara").fadeOut();
+                $("#divTicks").fadeOut();
+			 }
+			 
+			 
+			 
 			
 			});
 			

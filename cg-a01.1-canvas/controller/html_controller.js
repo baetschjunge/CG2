@@ -12,8 +12,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","ParametricCurve"],
-    (function($, Line, Circle, Point, KdTree, Util, KdUtil,ParametricCurve) {
+define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","ParametricCurve","BezierCurve"],
+    (function($, Line, Circle, Point, KdTree, Util, KdUtil,ParametricCurve,BezierCurve) {
         "use strict";
 
         /*
@@ -166,27 +166,73 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","Paramet
 			}));
 			
 			 /*
-	 * event handler for "new parametric curve".
-	 */
-        $("#btnNewParametric").click((function() {
-			window.console.log("test");
-            // create the actual line and add it to the scene
-            var style = {
-                width : Math.floor(Math.random() * 3) + 1,
-                color : randomColor()
-            };
+			 * event handler for "new parametric curve".
+			 */
+				$("#btnNewParametric").click((function() {
+					window.console.log("test");
+					// create the actual line and add it to the scene
+					var style = {
+						width : Math.floor(Math.random() * 3) + 1,
+						color : randomColor()
+					};
+					//get values
+					var xt =$("#xt").val();
+					var yt =$("#yt").val();
+					var minT = parseInt($("#minT").val());
+					var maxT =parseInt($("#maxT").val());
+					var segments=parseInt($("#segments").val());
+					var check = $("#checkTicks").attr("checked");
+					
+							
+					var curve = new ParametricCurve(xt, yt, minT,maxT, segments, style,check);
+					scene.addObjects([curve]);
 
-            var curve = new ParametricCurve("t*40", "Math.pow(t,3)-8*Math.pow(t,2)+100", 0, 8, 20, style);
-            scene.addObjects([curve]);
+					// deselect all objects, then select the newly
+					// created object
+					sceneController.deselect();
+					sceneController.select(curve);
+				// this will also
+				// redraw
 
-            // deselect all objects, then select the newly
-            // created object
-            sceneController.deselect();
-            sceneController.select(curve);
-        // this will also
-        // redraw
+				}));
+				
+				/*
+					Eventhandler for checkbox Ticks
+				*/
+			
+				$("#checkTicks").click( (function() {
+			
+				var selObj = sceneController.getSelectedObject();
+				if($("#checkTicks").attr('checked'))
+					selObj.ticks = true;
+				else
+					selObj.ticks = false;
+				
+				scene.draw(context);
+			}));			
+		
+				
+			/*
+			 * event handler for "new bezier button".
+			*/
+			$("#btnNewBezier").click((function() {
 
-        }));
+				// create the actual line and add it to the scene
+				var style = {
+					width : Math.floor(Math.random() * 3) + 1,
+					color : randomColor()
+				};
+ 
+				var curve = new BezierCurve( undefined, undefined, undefined, undefined, style);
+				scene.addObjects([curve]);
+
+				// deselect all objects, then select the newly
+				// created object
+				sceneController.deselect();
+				sceneController.select(curve);
+			// this will also
+			// redraw
+			}));	
 			
 			$("#btnNewPoint").click( (function() {
 			
@@ -267,6 +313,8 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","Paramet
                 // TODO: measure and compare timings of linear//
                 //       and kd-nearest-neighbor search	      //
                 ////////////////////////////////////////////////
+				
+				
                 var linearTiming;
                 var kdTiming;
 
