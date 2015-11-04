@@ -185,6 +185,29 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
 			
 			}));
 			
+			$("#btnNewPointList").click( (function() {
+
+                // create the actual line and add it to the scene
+                var style = {
+                    width: Math.floor(Math.random()*3)+1,
+					radius: 5,
+                    color: randomColor()
+                };
+
+                var numPoints = $("#kdTreeNumbers").attr("value");;
+                for(var i=0; i<numPoints; ++i) {
+                    var point = new Point([randomX(), randomY()],style);
+                    scene.addObjects([point]);
+                    pointList.push(point);
+					
+                }
+				
+                // deselect all objects, then select the newly created object
+                sceneController.deselect();
+				
+
+            }));
+			
 			 $("#visKdTree").click( (function() {
 
                 var showTree = $("#visKdTree").attr("checked");
