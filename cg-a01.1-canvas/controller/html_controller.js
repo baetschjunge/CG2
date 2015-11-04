@@ -300,14 +300,15 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","Paramet
 
                 var style = {
                     width: 2,
+					radius: 3,
                     color: "#ff0000"
                 };
-                var queryPoint = new Point([randomX(), randomY()], 2,
+                var queryPoint = new Point([randomX(), randomY()],
                     style);
                 scene.addObjects([queryPoint]);
                 sceneController.select(queryPoint); 
 
-                console.log("query point: ", queryPoint.center);
+                console.log("query point: ", queryPoint.p0);
 
                 ////////////////////////////////////////////////
                 // TODO: measure and compare timings of linear//
@@ -317,15 +318,26 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","Paramet
 				
                 var linearTiming;
                 var kdTiming;
-
-                var minIdx = KdUtil.linearSearch(pointList, queryPoint);
-
-                console.log("nearest neighbor linear: ", pointList[minIdx].center);
-
-                var kdNearestNeighbor = kdTree.findNearestNeighbor(kdTree.root, queryPoint, 10000000, kdTree.root, 0);
-
-                console.log("nearest neighbor kd: ", kdNearestNeighbor.point.center);
-
+				var t_start, t_end;
+				t_start = new Date().getTime();
+				
+				
+                var minIdx = KdUtil.linearSearch(pointList, queryPoint.p0);
+				t_end = new Date().getTime();
+                console.log("nearest neighbor linear: ", pointList[minIdx].p0);
+				
+				
+				
+				var t_start2, t_end2;
+				t_start2 = new Date().getTime();
+				
+                var kdNearestNeighbor = kdTree.findNearestNeighbor(kdTree.root, queryPoint.p0, 10000000, kdTree.root, 0);
+				t_end2 = new Date().getTime();
+                console.log("nearest neighbor kd: ", kdNearestNeighbor.point.p0);
+				
+				
+				alert("linearSearch:" + (t_end - t_start) + "ms"
+				+ "   " + "findNearestNeighbor:" + (t_end2 - t_start2) + "ms");
                 sceneController.select(pointList[minIdx]);
                 sceneController.select(kdNearestNeighbor.point);
 
@@ -335,8 +347,7 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","Paramet
 
         // return the constructor function
         return HtmlController;
-
-
+		
     })); // require
 
 

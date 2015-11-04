@@ -127,7 +127,7 @@ define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
                 var closest = currentBest;
                 var closestDistance = nearestDistance;
 
-                var dist = KdUtil.distance(node.point.center, query.center);
+                var dist = KdUtil.distance(node.point.p0, query);
                 if( dist < nearestDistance ) {
                     closestDistance = dist;
                     closest = node;
@@ -135,7 +135,7 @@ define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
 
                 var first, second;
                 if (dim == 0) {
-                    if ( query.center[0] < node.point.center[0]) {
+                    if ( query[0] < node.point.p0[0]) {
                         first = node.leftChild;
                         second = node.rightChild;
                     } else {
@@ -143,7 +143,7 @@ define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
                         second = node.leftChild;
                     }
                 } else {
-                    if (query.center[1] < node.point.center[1]) {
+                    if (query[1] < node.point.p0[1]) {
                         first = node.leftChild;
                         second = node.rightChild;
                     } else {
@@ -153,12 +153,12 @@ define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
                 }
 
                 var nextDim = (dim === 0) ? 1 : 0;
-                if( first && first.bbox.distanceTo(query.center) < closestDistance) {
+                if( first && first.bbox.distanceTo(query) < closestDistance) {
                     closest = this.findNearestNeighbor(first, query, closestDistance, closest, nextDim);
-                    closestDistance = KdUtil.distance(closest.point.center, query.center);
+                    closestDistance = KdUtil.distance(closest.point.p0, query);
                 }
 
-                if( second && second.bbox.distanceTo(query.center) < closestDistance) {
+                if( second && second.bbox.distanceTo(query) < closestDistance) {
                     closest = this.findNearestNeighbor(second, query, closestDistance, closest, nextDim);
                 }
 

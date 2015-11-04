@@ -60,7 +60,7 @@ define([], (function() {
         var minDist = 100000;
         var minIdx = -1;
         for( var i=0; i<pointList.length; ++i) {
-            var dist = kdutil.distance(pointList[i].p0, queryPoint.p0);
+            var dist = kdutil.distance(pointList[i].p0, queryPoint);
             if( dist < minDist ) {
                 minIdx = i;
                 minDist = dist;
