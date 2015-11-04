@@ -12,8 +12,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
-    (function($, Line, Circle, Point, KdTree, Util, KdUtil) {
+define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","ParametricCurve"],
+    (function($, Line, Circle, Point, KdTree, Util, KdUtil,ParametricCurve) {
         "use strict";
 
         /*
@@ -165,6 +165,29 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
 			
 			}));
 			
+			 /*
+	 * event handler for "new parametric curve".
+	 */
+        $("#btnNewParametric").click((function() {
+			window.console.log("test");
+            // create the actual line and add it to the scene
+            var style = {
+                width : Math.floor(Math.random() * 3) + 1,
+                color : randomColor()
+            };
+
+            var curve = new ParametricCurve("t*40", "Math.pow(t,3)-8*Math.pow(t,2)+100", 0, 8, 20, style);
+            scene.addObjects([curve]);
+
+            // deselect all objects, then select the newly
+            // created object
+            sceneController.deselect();
+            sceneController.select(curve);
+        // this will also
+        // redraw
+
+        }));
+			
 			$("#btnNewPoint").click( (function() {
 			
 				//create the circle and add it to the scene
@@ -241,8 +264,8 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
                 console.log("query point: ", queryPoint.center);
 
                 ////////////////////////////////////////////////
-                // TODO: measure and compare timings of linear
-                //       and kd-nearest-neighbor search
+                // TODO: measure and compare timings of linear//
+                //       and kd-nearest-neighbor search	      //
                 ////////////////////////////////////////////////
                 var linearTiming;
                 var kdTiming;

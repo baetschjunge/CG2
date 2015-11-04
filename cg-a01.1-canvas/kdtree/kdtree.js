@@ -9,7 +9,7 @@
 
 
 /* requireJS module definition */
-define(["kdutil", "vec2", "Scene", "KdNode", "BoundingBox"],
+define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
     (function(KdUtil, vec2, Scene, KdNode, BoundingBox) {
 
         "use strict";
@@ -32,31 +32,52 @@ define(["kdutil", "vec2", "Scene", "KdNode", "BoundingBox"],
              * @returns returns root node after tree is build
              */
             this.build = function(pointList, dim, parent, isLeft) {
-
+				console.log("1");
+				var axis = dim;
                 // IMPLEMENT!
                 // create new node
-
+				var node = new KdNode(dim);
+				
                 // find median position in pointList
-                
+                var median = KdUtil.median(pointList,dim);
                 // compute next axis
-                
+                if(axis=0){
+					axis = 1;
+					}
+				else{
+					axis = 0;
+				}
                 // set point in node
-                
+                node.point = pointList[median];
+				console.log(node.point);
+				
                 // compute bounding box for node
                 // check if node is root (has no parent)
-                // 
+                // if (!parent)
+				
                 // take a look in findNearestNeighbor why we 
                 // need this bounding box!
                 if( !parent ) {
                     // Note: hardcoded canvas size here
+					node.leftChild = new BoundingBox(0, 0, pointList[median].p0[0], 400, pointList[median], axis);
+					node.rightChild = new BoundingBox(pointList[median].p0[0], 0, 500, 400, pointList[median], axis);
                 } else {
                     // create bounding box and distinguish between axis and
                     // which side (left/right) the node is on
+					if(axis=1){
+						node.leftChild = new BoundingBox(parent.xmin,pointList[median].p0[1],parent.xmax,parent.ymax,axis);
+						node.rightChild= new BoundingBox(parent.xmin,parent.ymin,parent.xmax,parent.pointList[median].p0[1],axis);
+					}
+					else{
+						node.leftChild = new BoundingBox(parent.xmin,parent.ymin,pointList[median].p0[0],parent.ymax,axis);
+						node.rightChild= new BoundingBox(pointList[median].p0[0],parent.ymin,parent.xmax,parent.ymax,axis);
+					}
                 }
 
                 // create point list left/right and
                 // call build for left/right arrays
-                
+          
+				return node;
                 // return root node
             };
 

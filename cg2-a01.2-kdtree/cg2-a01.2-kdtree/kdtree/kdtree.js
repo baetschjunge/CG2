@@ -9,7 +9,7 @@
 
 
 /* requireJS module definition */
-define(["kdutil", "vec2", "Scene", "KdNode", "BoundingBox"],
+define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
     (function(KdUtil, vec2, Scene, KdNode, BoundingBox) {
 
         "use strict";
@@ -32,7 +32,7 @@ define(["kdutil", "vec2", "Scene", "KdNode", "BoundingBox"],
              * @returns returns root node after tree is build
              */
             this.build = function(pointList, dim, parent, isLeft) {
-				
+				console.log("1");
 				var axis = dim;
                 // IMPLEMENT!
                 // create new node

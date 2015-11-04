@@ -59,6 +59,20 @@ define([],
         return t;
                 
     };
+	
+	// replace t with value 
+    vec2.makeFunction = function(formel) {
+        try {
+            var f;
+            eval("f = function(t) { return " + formel + ";};");
+            return f;
+        } catch (err) {
+            console.log(err);
+            return function f(t) {
+                return 0
+            };
+        }
+    };
 	    
     // this module exports an object defining a number of functions
     return vec2;
