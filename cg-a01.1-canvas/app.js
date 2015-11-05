@@ -138,6 +138,10 @@ define(["jquery", "gl-matrix", "util",
             var point = selObj.pointOnCircle;
             if (point)
                 $("#radius").val(Math.round(selObj.getRadius()));
+				
+			var segments = selObj.segments;
+            if (segments)
+                $("#segments").val(selObj.segments);
 
         });
 		

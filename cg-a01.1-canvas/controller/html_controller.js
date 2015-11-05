@@ -120,6 +120,15 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","Paramet
                 selObj.setRadius(this.value);
 				scene.draw(context);
         }));
+		
+		 /*
+		 * event handler for "change segments".
+		*/
+        $("#segments").change((function() {
+            var selObj = sceneController.getSelectedObject();
+            selObj.setSegments(parseInt($("#segments").val()));
+            scene.draw(context);
+        }));
 			
 			
 			
@@ -223,7 +232,10 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","Paramet
 					color : randomColor()
 				};
  
-				var curve = new BezierCurve( undefined, undefined, undefined, undefined, style);
+				var curve = new BezierCurve( [randomX(),randomY()],
+											 [randomX(),randomY()],
+											 [randomX(),randomY()],
+											 [randomX(),randomY()], style);
 				scene.addObjects([curve]);
 
 				// deselect all objects, then select the newly

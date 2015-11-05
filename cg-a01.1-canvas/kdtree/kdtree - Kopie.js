@@ -32,52 +32,67 @@ define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
              * @returns returns root node after tree is build
              */
             this.build = function(pointList, dim, parent, isLeft) {
-				console.log("1");
 				var axis = dim;
                 // IMPLEMENT!
                 // create new node
 				var node = new KdNode(dim);
 				
                 // find median position in pointList
-                var median = kdutil.median(pointList,dim);
+                var median = KdUtil.median(pointList,dim);
                 // compute next axis
-                if(axis=0){
-					axis = 1;
-					}
-				else{
-					axis = 0;
-				}
+              
                 // set point in node
-                node.point = median.p0;
+                node.point = pointList[median];
 				console.log(node.point);
 				
                 // compute bounding box for node
                 // check if node is root (has no parent)
                 // if (!parent)
-				BoundingBox = function (xmin, ymin, xmax, ymax, point, dim)
 				
                 // take a look in findNearestNeighbor why we 
                 // need this bounding box!
                 if( !parent ) {
                     // Note: hardcoded canvas size here
-					node.isLeft = new Boundingbox(0, 0, median.p0[0], 400, point, axis);
-					node.isRight = new Boundingbox(median.p0[0], 0, 500, 400, point, axis);
+					node.bbox = new BoundingBox(0, 0, 500, 400, node.point, axis);
+					
                 } else {
+				
                     // create bounding box and distinguish between axis and
                     // which side (left/right) the node is on
-					if(axis=1){
-						node.isLeft = new BoundingBox(parent.xmin,median.p0[1],parent.xmax,parent.ymax,axis);
-						node.isRight= new BoundingBox(parent.xmin,parent.ymin,parent.xmax,parent.median.p0[1],.axis);
+					if(axis==0){
+						if(isLeft){
+							node.bbox = new BoundingBox(parent.bbox.xmin,parent.ymin,parent.bbox.xmax,parent.point.p0[1],node.point,axis);
+
+						}
+						else {
+							node.bbox = new BoundingBox(parent.bbox.xmin,parent.point.p0[1],parent.bbox.xmax,parent.bbox.ymax,node.point,axis);
+
+						}
 					}
 					else{
-						node.isLeft = new BoundingBox(parent.xmin,parent.ymin,median.p0[0],parent.ymax,axis);
-						node.isRight= new BoundingBox(median.p0[0],parent.ymin,parent.xmax,parent.ymax,axis);
+						if(isLeft){
+							node.bbox = new BoundingBox(parent.bbox.xmin,parent.bbox.ymin,parent.point.p0[0],parent.bbox.ymax,node.point,axis);
+
+						}
+						else{
+						    node.bbox = new BoundingBox(parent.point.p0[0],parent.bbox.ymin,parent.xmax,parent.bbox.ymax,node.point,axis);
+
+						}
 					}
                 }
 
                 // create point list left/right and
-                // call build for left/right arrays
-          
+				var left = pointList.slice(0, median);
+
+                var right = pointList.slice(median + 1, pointList.length);
+				
+				if(left.length > 0){
+					this.build(left,axis,node,true);
+				}
+				if(right.length > 0){
+					this.build(right,axis,node,false);
+				}
+				
 				return node;
                 // return root node
             };
@@ -102,7 +117,7 @@ define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
                 var closest = currentBest;
                 var closestDistance = nearestDistance;
 
-                var dist = KdUtil.distance(node.point.center, query.center);
+                var dist = KdUtil.distance(node.point.p0, query);
                 if( dist < nearestDistance ) {
                     closestDistance = dist;
                     closest = node;
@@ -110,7 +125,7 @@ define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
 
                 var first, second;
                 if (dim == 0) {
-                    if ( query.center[0] < node.point.center[0]) {
+                    if ( query[0] < node.point.p0[0]) {
                         first = node.leftChild;
                         second = node.rightChild;
                     } else {
@@ -118,7 +133,7 @@ define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
                         second = node.leftChild;
                     }
                 } else {
-                    if (query.center[1] < node.point.center[1]) {
+                    if (query[1] < node.point.p0[1]) {
                         first = node.leftChild;
                         second = node.rightChild;
                     } else {
@@ -128,12 +143,12 @@ define(["KdUtil", "vec2", "Scene", "KdNode", "BoundingBox"],
                 }
 
                 var nextDim = (dim === 0) ? 1 : 0;
-                if( first && first.bbox.distanceTo(query.center) < closestDistance) {
+                if( first && first.bbox.distanceTo(query) < closestDistance) {
                     closest = this.findNearestNeighbor(first, query, closestDistance, closest, nextDim);
-                    closestDistance = KdUtil.distance(closest.point.center, query.center);
+                    closestDistance = KdUtil.distance(closest.point.p0, query);
                 }
 
-                if( second && second.bbox.distanceTo(query.center) < closestDistance) {
+                if( second && second.bbox.distanceTo(query) < closestDistance) {
                     closest = this.findNearestNeighbor(second, query, closestDistance, closest, nextDim);
                 }
 

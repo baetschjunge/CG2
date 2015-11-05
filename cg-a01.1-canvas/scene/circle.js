@@ -65,7 +65,11 @@ define(["util","vec2","Scene","PointDragger"],
                 var _circle = this;
 				
                 var getP0 = function() { return _circle.p0; };         
-                var setP0 = function(dragEvent) { _circle.p0 = dragEvent.position; };
+                var setP0 = function(dragEvent) { 
+					var diff = vec2.sub(dragEvent.position, _circle.p0);
+					_circle.p0= dragEvent.position;
+					_circle.pointOnCircle = vec2.add(_circle.pointOnCircle,diff);
+				};
 				
 				var getP1 = function() { return _circle.pointOnCircle; };
                 var setP1 = function(dragEvent) { _circle.pointOnCircle = dragEvent.position; };

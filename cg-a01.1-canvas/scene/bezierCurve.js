@@ -1,21 +1,21 @@
+
+
 /* requireJS module definition */
-define(["util", "vec2", "Scene", "PointDragger"], 
-		(function(Util, vec2, Scene, PointDragger) {
+define(["util", "vec2", "Scene", "PointDragger"],
+	(function(Util, vec2, Scene, PointDragger) {
     "use strict";
 
     /**
-     *  A bezier curve, that can be dragged
-     *  around by its endpoints and control points.
-     *  Parameters:
-     *  - p0 and p3: start and endpoint
-     *  - p1 and p2: controlpoints
-     *  - lineStyle: object defining width and color attributes for line drawing,
-     *       begin of the form { width: 2, color: "#00FF00" }
-     *  - ticks: show ticks or not
-     *  - maxAngle: max angle to provide the accuracy of the curve
-     */
+	 *  A parametric curve, that can be dragged
+	 *  around by its endpoints.
+	 *  Parameters:
+	 *  - point0 and point1: array objects representing [x,y] coordinates of start and end point
+	 *  - lineStyle: object defining width and color attributes for line drawing,
+	 *       begin of the form { width: 2, color: "#00FF00" }
+	 */
 
-    var BezierCurve = function(p0, p1, p2, p3, lineStyle, ticks, maxAngle, web, maxDepth) {
+    var SimpleBezierCurve = function(p0, p1, p2, p3, lineStyle, ticks) {
+        //console.log("creating bezier curve with [x(t): " + xFormel + ", y(t): " + yFormel + "] from t="+minT+" to t=" + maxT);
 
         // draw style for drawing the line
         this.lineStyle = lineStyle || {
@@ -23,40 +23,79 @@ define(["util", "vec2", "Scene", "PointDragger"],
             color : "#0000AA"
         };
 
+        // convert to Vec2 just in case the points were given as arrays
         this.p0 = p0 || [100,200];
         this.p1 = p1 || [200,300];
         this.p2 = p2 || [200,100];
         this.p3 = p3 || [300,200];
+        this.f = function(t) {
+            var p = vec2.mult(this.p0, Math.pow(1-t,3));
+            p = vec2.add(p,vec2.mult(this.p1, 3*Math.pow(1-t,2)*t));
+            p = vec2.add(p,vec2.mult(this.p2, 3*(1-t)*Math.pow(t,2)));
+            p = vec2.add(p,vec2.mult(this.p3, Math.pow(t,3)));
+            return p;
+        };
         this.ticks = ticks || true;
-        this.web = web || false;
-        this.maxAngle = maxAngle || 10;
-        this.maxDepth = maxDepth || 5;
-        this._lastPoint = undefined;
+        this.segments = 20;
         this.points = [];
 
-        console.log("creating bezier curve with [p0: " + this.p0 + ", p1: " + this.p1 +
-            ", p2: " + this.p2 + ", p3: " + this.p3 +"] max angle:"+ this.maxAngle +
-            ", show ticks: " + this.ticks + " and show web: " + this.web);
     };
 
-    // draw this curve into the provided 2D rendering context
-		BezierCurve.prototype.draw = function(context) {
+    // draw this line into the provided 2D rendering context
+    SimpleBezierCurve.prototype.draw = function(context) {
 
-        this.segments = 0;
-        this.depth = 0;
         this.points = [];
 
         // draw actual line
         context.beginPath();
-        context.lineJoin="round";
-        context.lineCap="round";
         context.strokeStyle = this.lineStyle.color;
         context.lineWidth = this.lineStyle.width;
-        context.moveTo(this.p0[0], this.p0[1]);
-        this.points.push(this.p0);
 
-        this.drawCurve(this.p0, this.p1, this.p2, this.p3, context, 0);
-        this.drawPoint(this.p3, context);
+        // set points to be drawn
+        var step = 1/this.segments;
+        var t = 0;
+        var first = true;
+        var lastX;
+        var lastY;
+        var lastLastX;
+        var lastLastY;
+        var x;
+        var y;
+        while(t <= 1.00000000001) {
+            lastLastX = lastX;
+            lastLastY = lastY;
+            lastX = x;
+            lastY = y;
+            var p = this.f(t);
+            this.points.push(p);
+            x=p[0];
+            y=p[1];
+            if(first) {
+                context.moveTo(x, y);
+                first = false;
+            } else {
+                context.lineTo(x, y);
+            }
+            if(this.ticks) {
+                context.stroke();
+                context.beginPath();
+                context.strokeStyle = "#ff0000";
+                context.lineWidth = 1;
+                var helpVec = vec2.sub([x,y],[lastLastX,lastLastY]);
+                helpVec = [helpVec[1],-helpVec[0]];
+                var direction = vec2.mult(helpVec, 1/vec2.length(helpVec));
+                var start = vec2.sub([lastX,lastY], vec2.mult(direction, this.lineStyle.width+1));
+                context.moveTo(start[0], start[1]);
+                var end = vec2.add([lastX,lastY], vec2.mult(direction, this.lineStyle.width+1));
+                context.lineTo(end[0], end[1]);
+                context.stroke();
+                context.beginPath();
+                context.strokeStyle = this.lineStyle.color;
+                context.lineWidth = this.lineStyle.width;
+                context.moveTo(x, y);
+            }
+            t+=step;
+        }
 
         // set drawing style
         context.lineWidth = this.lineStyle.width;
@@ -68,8 +107,7 @@ define(["util", "vec2", "Scene", "PointDragger"],
     };
 
     // test whether the mouse position is on this line segment
-    BezierCurve.prototype.isHit = function(context, pos) {
-
+    SimpleBezierCurve.prototype.isHit = function(context, pos) {
         var p0;
         var p1;
         for(var i = 0; i < this.points.length;++i) {
@@ -100,7 +138,7 @@ define(["util", "vec2", "Scene", "PointDragger"],
     };
 
     // return list of draggers to manipulate this line
-    BezierCurve.prototype.createDraggers = function() {
+    SimpleBezierCurve.prototype.createDraggers = function() {
 
         var draggerStyle = {
             radius : 4,
@@ -137,8 +175,8 @@ define(["util", "vec2", "Scene", "PointDragger"],
             _line.p3 = dragEvent.position;
         };
 
-        draggers.push(new PointDragger(getP0, setP0, draggerStyle));
-        draggers.push(new PointDragger(getP3, setP3, draggerStyle));
+        draggers.push(new PointDragger(getP0, setP0,draggerStyle));
+        draggers.push(new PointDragger(getP3, setP3,draggerStyle));
         draggers.push(new PointDragger(getP1, setP1, draggerStyle));
         draggers.push(new PointDragger(getP2, setP2, draggerStyle));
 
@@ -146,188 +184,91 @@ define(["util", "vec2", "Scene", "PointDragger"],
 
     };
 
-    // draw this curve with spezific points
-    BezierCurve.prototype.drawCurve = function(point0, point1, point2, point3, context, currDepth) {
-
-        var _curve = this;
-        currDepth++;
-
-        var a0 = vec2.add(vec2.mult(point0, 0.5), vec2.mult(point1, 0.5));
-        var a1 = vec2.add(vec2.mult(point1, 0.5), vec2.mult(point2, 0.5));
-        var a2 = vec2.add(vec2.mult(point2, 0.5), vec2.mult(point3, 0.5));
-
-        var b0 = vec2.add(vec2.mult(a0, 0.5), vec2.mult(a1, 0.5));
-        var b1 = vec2.add(vec2.mult(a1, 0.5), vec2.mult(a2, 0.5));
-
-        var c0 = vec2.add(vec2.mult(b0, 0.5), vec2.mult(b1, 0.5));
-
-        // draw the web
-        if(_curve.web) {
-
-            context.stroke();
-            context.beginPath();
-            // style of the web
-            context.strokeStyle = "#ff0022";
-            context.lineWidth = 1;
-
-            context.moveTo(point0[0], point0[1]);
-            context.lineTo(point1[0], point1[1]);
-            context.lineTo(point2[0], point2[1]);
-            context.lineTo(point3[0], point3[1]);
-            context.lineTo(a2[0], a2[1]);
-            context.lineTo(b1[0], b1[1]);
-            context.lineTo(c0[0], c0[1]);
-            context.lineTo(b0[0], b0[1]);
-            context.lineTo(a0[0], a0[1]);
-            context.lineTo(a1[0], a1[1]);
-            context.lineTo(a2[0], a2[1]);
-
-            context.stroke();
-            context.beginPath();
-            // old point and style
-            context.strokeStyle = _curve.lineStyle.color;
-            context.lineWidth = _curve.lineStyle.width;
-            var last = _curve.points[_curve.points.length-1];
-            context.moveTo(last[0], last[1]);
-        }
-
-        var angle = vec2.angle(vec2.sub(point0, c0), vec2.sub(point3, c0));
-
-        // angle near 180 and maxDepth not reached
-        if(currDepth > _curve.maxDepth || (currDepth > 1 && (angle <= 180+_curve.maxAngle/2 && angle >= 180-_curve.maxAngle/2))) {
-            this.drawPoint(c0, context);
-        } else {
-            this.drawCurve(point0, a0, b0, c0, context, currDepth);
-            this.drawCurve(c0, b1, a2, point3, context, currDepth);
-        }
-    };
-
-    // draw this curve with spezific points
-    BezierCurve.prototype.drawPoint = function(d3, context) {
-        var _curve = this;
-
-        context.lineTo(d3[0], d3[1]);
-        _curve.points.push(d3);
-        _curve.segments+=1;
-        context.stroke();
-
-
-        if(_curve.ticks) {
-
-            if(_curve.points.length > 2) {
-
-                var po1 = _curve.points[_curve.points.length-3];
-                var po2 = _curve.points[_curve.points.length-2];
-                var po3 = _curve.points[_curve.points.length-1];
-
-                var helpVec = vec2.sub(po1,po3);
-                // ortogonal
-                helpVec = [helpVec[1],-helpVec[0]];
-                // normalize
-                var direction = vec2.mult(helpVec, 1/vec2.length(helpVec));
-                var start = vec2.sub(po2, vec2.mult(direction, _curve.lineStyle.width+1));
-                var end = vec2.add(po2, vec2.mult(direction, _curve.lineStyle.width+1));
-
-                context.beginPath();
-                context.strokeStyle = "#ff0000";
-                context.lineWidth = 1;
-
-                context.moveTo(start[0], start[1]);
-                context.lineTo(end[0], end[1]);
-
-                context.stroke();
-                context.beginPath();
-                context.strokeStyle = _curve.lineStyle.color;
-                context.lineWidth = _curve.lineStyle.width;
-                context.moveTo(d3[0], d3[1]);
-            }
-        }
-    }
-
     // get the current color
-    BezierCurve.prototype.getColor = function() {
+    SimpleBezierCurve.prototype.getColor = function() {
         return this.lineStyle.color;
     };
 
     // set the current color
-    BezierCurve.prototype.setColor = function(color) {
+    SimpleBezierCurve.prototype.setColor = function(color) {
         this.lineStyle.color = color;
     };
 
     // get the current color
-    BezierCurve.prototype.getWidth = function() {
+    SimpleBezierCurve.prototype.getWidth = function() {
         return this.lineStyle.width;
     };
 
     // set the current color
-    BezierCurve.prototype.setWidth = function(width) {
+    SimpleBezierCurve.prototype.setWidth = function(width) {
         this.lineStyle.width = width;
     };
 
     // set the formel for x
-    BezierCurve.prototype.setFormelX = function(formel) {
+    SimpleBezierCurve.prototype.setFormelX = function(formel) {
         this.xFormel = formel;
     };
 
     // set the formel for y
-    BezierCurve.prototype.setFormelY = function(formel) {
+    SimpleBezierCurve.prototype.setFormelY = function(formel) {
         this.yFormel = formel;
     };
 
     // get the current formel for x
-    BezierCurve.prototype.getFormelX = function() {
+    SimpleBezierCurve.prototype.getFormelX = function() {
         return this.xFormel;
     };
 
     // get the current formel for y
-    BezierCurve.prototype.getFormelY = function() {
+    SimpleBezierCurve.prototype.getFormelY = function() {
         return this.yFormel;
     };
 
     // set the min of t
-    BezierCurve.prototype.setMinT = function(value) {
+    SimpleBezierCurve.prototype.setMinT = function(value) {
         if(value<this.maxT)
             this.minT = value;
     };
 
     // set the max of t
-    BezierCurve.prototype.setMaxT = function(value) {
+    SimpleBezierCurve.prototype.setMaxT = function(value) {
         if(value>this.minT)
             this.maxT = value;
     };
 
     // get the current min of t
-    BezierCurve.prototype.getMinT = function() {
+    SimpleBezierCurve.prototype.getMinT = function() {
         return this.minT;
     };
 
     // get the current max of t
-    BezierCurve.prototype.getMaxT = function() {
+    SimpleBezierCurve.prototype.getMaxT = function() {
         return this.maxT;
     };
 
     // set the segments
-    BezierCurve.prototype.setSegments = function(value) {
+    SimpleBezierCurve.prototype.setSegments = function(value) {
         this.segments = value;
     };
 
     // get the current segments
-    BezierCurve.prototype.getSegments = function() {
+    SimpleBezierCurve.prototype.getSegments = function() {
         return this.segments;
     };
 
     // set the ticks
-    BezierCurve.prototype.setTicks = function(value) {
+    SimpleBezierCurve.prototype.setTicks = function(value) {
         this.ticks = value;
     };
 
     // get the ticks
-    BezierCurve.prototype.getTicks = function() {
+    SimpleBezierCurve.prototype.getTicks = function() {
         return this.ticks;
     };
 
-    // this module only exports the constructor for BezierCurve objects
-    return BezierCurve;
+    // this module only exports the constructor for StraightLine objects
+    return SimpleBezierCurve;
 
 }));
 // define
+
