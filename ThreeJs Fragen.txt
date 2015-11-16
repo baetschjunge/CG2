@@ -1,0 +1,7 @@
+Fragen:
+1.Wie fügt man dem Render einen Shader hinzu, so dass man die Kanten von Objekten sieht,
+  wie bei diesem Beispiel:
+  http://threejs.org/docs/index.html#Reference/Extras.Geometries/OctahedronGeometry
+2.
+3.
+
