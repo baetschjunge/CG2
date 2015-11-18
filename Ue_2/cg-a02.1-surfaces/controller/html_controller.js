@@ -11,8 +11,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "BufferGeometry", "random", "band"],
-    (function($,BufferGeometry, Random, Band) {
+define(["jquery", "BufferGeometry", "random", "band","parametric"],
+    (function($,BufferGeometry, Random, Band,Parametric) {
         "use strict";
 
         /*
@@ -24,16 +24,26 @@ define(["jquery", "BufferGeometry", "random", "band"],
 
             $("#random").show();
             $("#band").hide();
+			$("#parametric").hide();
 
             $("#btnRandom").click( (function() {
                 $("#random").show();
                 $("#band").hide();
+				$("#parametric").hide();
             }));
 
             $("#btnBand").click( (function() {
                 $("#random").hide();
+				$("#parametric").hide();
                 $("#band").show();
             }));
+			
+			$("#btnParametric").click( (function() {
+                $("#random").hide();
+                $("#band").hide();
+				$("#parametric").show();
+			}));
+			
 
             $("#btnNewRandom").click( (function() {
 
@@ -62,6 +72,35 @@ define(["jquery", "BufferGeometry", "random", "band"],
                 bufferGeometryBand.addAttribute("color", band.getColors());
 
                 scene.addBufferGeometry(bufferGeometryBand);
+            }));
+			
+			$("#btnNewParametric").click( (function() {
+
+                var config = {
+                    segments : parseInt($("#numSegmentsPara").attr("value")),
+                    umin : parseInt($("#numUmin").attr("value")),
+                    umax : parseInt($("#numUmax").attr("value")),
+                    vmin : parseInt($("#numVmin").attr("value")),
+                    vmax : parseInt($("#numVmax").attr("value"))
+                };
+				
+				var posFunc = function(u,v) {
+                    var x = eval($("#x").attr("value"));
+                    var y = eval($("#y").attr("value"));
+                    var z = eval($("#z").attr("value"));
+                    return [x,y,z];
+                };
+
+
+              var parametric = new Parametric(posFunc, config);
+			  
+			  var bufferGeometryParametric = new BufferGeometry();
+                bufferGeometryParametric.addAttribute("position", parametric.getPositions());
+                bufferGeometryParametric.addAttribute("color", parametric.getColors());
+
+                scene.addBufferGeometry(bufferGeometryParametric);
+                
+
             }));
 
 
