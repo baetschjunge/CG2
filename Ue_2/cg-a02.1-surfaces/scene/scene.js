@@ -77,7 +77,13 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band","parametr
                 scope.renderer.render(scope.scene, scope.camera);
 
             };
+			
+			this.getScope = function() {
+                return this;
+            };
         };
+		
+		
 
 
         // this module only exports the constructor for Scene objects

@@ -95,14 +95,94 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
               var parametric = new Parametric(posFunc, config);
 			  
 			  var bufferGeometryParametric = new BufferGeometry();
-                bufferGeometryParametric.addAttribute("position", parametric.getPositions());
-                bufferGeometryParametric.addAttribute("color", parametric.getColors());
+                  bufferGeometryParametric.addAttribute("position", parametric.getPositions());
+                  bufferGeometryParametric.addAttribute("color", parametric.getColors());
 
                 scene.addBufferGeometry(bufferGeometryParametric);
                 
 
             }));
+			
+			$("#btnNewParametric2").click( (function() {
 
+
+                var config = {
+                    segments : parseInt($("#numSegmentsPara").attr("value")),
+                    umin : -Math.PI,
+                    umax : Math.PI,
+                    vmin : -Math.PI,
+                    vmax : Math.PI
+                };
+				
+				var posFunc = function(u,v) {
+                    var x = eval("Math.cos(u)*200");
+                    var y = eval("Math.cos(v)*200");
+                    var z = eval("Math.cos(u+v)*200");
+                    return [x,y,z];
+                };
+
+
+              var parametric = new Parametric(posFunc, config);
+			  
+			  var bufferGeometryParametric = new BufferGeometry();
+                  bufferGeometryParametric.addAttribute("position", parametric.getPositions());
+                  bufferGeometryParametric.addAttribute("color", parametric.getColors());
+
+                scene.addBufferGeometry(bufferGeometryParametric);
+                
+
+            }));
+			
+			$("#btnNewParametric3").click( (function() {
+
+                var config = {
+                    segments : parseInt($("#numSegmentsPara").attr("value")),
+                    umin : 0,
+                    umax : 2*Math.PI,
+                    vmin : 0,
+                    vmax : 2*Math.PI
+                };
+				
+				var posFunc = function(u,v) {
+                    var x = eval("((5+2*Math.cos(v))*Math.cos(u))*50");
+                    var y = eval("((5+2*Math.cos(v))*Math.sin(u))*50");
+                    var z = eval("2*Math.sin(v)*50");
+                    return [x,y,z];
+                };
+
+
+              var parametric = new Parametric(posFunc, config);
+			  
+			  var bufferGeometryParametric = new BufferGeometry();
+                  bufferGeometryParametric.addAttribute("position", parametric.getPositions());
+                  bufferGeometryParametric.addAttribute("color", parametric.getColors());
+
+                scene.addBufferGeometry(bufferGeometryParametric);
+                
+
+            }));
+			
+			$("#CheckBoxRotation").click( (function() {
+
+			    var checked = $("#CheckBoxRotation").attr("checked");
+				var scope = scene.getScope();	
+				var render = function () {
+						
+						if(document.getElementById("CheckBoxRotation").checked==true)
+						requestAnimationFrame( render ); 
+						scope.currentMesh.rotation.x += 0.01; 
+						scope.currentMesh.rotation.y += 0.01; 
+						
+						//	scene.renderer.render(scene, camera);
+
+				};
+					
+				if(checked){
+					render();
+				}
+									
+            }));
+			
 
         };
 

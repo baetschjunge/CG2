@@ -44,7 +44,6 @@ define(["three"],
 
 					// IMPORTANT: push each float value separately!
 					var index = ( j + i * segments ) * 3;
-					//console.log(index);
 					
 					this.positions[ index ]     = coords[0];
 					this.positions[ index + 1 ] = coords[1];
