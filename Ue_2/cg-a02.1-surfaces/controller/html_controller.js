@@ -24,24 +24,36 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
 
             $("#random").show();
             $("#band").hide();
+			$("#ellipsoid").hide();
 			$("#parametric").hide();
 
             $("#btnRandom").click( (function() {
-                $("#random").show();
                 $("#band").hide();
 				$("#parametric").hide();
+				$("#ellipsoid").hide();
+				$("#random").show();
             }));
 
             $("#btnBand").click( (function() {
                 $("#random").hide();
 				$("#parametric").hide();
+				$("#ellipsoid").hide();
                 $("#band").show();
+				
             }));
+			
+			$("#btnEllipsoid").click( (function() {
+                $("#random").hide();
+                $("#band").hide();
+				$("#parametric").hide();
+				$("#ellipsoid").show();
+			}));
 			
 			$("#btnParametric").click( (function() {
                 $("#random").hide();
                 $("#band").hide();
 				$("#parametric").show();
+				$("#ellipsoid").hide();
 			}));
 			
 
@@ -72,6 +84,40 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
                 bufferGeometryBand.addAttribute("color", band.getColors());
 
                 scene.addBufferGeometry(bufferGeometryBand);
+            }));
+			
+			$("#btnNewEllipsoid").click( (function() {
+
+
+                var config = {
+                    segments : parseInt($("#numSegmentsEllipsoid").attr("value")),
+                    umin : 0,
+                    umax : 2*Math.PI,
+                    vmin : 0,
+                    vmax : Math.PI
+                };
+				
+				var a = parseString($("#constA").attr("value"));
+				var b = parseString($("#constB").attr("value"));
+				var c = parseString($("#constC").attr("value"));
+				
+				var posFunc = function(u,v) {
+                    var x = eval(a+"*Math.cos(u)*Math.sin(v)*100");
+                    var y = eval(b+"*Math.sin(u)*Math.sin(v)*100");
+                    var z = eval(c+"*Math.cos(v)*100");
+                    return [x,y,z];
+                };
+
+
+              var parametric = new Parametric(posFunc, config);
+			  
+			  var bufferGeometryParametric = new BufferGeometry();
+                  bufferGeometryParametric.addAttribute("position", parametric.getPositions());
+                  bufferGeometryParametric.addAttribute("color", parametric.getColors());
+
+                scene.addBufferGeometry(bufferGeometryParametric);
+                
+
             }));
 			
 			$("#btnNewParametric").click( (function() {

@@ -64,6 +64,29 @@
             </tr>
 			
         </table>
+		   <table id="ellipsoid">
+            <tr>
+                <td><button id="btnNewEllipsoid"   type="button">Create Ellipsoid</button></td>
+            </tr>
+			 <tr>
+                <td>Konstante a:</td>
+                <td><input id="constA" class="objParam" type="number" min="1" max="1000" value="2">
+            </tr>
+			 <tr>
+                <td>Konstante b:</td>
+                <td><input id="constB" class="objParam" type="number" min="1" max="1000" value="3">
+            </tr>
+			 <tr>
+                <td>Konstante c:</td>
+                <td><input id="constC" class="objParam" type="number" min="1" max="1000" value="4">
+            </tr>
+			 <tr>
+                <td>Segmente:</td>
+                <td><input id="numSegmentsEllipsoid" class="objParam" type="number" min="1" max="1000" value="100">
+            </tr>
+			
+        </table>
+		
 		<table id="parametric">
 			<tr>
                 <td>x:</td>
@@ -99,8 +122,7 @@
                 <td><input id="numVmax" class="objParam" type="number"  max="10000" value="2">
             </tr>
 			<tr> 
-				<td>Rotation</td>
-				<td><input id="CheckBoxRotation" type="checkbox"> </input></td>
+				
 			</tr>
 			<tr> 
 				<td><button id="btnNewParametric" type="button">Create Parametric 1</button></td>
@@ -109,6 +131,8 @@
 			</tr>
 			
 		</table>
+		Rotation: <input id="CheckBoxRotation" type="checkbox"> </input>
+
 
     </div>
 
