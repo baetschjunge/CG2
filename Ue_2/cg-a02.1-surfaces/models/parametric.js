@@ -1,7 +1,7 @@
 /*
  * JavaScript / Canvas teaching framwork
  * (C)opyright Kristian Hildebrand, khildebrand@beuth-hochschule.de
- *
+ * changes by Benjamin Bleckmann, Josef Strunk
  * Module: ParametricSurface
  *
  */
@@ -25,6 +25,7 @@ define(["three"],
 			
             this.positions = new Float32Array(segments * segments * 3);
             this.colors = new Float32Array(segments * segments * 3);
+			this.indices = new Uint32Array(segments * segments * 3);
 			
 			var color = new THREE.Color();
 
@@ -54,7 +55,33 @@ define(["three"],
 					this.colors[ index ]     = color.r;
 					this.colors[ index + 1 ] = color.g;
 					this.colors[ index + 2 ] = color.b;
-				
+					
+					// current index into the vertex buffers
+					var vindex = i*(segments+1) + j;
+					
+					// index inside the
+					var iindex = i*segments + j;
+					
+					// indices for drawing two triangles per patch
+                    if(i<=segments && j<=segments) {
+                        var ii = iindex*6;
+						if(ii==0){
+                        this.indices[ii] = vindex;
+                        this.indices[ii++] = vindex+(segments+1);
+                        this.indices[ii++] = vindex+(segments+1)+1;
+                        this.indices[ii++] = vindex+(segments+1)+1;
+                        this.indices[ii++] = vindex+1;
+                        this.indices[ii++] = vindex;
+						}
+						else{
+						this.indices[ii++] = vindex;
+                        this.indices[ii++] = vindex+(segments+1);
+                        this.indices[ii++] = vindex+(segments+1)+1;
+                        this.indices[ii++] = vindex+(segments+1)+1;
+                        this.indices[ii++] = vindex+1;
+                        this.indices[ii++] = vindex;
+						}
+                    };
 				}
             };
 			
@@ -65,6 +92,11 @@ define(["three"],
             this.getColors = function() {
                 return this.colors;
             };
+			
+			this.getIndices = function() {
+				return this.indices;
+				
+			};
 
         };
 		

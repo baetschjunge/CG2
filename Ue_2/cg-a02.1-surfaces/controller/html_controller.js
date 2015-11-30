@@ -1,7 +1,7 @@
 /*
- * JavaScript / Canvas teaching framwork 
+ * JavaScript / Canvas teaching framework 
  * (C)opyright Kristian Hildebrand, khildebrand@beuth-hochschule.de
- *
+ * changes by Benjamin Bleckmann, Josef Strunk
  * Module: html_controller
  *
  * Defines callback functions for communicating with various 
@@ -22,10 +22,10 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
         var HtmlController = function(scene) {
 
 
-            $("#random").show();
+            $("#random").hide();
             $("#band").hide();
 			$("#ellipsoid").hide();
-			$("#parametric").hide();
+			$("#parametric").show();
 
             $("#btnRandom").click( (function() {
                 $("#band").hide();
@@ -97,14 +97,14 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
                     vmax : Math.PI
                 };
 				
-				var a = parseString($("#constA").attr("value"));
-				var b = parseString($("#constB").attr("value"));
-				var c = parseString($("#constC").attr("value"));
+				var a = ($("#constA").attr("value"));
+				var b = ($("#constB").attr("value"));
+				var c = ($("#constC").attr("value"));
 				
 				var posFunc = function(u,v) {
-                    var x = eval(a+"*Math.cos(u)*Math.sin(v)*100");
-                    var y = eval(b+"*Math.sin(u)*Math.sin(v)*100");
-                    var z = eval(c+"*Math.cos(v)*100");
+                    var x = eval(a+"*Math.cos(u)*Math.sin(v)*125");
+                    var y = eval(b+"*Math.sin(u)*Math.sin(v)*125");
+                    var z = eval(c+"*Math.cos(v)*125");
                     return [x,y,z];
                 };
 
@@ -114,6 +114,7 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
 			  var bufferGeometryParametric = new BufferGeometry();
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
+				  bufferGeometryParametric.setIndex(parametric.getIndices());
 
                 scene.addBufferGeometry(bufferGeometryParametric);
                 
@@ -143,6 +144,7 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
 			  var bufferGeometryParametric = new BufferGeometry();
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
+				  bufferGeometryParametric.setIndex(parametric.getIndices());
 
                 scene.addBufferGeometry(bufferGeometryParametric);
                 
@@ -173,6 +175,7 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
 			  var bufferGeometryParametric = new BufferGeometry();
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
+				  bufferGeometryParametric.setIndex(parametric.getIndices());
 
                 scene.addBufferGeometry(bufferGeometryParametric);
                 
@@ -202,6 +205,7 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
 			  var bufferGeometryParametric = new BufferGeometry();
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
+				  bufferGeometryParametric.setIndex(parametric.getIndices());
 
                 scene.addBufferGeometry(bufferGeometryParametric);
                 

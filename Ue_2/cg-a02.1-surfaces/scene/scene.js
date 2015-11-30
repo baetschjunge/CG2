@@ -1,7 +1,7 @@
 /*
  * JavaScript / Canvas teaching framwork 
  * (C)opyright Kristian Hildebrand, khildebrand@beuth-hochschule.de
- *
+ * changes by Benjamin Bleckmann, Josef Strunk
  * Module: scene
  *
  * A Scene is a depth-sorted collection of things to be drawn, 
