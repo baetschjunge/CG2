@@ -60,7 +60,14 @@ define(["three"],
             this.getMesh = function() {
                 return this.mesh;
             }
+            
+            this.getMaterial = function() {
+	            return this.material;
+            }
 			
+			this.setWireframe = function(wireframe) {
+				this.material.wireframe = wireframe;
+			}
         };
 
         return BufferGeometry;
