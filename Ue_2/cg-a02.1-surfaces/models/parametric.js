@@ -67,17 +67,17 @@ define(["three"],
                         var ii = iindex*6;
 						if(ii==0){
                         this.indices[ii] = vindex;
-                        this.indices[ii++] = vindex+(segments+1);
-                        this.indices[ii++] = vindex+(segments+1)+1;
-                        this.indices[ii++] = vindex+(segments+1)+1;
+                        this.indices[ii++] = vindex+(segments);
+                        this.indices[ii++] = vindex+(segments)+1;
+                        this.indices[ii++] = vindex+(segments)+1;
                         this.indices[ii++] = vindex+1;
                         this.indices[ii++] = vindex;
 						}
 						else{
 						this.indices[ii++] = vindex;
+                        this.indices[ii++] = vindex+(segments);
                         this.indices[ii++] = vindex+(segments+1);
-                        this.indices[ii++] = vindex+(segments+1)+1;
-                        this.indices[ii++] = vindex+(segments+1)+1;
+                        this.indices[ii++] = vindex+(segments+1);
                         this.indices[ii++] = vindex+1;
                         this.indices[ii++] = vindex;
 						}

@@ -33,7 +33,7 @@ define(["three"],
             } );
 			*/
 			this.material = new THREE.MeshBasicMaterial( {
-                color: 0x000,
+                color: 0xf00,
 				side: THREE.DoubleSide,
 				wireframe: true
             } );
@@ -46,6 +46,7 @@ define(["three"],
              * @param name vertex attributes name, e.g. position, color, normal
              * @param buffer
              */
+			 
             this.addAttribute = function(name, buffer) {
                 this.geometry.addAttribute( name, new THREE.BufferAttribute( buffer, 3 ) );
                 this.geometry.computeBoundingSphere();
@@ -59,6 +60,7 @@ define(["three"],
             this.getMesh = function() {
                 return this.mesh;
             }
+			
         };
 
         return BufferGeometry;
