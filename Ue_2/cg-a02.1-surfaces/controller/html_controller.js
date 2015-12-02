@@ -26,9 +26,6 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
             $("#band").hide();
 			$("#ellipsoid").hide();
 			$("#parametric").show();
-			$("#CheckBoxWireframe").hide();
-			$("#CheckBoxSolid").hide();
-			$("#CheckBoxPoints").hide();
 
             $("#btnRandom").click( (function() {
                 $("#band").hide();
@@ -57,9 +54,6 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
                 $("#band").hide();
 				$("#parametric").show();
 				$("#ellipsoid").hide();
-				$("#CheckBoxWireframe").show();
-				$("#CheckBoxSolid").show();
-				$("#CheckBoxPoints").show();
 			}));
 			
 
@@ -247,9 +241,10 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
 			    var scope = scene.getScope();
 			    
 					if (checked) {
-						scope.currentMesh.setWireframe(true);
+						scope.currentMesh.material.wireframe = true;
 					} else {
-						scope.currentMesh.setWireframe(false);
+					
+						scope.currentMesh.material.wireframe = false;
 					}
 									
             }));
@@ -278,6 +273,65 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
 
 			// pointscheckbox
             $("#CheckBoxPoints").click( (function() {
+
+			    var checked = $("#CheckBoxPoints").attr("checked");
+				var scope = scene.getScope();	
+				var render = function () {
+						
+						if(document.getElementById("CheckBoxPoints").checked==true)
+						requestAnimationFrame( render ); 
+						scope.currentMesh.rotation.x += 0.04; 
+						scope.currentMesh.rotation.y += 0.04; 
+						
+						//	scene.renderer.render(scene, camera);
+
+				};
+					
+				if(checked){
+					render();
+				}
+									
+            }));
+			
+			// wireframe checkbox
+			$("#CheckBoxWireframeElli").click( (function() {
+
+			    var checked = $("#CheckBoxWireframe").attr("checked");
+			    var scope = scene.getScope();
+			    
+					if (checked) {
+						scope.currentMesh.material.wireframe = true;
+					} else {
+					
+						scope.currentMesh.material.wireframe = false;
+					}
+									
+            }));
+            
+            //solidcheckbox
+            $("#CheckBoxSolidElli").click( (function() {
+
+			    var checked = $("#CheckBoxSolid").attr("checked");
+				var scope = scene.getScope();	
+				var render = function () {
+						
+						if(document.getElementById("CheckBoxSolid").checked==true)
+						requestAnimationFrame( render ); 
+						scope.currentMesh.rotation.x += 0.04; 
+						scope.currentMesh.rotation.y += 0.04; 
+						
+						//	scene.renderer.render(scene, camera);
+
+				};
+					
+				if(checked){
+					render();
+				}
+									
+            }));
+
+			// pointscheckbox
+            $("#CheckBoxPointsElli").click( (function() {
 
 			    var checked = $("#CheckBoxPoints").attr("checked");
 				var scope = scene.getScope();	

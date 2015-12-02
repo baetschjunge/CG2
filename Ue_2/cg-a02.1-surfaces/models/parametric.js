@@ -57,7 +57,7 @@ define(["three"],
 					this.colors[ index + 2 ] = color.b;
 					
 					// current index into the vertex buffers
-					var vindex = i*(segments+1) + j;
+					var vindex = i*(segments) + j;
 					
 					// index inside the
 					var iindex = i*segments + j;
