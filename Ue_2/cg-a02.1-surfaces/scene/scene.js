@@ -12,8 +12,8 @@
 
 
 /* requireJS module definition */
-define(["three", "util", "shaders", "BufferGeometry", "random", "band","parametric"],
-    (function(THREE, util, shaders, BufferGeometry, Random, Band,Parametric) {
+define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "random", "band","parametric"],
+    (function(THREE, util, shaders, BufferGeometry, BufferGeometryPoints, Random, Band,Parametric) {
 
         "use strict";
 
@@ -63,6 +63,13 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band","parametr
             this.addBufferGeometry = function(bufferGeometry) {
 
                 scope.currentMesh = bufferGeometry.getMesh();
+                scope.scene.add( scope.currentMesh );
+
+            }
+			
+			this.addBufferGeometryPoints = function(bufferGeometryPoints) {
+
+                scope.currentMesh = bufferGeometryPoints.getMesh();
                 scope.scene.add( scope.currentMesh );
 
             }

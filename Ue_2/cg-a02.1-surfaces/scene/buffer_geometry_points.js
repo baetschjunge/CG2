@@ -21,26 +21,24 @@ define(["three"],
 
         "use strict";
 
-        var BufferGeometry = function () {
+        var BufferGeometryPoints = function () {
 
             this.mesh     = undefined;
             this.geometry = new THREE.BufferGeometry();
 			
-			/*
             this.material = new THREE.PointsMaterial( {
                 color: 0xaaaaaa,
                 size: 10,
 				vertexColors: THREE.VertexColors
             } );
-			*/
 			
-			
+			/*
 			this.material = new THREE.MeshBasicMaterial( {
-                color: 0xf000,
+                color: 0xf00,
 				side: THREE.DoubleSide
 				//wireframe: true
             } );
-			
+			*/
 			
             /**
              * Adds a vertex attribute, we assume each element has three components, e.g.
@@ -54,12 +52,10 @@ define(["three"],
             this.addAttribute = function(name, buffer) {
                 this.geometry.addAttribute( name, new THREE.BufferAttribute( buffer, 3 ) );
                 this.geometry.computeBoundingSphere();
+				
+				this.mesh = new THREE.Points( this.geometry, this.material );
             }
 			
-			this.setIndex = function(buffer) {
-				this.geometry.setIndex( new THREE.BufferAttribute( buffer, 1 ) );
-				this.mesh = new THREE.Mesh( this.geometry, this.material );
-			}
 
             this.getMesh = function() {
                 return this.mesh;
@@ -74,5 +70,5 @@ define(["three"],
 			}
         };
 
-        return BufferGeometry;
+        return BufferGeometryPoints;
     }));

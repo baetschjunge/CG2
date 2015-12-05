@@ -11,8 +11,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "BufferGeometry", "random", "band","parametric"],
-    (function($,BufferGeometry, Random, Band,Parametric) {
+define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","parametric"],
+    (function($,BufferGeometry,BufferGeometryPoints, Random, Band,Parametric) {
         "use strict";
 
         /*
@@ -61,11 +61,11 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
 
                 var numPoints = parseInt($("#numItems").attr("value"));
                 var random = new Random(numPoints);
-                var bufferGeometryRandom = new BufferGeometry();
+                var bufferGeometryRandom = new BufferGeometryPoints();
                 bufferGeometryRandom.addAttribute("position", random.getPositions());
                 bufferGeometryRandom.addAttribute("color", random.getColors());
 
-                scene.addBufferGeometry(bufferGeometryRandom);
+                scene.addBufferGeometryPoints(bufferGeometryRandom);
             }));
 
 
@@ -79,10 +79,11 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
 
 
                 var band = new Band(config);
-                var bufferGeometryBand = new BufferGeometry();
+                var bufferGeometryBand = new BufferGeometryPoints();
+				
                 bufferGeometryBand.addAttribute("position", band.getPositions());
                 bufferGeometryBand.addAttribute("color", band.getColors());
-
+				console.log(bufferGeometryBand.getMesh());
                 scene.addBufferGeometry(bufferGeometryBand);
             }));
 			
@@ -145,7 +146,7 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
 				  bufferGeometryParametric.setIndex(parametric.getIndices());
-
+				  
                 scene.addBufferGeometry(bufferGeometryParametric);
                 
 
@@ -176,7 +177,7 @@ define(["jquery", "BufferGeometry", "random", "band","parametric"],
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
 				  bufferGeometryParametric.setIndex(parametric.getIndices());
-
+				  console.log(parametric.getIndices());
                 scene.addBufferGeometry(bufferGeometryParametric);
                 
 

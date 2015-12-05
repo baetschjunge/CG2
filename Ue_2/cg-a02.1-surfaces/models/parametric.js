@@ -23,9 +23,9 @@ define(["three"],
 			
 			var positionFunc = posFunc;
 			
-            this.positions = new Float32Array(segments * segments * 3);
-            this.colors = new Float32Array(segments * segments * 3);
-			this.indices = new Uint32Array(segments * segments * 3);
+            this.positions = new Float32Array((segments+1) * (segments+1) * 3);
+            this.colors = new Float32Array((segments+1) * (segments+1) * 3);
+			this.indices = new Uint32Array(segments + segments * 2 * 3);
 			
 			var color = new THREE.Color();
 
@@ -33,8 +33,8 @@ define(["three"],
 			var vSteps = (vmax-vmin)/segments;
 
 			
-			for(var i=0; i<segments; i++) {
-				for(var j=0; j<segments; j++) {
+			for(var i=0; i<segments+1; i++) {
+				for(var j=0; j<segments+1; j++) {
 			
 					// compute u and v
 					var u = umin + i * uSteps;
@@ -44,7 +44,7 @@ define(["three"],
 					var coords = positionFunc(u,v);
 
 					// IMPORTANT: push each float value separately!
-					var index = ( j + i * segments ) * 3;
+					var index = ( j + i * (segments+1) ) * 3;
 					
 					this.positions[ index ]     = coords[0];
 					this.positions[ index + 1 ] = coords[1];
@@ -57,30 +57,22 @@ define(["three"],
 					this.colors[ index + 2 ] = color.b;
 					
 					// current index into the vertex buffers
-					var vindex = i*(segments) + j;
+					var vindex = i*(segments+1) + j;
 					
 					// index inside the
-					var iindex = i*segments + j;
+					var iindex = (i*(segments+1) + j)*6;
 					
 					// indices for drawing two triangles per patch
                     if(i<=segments && j<=segments) {
-                        var ii = iindex*6;
-						if(ii==0){
-                        this.indices[ii] = vindex;
-                        this.indices[ii++] = vindex+(segments);
-                        this.indices[ii++] = vindex+(segments)+1;
-                        this.indices[ii++] = vindex+(segments)+1;
-                        this.indices[ii++] = vindex+1;
-                        this.indices[ii++] = vindex;
-						}
-						else{
-						this.indices[ii++] = vindex;
-                        this.indices[ii++] = vindex+(segments);
-                        this.indices[ii++] = vindex+(segments+1);
-                        this.indices[ii++] = vindex+(segments+1);
-                        this.indices[ii++] = vindex+1;
-                        this.indices[ii++] = vindex;
-						}
+                        var ii = iindex;
+						
+						this.indices[ii]   = vindex;
+                        this.indices[ii+1] = vindex+(segments+1);
+                        this.indices[ii+2] = vindex+(segments+1)+1;
+                        this.indices[ii+3] = vindex+(segments+1)+1;
+                        this.indices[ii+4] = vindex+1;
+                        this.indices[ii+5] = vindex;
+						
                     };
 				}
             };

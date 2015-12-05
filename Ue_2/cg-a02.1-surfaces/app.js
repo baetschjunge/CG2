@@ -28,6 +28,7 @@ requirejs.config({
         "util"  : "./utils/util",
         "shaders" : "./shaders",
         "BufferGeometry" : "./scene/buffer_geometry",
+		"BufferGeometryPoints" : "./scene/buffer_geometry_points",
         "HtmlController": "./controller/html_controller"
 
     },
