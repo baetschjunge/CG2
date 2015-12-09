@@ -1,6 +1,7 @@
 /*
  * JavaScript / Canvas teaching framwork
  * (C)opyright Kristian Hildebrand, khildebrand@beuth-hochschule.de
+ * changed by Benjamin Bleckmann, Josef Strunk
  *
  * Module: BufferGeometry
  *

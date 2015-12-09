@@ -25,7 +25,7 @@ define(["three"],
 			
             this.positions = new Float32Array((segments+1) * (segments+1) * 3);
             this.colors = new Float32Array((segments+1) * (segments+1) * 3);
-			this.indices = new Uint32Array(segments + segments * 2 * 3);
+			this.indices = new Uint32Array(segments * segments * 2 * 3);
 			
 			var color = new THREE.Color();
 
@@ -86,8 +86,7 @@ define(["three"],
             };
 			
 			this.getIndices = function() {
-				return this.indices;
-				
+				return this.indices;	
 			};
 
         };

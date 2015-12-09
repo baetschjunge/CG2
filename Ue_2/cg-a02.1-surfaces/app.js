@@ -2,6 +2,7 @@
  *
  * Module app: CG2 Aufgabe 2
  * (C)opyright Kristian Hildebrand, khildebrand@beuth-hochschule.de
+ * changed by Benjamin Bleckmann, Josef Strunk
  */
 
 

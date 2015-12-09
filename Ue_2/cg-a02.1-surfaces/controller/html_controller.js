@@ -177,7 +177,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
 				  bufferGeometryParametric.setIndex(parametric.getIndices());
-				  console.log(parametric.getIndices());
+				  console.log(parametric.getIndices().length);
                 scene.addBufferGeometry(bufferGeometryParametric);
                 
 
@@ -249,10 +249,23 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 					}
 									
             }));
+			
+			// wireframe checkbox ellipsoid
+			$("#CheckBoxWireframeElli").click( (function() {
+				var checked = $("#CheckBoxWireframeElli").attr("checked");
+			    var scope = scene.getScope();
+			    
+					if (checked) {
+						scope.currentMesh.material.wireframe = true;
+					} else {
+					
+						scope.currentMesh.material.wireframe = false;
+					}
+            }));
             
             //solidcheckbox
             $("#CheckBoxSolid").click( (function() {
-
+				
 			    var checked = $("#CheckBoxSolid").attr("checked");
 				var scope = scene.getScope();	
 				var render = function () {
@@ -297,7 +310,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 			// wireframe checkbox
 			$("#CheckBoxWireframeElli").click( (function() {
 
-			    var checked = $("#CheckBoxWireframe").attr("checked");
+			    var checked = $("#CheckBoxWireframeElli").attr("checked");
 			    var scope = scene.getScope();
 			    
 					if (checked) {
