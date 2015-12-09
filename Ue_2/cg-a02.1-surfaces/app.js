@@ -30,7 +30,8 @@ requirejs.config({
         "shaders" : "./shaders",
         "BufferGeometry" : "./scene/buffer_geometry",
 		"BufferGeometryPoints" : "./scene/buffer_geometry_points",
-        "HtmlController": "./controller/html_controller"
+        "HtmlController": "./controller/html_controller",
+		"robot": "./models/robot"
 
     },
     shim: {

@@ -18,7 +18,7 @@ define(["three"],
 			var umin = config.umin;
 			var umax = config.umax;
 			var vmin = config.vmin;
-			var vmax = config.vmax
+			var vmax = config.vmax;
 			var segments = config.segments;
 			
 			var positionFunc = posFunc;

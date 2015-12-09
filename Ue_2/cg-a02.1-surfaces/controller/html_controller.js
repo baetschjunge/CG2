@@ -11,8 +11,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","parametric"],
-    (function($,BufferGeometry,BufferGeometryPoints, Random, Band,Parametric) {
+define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","parametric","robot"],
+    (function($,BufferGeometry,BufferGeometryPoints, Random, Band,Parametric,Robot) {
         "use strict";
 
         /*
@@ -363,6 +363,14 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				if(checked){
 					render();
 				}
+									
+            }));
+			
+			$("#newRobot").click( (function() {
+
+				var robot = new Robot();
+				scene.addMesh(robot.getMesh());
+				console.log(robot);
 									
             }));
         };
