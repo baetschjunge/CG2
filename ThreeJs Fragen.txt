@@ -1,15 +1,7 @@
 Fragen:
-1.
-Wie fŸgt man dem Render einen Shader hinzu, so dass man die Kanten von Objekten sieht,
+1.Wie fügt man dem Render einen Shader hinzu, so dass man die Kanten von Objekten sieht,
   wie bei diesem Beispiel:
   http://threejs.org/docs/index.html#Reference/Extras.Geometries/OctahedronGeometry
-
 2.
-Was versteht man unter ÒdirtyÓ flags und wie benutzt man sie? (Geometry.dynamic)
-
 3.
-Warum werden manche Properties (z.B. .linecap, .linejoin) vom WebGL Renderer ignoriert, aber vom Canvas Renderer nicht? (LineBasicMaterial)
-Kann dies umgangen werden? Wenn ja, Wie?
 
-4.
-Warum funktioniert Òflipping texturesÓ nicht bei komprimierten Texturen, warum kšnnen von komprimierten Texturen keine Mipmaps erstellt werden? (CompressedTexture)

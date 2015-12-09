@@ -13,7 +13,7 @@
 
 /* requireJS module definition */
 define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil","ParametricCurve","BezierCurve"],
-    (function($, Line, Circle, Point, KdTree, Util, KdUtil,ParametricCurve,BezierCurve) {
+    (function($, Line, Circle, Point, KdTree, Util, KdUtil, ParametricCurve,BezierCurve) {
         "use strict";
 
         /*
