@@ -44,8 +44,12 @@ define(["three"],
 			var tailMidJoint4Size = [20,15,15];
 			var tailPart5Size = [1,10,200,20];
 			
-			
-			
+			// claws
+			var clawJointSize =[15,15,15];
+			var clawPartSize = [20,10,100,10];
+			var clawJointMidSize = [25,15,15];
+			var clawPart2Size = [20,1,100,10];
+			var clawPart3Size = [10,1,75,10];
 			
 			this.root = new THREE.Object3D();
 			
@@ -142,8 +146,6 @@ define(["three"],
 			this.footLeftCenter.translateY(-footSize[2]/2+legJointMid[0]/2);
 			this.footLeftCenter.translateZ(-tighSize[2]*1/3);
 			
-			
-			
 			// leg left front
 			this.legJointLeft3 = new THREE.Object3D();
 			this.legJointLeft3.translateZ(-torsoSize[2]/2);
@@ -199,10 +201,50 @@ define(["three"],
 			this.tailPart5.translateY(-tailPart5Size[2]/3);
 			
 			
+			// claws right
+			this.clawJointRight = new THREE.Object3D();
+			this.clawJointRight.translateX(+torsoSize[0]/2);
+			this.clawJointRight.translateZ(+torsoSize[2]*3/6);
+			
+			this.clawPartRight = new THREE.Object3D();
+			this.clawPartRight.translateX(+clawPartSize[0]*2);
+			this.clawPartRight.translateZ(+clawPartSize[0]*2);
+			
+			this.clawJointMidRight = new THREE.Object3D();
+			this.clawJointMidRight.translateX(+clawPartSize[2]/2-clawJointMidSize[0]/2);
+			this.clawJointMidRight.translateZ(+clawPartSize[2]/2-clawJointMidSize[0]/2);
+			
+			this.clawPart2Right = new THREE.Object3D();
+			this.clawPart2Right.translateX(+clawPart2Size[2]/2);
+			
+			this.clawPart3Right = new THREE.Object3D();
+			this.clawPart3Right.translateX(+clawJointMidSize[0]);
+			this.clawPart3Right.translateZ(-clawJointMidSize[0]);
+
+
+			
+			// claws left
+			this.clawJointLeft = new THREE.Object3D();
+			this.clawJointLeft.translateX(+torsoSize[0]/2);
+			this.clawJointLeft.translateZ(-torsoSize[2]*3/6);
+			
+			this.clawPartLeft = new THREE.Object3D();
+			this.clawPartLeft.translateX(+clawPartSize[0]*2);
+			this.clawPartLeft.translateZ(-clawPartSize[0]*2);
+			
+			this.clawJointMidLeft = new THREE.Object3D();
+			this.clawJointMidLeft.translateX(+clawPartSize[2]/2-clawJointMidSize[0]/2);
+			this.clawJointMidLeft.translateZ(-clawPartSize[2]/2+clawJointMidSize[0]/2);
+
+			this.clawPart2Left = new THREE.Object3D();
+			this.clawPart2Left.translateX(+clawPart2Size[2]/2);
+			
+			this.clawPart3Left = new THREE.Object3D();
+			this.clawPart3Left.translateX(+clawJointMidSize[0]);
+			this.clawPart3Left.translateZ(+clawJointMidSize[0]);
 			
 			
-			
-			
+
 			// torso
 			this.torso = new THREE.Object3D();
 			// head
@@ -259,6 +301,19 @@ define(["three"],
 			this.tailPart4.add(this.tailMidJoint4);
 			this.tailMidJoint4.add(this.tailPart5);
 			
+			// claws right
+			this.torso.add(this.clawJointRight);
+			this.clawJointRight.add(this.clawPartRight);
+			this.clawPartRight.add(this.clawJointMidRight);
+			this.clawJointMidRight.add(this.clawPart2Right);
+			this.clawJointMidRight.add(this.clawPart3Right);
+			
+			// claws left
+			this.torso.add(this.clawJointLeft);
+			this.clawJointLeft.add(this.clawPartLeft);
+			this.clawPartLeft.add(this.clawJointMidLeft);
+			this.clawJointMidLeft.add(this.clawPart2Left);
+			this.clawJointMidLeft.add(this.clawPart3Left);
 			
 			
 			// this is head, torso skin
@@ -303,8 +358,6 @@ define(["three"],
 			// leg left back
 			this.legJointLeftSkin = new THREE.Mesh(new THREE.SphereGeometry(legJointSize[0],legJointSize[1],legJointSize[2]),
 											new THREE.MeshNormalMaterial());
-			
-			
 			this.tighLeftBackSkin = new THREE.Mesh(new THREE.CylinderGeometry( tighSize[0] , tighSize[1] , tighSize[2], tighSize[3]), new THREE.MeshNormalMaterial());	
 			this.tighLeftBackSkin.rotateX(+Math.PI*4/6);
 			this.jointMidLeftBackSkin = new THREE.Mesh(new THREE.SphereGeometry(legJointMid[0],legJointMid[1],legJointMid[2]),
@@ -315,29 +368,23 @@ define(["three"],
 			// leg left center
 			this.legJointLeftSkin2 = new THREE.Mesh(new THREE.SphereGeometry(legJointSize[0],legJointSize[1],legJointSize[2]),
 											 new THREE.MeshNormalMaterial());
-			
 			this.tighLeftCenterSkin = new THREE.Mesh(new THREE.CylinderGeometry( tighSize[0] , tighSize[1] , tighSize[2], tighSize[3]), new THREE.MeshNormalMaterial());	
 			this.tighLeftCenterSkin.rotateX(+Math.PI*4/6);
-			
 			this.jointMidLeftCenterSkin = new THREE.Mesh(new THREE.SphereGeometry(legJointMid[0],legJointMid[1],legJointMid[2]),
 											 new THREE.MeshNormalMaterial());
-			
 			this.footLeftCenterSkin = new THREE.Mesh(new THREE.CylinderGeometry( footSize[0] , footSize[1] , footSize[2], footSize[3]), new THREE.MeshNormalMaterial());	
 			this.footLeftCenterSkin.rotateX(+Math.PI*1/6);
-			
 			
 			// leg left front
 			this.legJointLeftSkin3 = new THREE.Mesh(new THREE.SphereGeometry(legJointSize[0],legJointSize[1],legJointSize[2]),
 											 new THREE.MeshNormalMaterial());
 			this.tighLeftFrontSkin = new THREE.Mesh(new THREE.CylinderGeometry( tighSize[0] , tighSize[1] , tighSize[2], tighSize[3]), new THREE.MeshNormalMaterial());	
 			this.tighLeftFrontSkin.rotateX(+Math.PI*4/6);
-			
 			this.jointMidLeftFrontSkin = new THREE.Mesh(new THREE.SphereGeometry(legJointMid[0],legJointMid[1],legJointMid[2]),
 											 new THREE.MeshNormalMaterial());
 			
 			this.footLeftFrontSkin = new THREE.Mesh(new THREE.CylinderGeometry( footSize[0] , footSize[1] , footSize[2], footSize[3]), new THREE.MeshNormalMaterial());	
-			this.footLeftFrontSkin.rotateX(+Math.PI*1/6);
-											 
+			this.footLeftFrontSkin.rotateX(+Math.PI*1/6);								 
 
 			
 			// this is the tail skin
@@ -355,8 +402,35 @@ define(["three"],
 			this.tailMidJoint4Skin = new THREE.Mesh(new THREE.SphereGeometry( tailMidJoint4Size[0] , tailMidJoint4Size[1] , tailMidJoint4Size[2]), new THREE.MeshNormalMaterial());		
 			this.tailPart5Skin = new THREE.Mesh(new THREE.CylinderGeometry( tailPart5Size[0] , tailPart5Size[1] , tailPart5Size[2], tailPart5Size[3]), new THREE.MeshNormalMaterial());	
 			this.tailPart5Skin.rotateZ(-Math.PI*3/4);
-				
-							
+			
+			
+			// claws right
+			this.clawJointRightSkin = new THREE.Mesh(new THREE.SphereGeometry( clawJointSize[0] , clawJointSize[1] , clawJointSize[2]), new THREE.MeshNormalMaterial());	
+			this.clawPartRightSkin = new THREE.Mesh(new THREE.CylinderGeometry( clawPartSize[0] , clawPartSize[1] , clawPartSize[2], clawPartSize[3]), new THREE.MeshNormalMaterial());	
+			this.clawPartRightSkin.rotateZ(-Math.PI/2);
+			this.clawPartRightSkin.rotateX(+Math.PI/4);
+			this.clawJointMidRightSkin = new THREE.Mesh(new THREE.SphereGeometry( clawJointMidSize[0] , clawJointMidSize[1] , clawJointMidSize[2]), new THREE.MeshNormalMaterial());
+			this.clawPart2RightSkin = new THREE.Mesh(new THREE.CylinderGeometry( clawPart2Size[0] , clawPart2Size[1] , clawPart2Size[2], clawPart2Size[3]), new THREE.MeshNormalMaterial());	
+			this.clawPart2RightSkin.rotateZ(-Math.PI/2);
+			this.clawPart2RightSkin.rotateX(+Math.PI);
+			this.clawPart3RightSkin = new THREE.Mesh(new THREE.CylinderGeometry( clawPart3Size[0] , clawPart3Size[1] , clawPart3Size[2], clawPart3Size[3]), new THREE.MeshNormalMaterial());	
+			this.clawPart3RightSkin.rotateZ(-Math.PI/2);
+			this.clawPart3RightSkin.rotateX(+Math.PI*4/5);
+			
+			// claws left
+			this.clawJointLeftSkin = new THREE.Mesh(new THREE.SphereGeometry( clawJointSize[0] , clawJointSize[1] , clawJointSize[2]), new THREE.MeshNormalMaterial());	
+			this.clawPartLeftSkin = new THREE.Mesh(new THREE.CylinderGeometry( clawPartSize[0] , clawPartSize[1] , clawPartSize[2], clawPartSize[3]), new THREE.MeshNormalMaterial());	
+			this.clawPartLeftSkin.rotateZ(+Math.PI/2);
+			this.clawPartLeftSkin.rotateX(+Math.PI/4+Math.PI);			
+			this.clawJointMidLeftSkin = new THREE.Mesh(new THREE.SphereGeometry( clawJointMidSize[0] , clawJointMidSize[1] , clawJointMidSize[2]), new THREE.MeshNormalMaterial());
+			this.clawPart2LeftSkin = new THREE.Mesh(new THREE.CylinderGeometry( clawPart2Size[0] , clawPart2Size[1] , clawPart2Size[2], clawPart2Size[3]), new THREE.MeshNormalMaterial());	
+			this.clawPart2LeftSkin.rotateZ(-Math.PI/2);
+			this.clawPart2LeftSkin.rotateX(+Math.PI);
+			this.clawPart3LeftSkin = new THREE.Mesh(new THREE.CylinderGeometry( clawPart3Size[0] , clawPart3Size[1] , clawPart3Size[2], clawPart3Size[3]), new THREE.MeshNormalMaterial());	
+			this.clawPart3LeftSkin.rotateZ(-Math.PI/2);
+			this.clawPart3LeftSkin.rotateX(-Math.PI*4/5);
+			
+			
 											
 			this.torso.add(this.torsoSkin);
 			this.head.add(this.headSkin);
@@ -414,7 +488,22 @@ define(["three"],
 			this.tailMidJoint4.add(this.tailMidJoint4Skin);
 			this.tailPart5.add(this.tailPart5Skin);
 			
-					
+			//claws right
+			this.clawJointRight.add(this.clawJointRightSkin);
+			this.clawPartRight.add(this.clawPartRightSkin);
+			this.clawJointMidRight.add(this.clawJointMidRightSkin);
+			this.clawPart2Right.add(this.clawPart2RightSkin);
+			this.clawPart3Right.add(this.clawPart3RightSkin);
+			
+			// claws left
+			this.clawJointLeft.add(this.clawJointLeftSkin);
+			this.clawPartLeft.add(this.clawPartLeftSkin);
+			this.clawJointMidLeft.add(this.clawJointMidLeftSkin);
+			this.clawPart2Left.add(this.clawPart2LeftSkin);
+			this.clawPart3Left.add(this.clawPart3LeftSkin);
+
+
+		
 			this.root.add(this.torso);
         
 			this.getMesh = function() {
