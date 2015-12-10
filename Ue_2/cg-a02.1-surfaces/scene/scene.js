@@ -57,6 +57,10 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
                     console.log("cursor right");
                     scope.currentMesh.rotation.y += -0.05;
                     // Cursor up
+                } else if(keycode == 66) {
+	                var nodeHead = scope.scene.getObjectByName("torus",true);
+	                if (nodeHead) 
+	                	nodeHead.translateX(0.5);
                 }
             };
 
