@@ -319,8 +319,8 @@ define(["three"],
 			
 			// left leg skin
 			// leg left back
-			this.torso.add(this.legJointLeft);
-			this.legJointLeft.add(this.tighLeftBack);
+			this.torso.add(this.legJointLeft3);
+			this.legJointLeft3.add(this.tighLeftBack);
 			this.tighLeftBack.add(this.jointMidLeftBack);
 			this.jointMidLeftBack.add(this.footLeftBack);
 			
@@ -332,8 +332,8 @@ define(["three"],
 			
 			
 			// leg left front
-			this.torso.add(this.legJointLeft3);
-			this.legJointLeft3.add(this.tighLeftFront);
+			this.torso.add(this.legJointLeft);
+			this.legJointLeft.add(this.tighLeftFront);
 			this.tighLeftFront.add(this.jointMidLeftFront);
 			this.jointMidLeftFront.add(this.footLeftFront);
 						

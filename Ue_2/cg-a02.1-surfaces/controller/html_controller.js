@@ -369,6 +369,33 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				}
 									
             }));
+            
+              $("#CheckBoxAnimateLegs").click( (function() {
+
+				var scope = scene.getScope();	
+				
+				
+				var render = function () {
+						
+						if(document.getElementById("CheckBoxAnimateLegs").checked==true)
+						requestAnimationFrame( render ); 
+						scope.animateLegs();
+						
+						//	scene.renderer.render(scene, camera);
+
+				};
+					
+				
+					render();
+				
+				
+				
+				
+					
+				
+			
+									
+            }));
 			
 			$("#newRobot").click( (function() {
 

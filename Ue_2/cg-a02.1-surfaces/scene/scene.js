@@ -36,7 +36,14 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
             // passed to the function 'onDocumentKeyDown'. There's another event type 'keypress'.
             document.addEventListener("keydown", onDocumentKeyDown, false);
 
+			var rotateLegFront = 1;
+			var rotateLegCenter = null;
+			var rotateLegBack = null;
 
+			var rotateClawRight = true;
+			var rotateClawLeft = true;
+			
+			
             function onDocumentKeyDown(event){
                 // Get the key code of the pressed key
                 var keyCode = event.which;
@@ -57,11 +64,155 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
                     console.log("cursor right");
                     scope.currentMesh.rotation.y += -0.05;
                     // key "a"
+                } else if(keyCode == 89) {
+					console.log("key Y");
+	                var nodeHead =  scope.scene.getObjectByName("legJointRight",true);
+	                var nodeHead2 = scope.scene.getObjectByName("legJointRight2",true);
+	                var nodeHead3 = scope.scene.getObjectByName("legJointRight3",true);
+	                var nodeHead4 = scope.scene.getObjectByName("legJointLeft3",true);
+	                var nodeHead5 = scope.scene.getObjectByName("legJointLeft2",true);
+	                var nodeHead6 = scope.scene.getObjectByName("legJointLeft",true);
+	                
+	                if (nodeHead) {
+		                if (rotateLegFront == 1) {
+			                nodeHead.rotation.x -= 0.05;
+							nodeHead.rotation.y += 0.05;
+								
+							nodeHead4.rotation.x += 0.05;
+							nodeHead4.rotation.y -= 0.05;
+														
+						
+							if (nodeHead.rotation.x <= -0.3){
+								rotateLegFront = 2;
+								if(rotateLegBack == null){
+									rotateLegBack = 1;
+								}
+							}
+		                } else if (rotateLegFront == 2) {
+			                nodeHead.rotation.x += 0.05;
+							nodeHead.rotation.y += 0.05;												
+
+												
+							nodeHead4.rotation.x -= 0.05;
+							nodeHead4.rotation.y -= 0.05;
+											
+							
+							if (nodeHead.rotation.y >= 0.6){
+								rotateLegFront = 3;	
+								if(rotateLegCenter == null){
+									rotateLegCenter = 1;
+								}
+							}
+		                } else if (rotateLegFront == 3){
+			                nodeHead.rotation.y -= 0.05;
+			                
+			                nodeHead4.rotation.y += 0.05;
+			               		              
+			                
+							if (nodeHead.rotation.y <= 0){
+								rotateLegFront = 1;	
+								
+								nodeHead.rotation.x = 0;
+								nodeHead.rotation.y = 0;
+																
+								nodeHead4.rotation.x = 0;
+								nodeHead4.rotation.y = 0;
+								
+								}
+		                }
+		                
+		                if (rotateLegCenter == 1) {
+			               
+							
+							nodeHead2.rotation.x -= 0.05;
+							nodeHead2.rotation.y += 0.05;
+							
+							nodeHead5.rotation.x += 0.05;
+							nodeHead5.rotation.y -= 0.05;
+												
+						
+							if (nodeHead2.rotation.x <= -0.3){
+								rotateLegCenter = 2;
+							}
+		                } else if (rotateLegCenter == 2) {
+			             
+							nodeHead2.rotation.x += 0.05;
+							nodeHead2.rotation.y += 0.05;
+														
+							nodeHead5.rotation.x -= 0.05;
+							nodeHead5.rotation.y -= 0.05;
+		
+							if (nodeHead2.rotation.y >= 0.6){
+								rotateLegCenter = 3;	
+							}
+		                } else if (rotateLegCenter == 3){
+			           
+			                nodeHead2.rotation.y -= 0.05;
+			                
+			                nodeHead5.rotation.y += 0.05;
+			           
+			                
+							if (nodeHead2.rotation.y <= 0){
+								rotateLegCenter = 1;								
+								
+								nodeHead2.rotation.x = 0;
+								nodeHead2.rotation.y = 0;
+								
+								nodeHead5.rotation.x = 0;
+								nodeHead5.rotation.y = 0;
+							
+								}
+		                }
+		                
+		                if (rotateLegBack == 1) {
+			               
+							
+							nodeHead3.rotation.x -= 0.05;
+							nodeHead3.rotation.y += 0.05;
+							
+							nodeHead6.rotation.x += 0.05;
+							nodeHead6.rotation.y -= 0.05;
+							
+						
+							if (nodeHead3.rotation.x <= -0.3){
+								rotateLegBack = 2;
+							}
+		                } else if (rotateLegBack == 2) {
+			             
+							nodeHead3.rotation.x += 0.05;
+							nodeHead3.rotation.y += 0.05;
+												
+							nodeHead6.rotation.x -= 0.05;
+							nodeHead6.rotation.y -= 0.05;
+							
+							
+							if (nodeHead3.rotation.y >= 0.6){
+								rotateLegBack = 3;	
+							}
+		                } else if (rotateLegBack == 3){
+			           
+			              
+			                
+			                nodeHead3.rotation.y -= 0.05;
+			                
+			                nodeHead6.rotation.y += 0.05;
+			                
+							if (nodeHead3.rotation.y <= 0){
+								rotateLegBack = 1;	
+								
+								nodeHead3.rotation.x = 0;
+								nodeHead3.rotation.y = 0;
+								
+								nodeHead6.rotation.x = 0;
+								nodeHead6.rotation.y = 0;
+							}
+		                }
+	                }        		  		                	
                 } else if(keyCode == 49) {
-					console.log("key 1");
+					console.log("key 2");
 	                var nodeHead = scope.scene.getObjectByName("jointMidRightFront",true);
-						console.log("test");
-	                	nodeHead.rotation.z += 0.05;
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
                 } else if(keyCode == 50) {
 					console.log("key 2");
 	                var nodeHead = scope.scene.getObjectByName("jointMidRightCenter",true);
@@ -123,16 +274,36 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
                 } else if(keyCode == 90) {
-					console.log("Z");
+					console.log("key Z");
 	                var nodeHead = scope.scene.getObjectByName("clawJointMidRight",true);
-	                if (nodeHead) 
-	                	nodeHead.rotation.x +=0.05;
+	                if (nodeHead) {
+	                	if (rotateClawLeft){ 
+	                			nodeHead.rotation.x +=0.05;
+							if (nodeHead.rotation.x >= Math.PI/2){
+								rotateClawLeft = false;}
+							} else {
+							 nodeHead.rotation.x -=0.05
+							if (nodeHead.rotation.x <= -Math.PI/2) 
+								rotateClawLeft = true; 
+							}
+					}
+	                
                 } else if(keyCode == 85) {
 					console.log("key U");
 	                var nodeHead = scope.scene.getObjectByName("clawJointMidLeft",true);
-	                if (nodeHead) 
-	                	nodeHead.rotation.x +=0.05;
-						console.log(nodeHead.rotation.x);
+	                
+	                
+	                if (nodeHead) {
+	                	if (rotateClawRight){ 
+	                			nodeHead.rotation.x +=0.05;
+							if (nodeHead.rotation.x >= Math.PI/2){
+								rotateClawRight = false;}
+							} else {
+							 nodeHead.rotation.x -=0.05
+							if (nodeHead.rotation.x <= -Math.PI/2) 
+								rotateClawRight = true; 
+							}
+					}	
                 } 
 				
             };
@@ -171,6 +342,151 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 			this.getScope = function() {
                 return this;
             };
+            
+            this.animateLegs = function(){
+	            	var nodeHead =  scope.scene.getObjectByName("legJointRight",true);
+	                var nodeHead2 = scope.scene.getObjectByName("legJointRight2",true);
+	                var nodeHead3 = scope.scene.getObjectByName("legJointRight3",true);
+	                var nodeHead4 = scope.scene.getObjectByName("legJointLeft3",true);
+	                var nodeHead5 = scope.scene.getObjectByName("legJointLeft2",true);
+	                var nodeHead6 = scope.scene.getObjectByName("legJointLeft",true);
+	                
+	                if (nodeHead) {
+		                if (rotateLegFront == 1) {
+			                nodeHead.rotation.x -= 0.025;
+							nodeHead.rotation.y += 0.025;
+								
+							nodeHead4.rotation.x += 0.025;
+							nodeHead4.rotation.y -= 0.025;
+														
+						
+							if (nodeHead.rotation.x <= -0.3){
+								rotateLegFront = 2;
+								if(rotateLegBack == null){
+									rotateLegBack = 1;
+								}
+							}
+		                } else if (rotateLegFront == 2) {
+			                nodeHead.rotation.x += 0.025;
+							nodeHead.rotation.y += 0.025;												
+
+												
+							nodeHead4.rotation.x -= 0.025;
+							nodeHead4.rotation.y -= 0.025;
+											
+							
+							if (nodeHead.rotation.y >= 0.6){
+								rotateLegFront = 3;	
+								if(rotateLegCenter == null){
+									rotateLegCenter = 1;
+								}
+							}
+		                } else if (rotateLegFront == 3){
+			                nodeHead.rotation.y -= 0.025;
+			                
+			                nodeHead4.rotation.y += 0.025;
+			               		              
+			                
+							if (nodeHead.rotation.y <= 0){
+								rotateLegFront = 1;	
+								
+								nodeHead.rotation.x = 0;
+								nodeHead.rotation.y = 0;
+																
+								nodeHead4.rotation.x = 0;
+								nodeHead4.rotation.y = 0;
+								
+								}
+		                }
+		                
+		                if (rotateLegCenter == 1) {
+			               
+							
+							nodeHead2.rotation.x -= 0.025;
+							nodeHead2.rotation.y += 0.025;
+							
+							nodeHead5.rotation.x += 0.025;
+							nodeHead5.rotation.y -= 0.025;
+												
+						
+							if (nodeHead2.rotation.x <= -0.3){
+								rotateLegCenter = 2;
+							}
+		                } else if (rotateLegCenter == 2) {
+			             
+							nodeHead2.rotation.x += 0.025;
+							nodeHead2.rotation.y += 0.025;
+														
+							nodeHead5.rotation.x -= 0.025;
+							nodeHead5.rotation.y -= 0.025;
+		
+							if (nodeHead2.rotation.y >= 0.6){
+								rotateLegCenter = 3;	
+							}
+		                } else if (rotateLegCenter == 3){
+			           
+			                nodeHead2.rotation.y -= 0.025;
+			                
+			                nodeHead5.rotation.y += 0.025;
+			           
+			                
+							if (nodeHead2.rotation.y <= 0){
+								rotateLegCenter = 1;								
+								
+								nodeHead2.rotation.x = 0;
+								nodeHead2.rotation.y = 0;
+								
+								nodeHead5.rotation.x = 0;
+								nodeHead5.rotation.y = 0;
+							
+								}
+		                }
+		                
+		                if (rotateLegBack == 1) {
+			               
+							
+							nodeHead3.rotation.x -= 0.025;
+							nodeHead3.rotation.y += 0.025;
+							
+							nodeHead6.rotation.x += 0.025;
+							nodeHead6.rotation.y -= 0.025;
+							
+						
+							if (nodeHead3.rotation.x <= -0.3){
+								rotateLegBack = 2;
+							}
+		                } else if (rotateLegBack == 2) {
+			             
+							nodeHead3.rotation.x += 0.025;
+							nodeHead3.rotation.y += 0.025;
+												
+							nodeHead6.rotation.x -= 0.025;
+							nodeHead6.rotation.y -= 0.025;
+							
+							
+							if (nodeHead3.rotation.y >= 0.6){
+								rotateLegBack = 3;	
+							}
+		                } else if (rotateLegBack == 3){
+			           
+			              
+			                
+			                nodeHead3.rotation.y -= 0.025;
+			                
+			                nodeHead6.rotation.y += 0.025;
+			                
+							if (nodeHead3.rotation.y <= 0){
+								rotateLegBack = 1;	
+								
+								nodeHead3.rotation.x = 0;
+								nodeHead3.rotation.y = 0;
+								
+								nodeHead6.rotation.x = 0;
+								nodeHead6.rotation.y = 0;
+							}
+		                }
+	                }   
+            }
         };
 		
 		
