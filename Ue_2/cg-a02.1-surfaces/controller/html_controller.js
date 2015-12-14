@@ -116,8 +116,12 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
 				  bufferGeometryParametric.setIndex(parametric.getIndices());
+			  var bufferGeometryParametric2= new BufferGeometryPoints();
+				  bufferGeometryParametric2.addAttribute("position", parametric.getPositions());
+				  bufferGeometryParametric2.addAttribute("color", parametric.getColors());
 
                 scene.addBufferGeometry(bufferGeometryParametric);
+             //   scene.addBufferGeometry(bufferGeometryParametric2);
                 
 
             }));
@@ -146,8 +150,12 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
 				  bufferGeometryParametric.setIndex(parametric.getIndices());
+			  var bufferGeometryParametric2= new BufferGeometryPoints();
+				  bufferGeometryParametric2.addAttribute("position", parametric.getPositions());
+				  bufferGeometryParametric2.addAttribute("color", parametric.getColors());
 				  
                 scene.addBufferGeometry(bufferGeometryParametric);
+               // scene.addBufferGeometry(bufferGeometryParametric2);
                 
 
             }));
@@ -173,12 +181,16 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 
               var parametric = new Parametric(posFunc, config);
 			  
-			  var bufferGeometryParametric = new BufferGeometry();
+			 var bufferGeometryParametric = new BufferGeometry();
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
 				  bufferGeometryParametric.setIndex(parametric.getIndices());
-				  console.log(parametric.getIndices().length);
-                scene.addBufferGeometry(bufferGeometryParametric);
+			  var bufferGeometryParametric2= new BufferGeometryPoints();
+				  bufferGeometryParametric2.addAttribute("position", parametric.getPositions());
+				  bufferGeometryParametric2.addAttribute("color", parametric.getColors());
+				  
+                  scene.addBufferGeometry(bufferGeometryParametric);
+				 // scene.addBufferGeometry(bufferGeometryParametric2);
                 
 
             }));
@@ -188,7 +200,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                 var config = {
                     segments : parseInt($("#numSegmentsPara").attr("value")),
                     umin : 0,
-                    umax : 2*Math.PI,
+                    umax : 2*Math.PI + 0.13,
                     vmin : 0,
                     vmax : 2*Math.PI
                 };
@@ -207,8 +219,13 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
 				  bufferGeometryParametric.setIndex(parametric.getIndices());
-
+			  var bufferGeometryParametric2= new BufferGeometryPoints();
+				  bufferGeometryParametric2.addAttribute("position", parametric.getPositions());
+				  bufferGeometryParametric2.addAttribute("color", parametric.getColors());
+				  
+				console.log(parametric.getIndices());
                 scene.addBufferGeometry(bufferGeometryParametric);
+              //  scene.addBufferGeometry(bufferGeometryParametric2);
                 
 
             }));
@@ -290,20 +307,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 
 			    var checked = $("#CheckBoxPoints").attr("checked");
 				var scope = scene.getScope();	
-				var render = function () {
-						
-						if(document.getElementById("CheckBoxPoints").checked==true)
-						requestAnimationFrame( render ); 
-						scope.currentMesh.rotation.x += 0.04; 
-						scope.currentMesh.rotation.y += 0.04; 
-						
-						//	scene.renderer.render(scene, camera);
-
-				};
-					
-				if(checked){
-					render();
-				}
+				
 									
             }));
 			

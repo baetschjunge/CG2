@@ -64,53 +64,65 @@ define(["three"],
 			this.legJointRight = new THREE.Object3D();
 			this.legJointRight.translateZ(torsoSize[2]/2);
 			this.legJointRight.translateX(torsoSize[0]/2-torsoSize[0]*1/5);
+			this.legJointRight.name = "legJointRight";
 			
 			this.tighRightFront = new THREE.Object3D();
 			this.tighRightFront.translateZ(tighSize[2]/2);
 			this.tighRightFront.translateY(+legJointSize[0]);
-
+			this.tighRightFront.name = "tighRightFront";
+			
 			this.jointMidRightFront = new THREE.Object3D();
 			this.jointMidRightFront.translateZ(tighSize[2]/2-legJointMid[0]);
 			this.jointMidRightFront.translateY(+legJointSize[0]);
+			this.jointMidRightFront.name = "jointMidRightFront";
 
 			this.footRightFront = new THREE.Object3D();
 			this.footRightFront.translateY(-footSize[2]/2+legJointMid[0]/2);
 			this.footRightFront.translateZ(+tighSize[2]*1/3);
+			this.footRightFront.name = "footRightFront";
 			
 			
 			// leg right center
 			this.legJointRight2 = new THREE.Object3D();
 			this.legJointRight2.translateZ(torsoSize[2]/2);
+			this.legJointRight2.name = "legJointRight2";
 			
 			this.tighRightCenter = new THREE.Object3D();
 			this.tighRightCenter.translateZ(tighSize[2]/2);
 			this.tighRightCenter.translateY(+legJointSize[0]);
+			this.tighRightCenter.name = "tighRightCenter.name";
 			
 			this.jointMidRightCenter = new THREE.Object3D();
 			this.jointMidRightCenter.translateZ(tighSize[2]/2-legJointMid[0]);
 			this.jointMidRightCenter.translateY(+legJointSize[0]);
+			this.jointMidRightCenter.name = "jointMidRightCenter";
 			
 			this.footRightCenter = new THREE.Object3D();
 			this.footRightCenter.translateY(-footSize[2]/2+legJointMid[0]/2);
 			this.footRightCenter.translateZ(+tighSize[2]*1/3);
+			this.footRightCenter.name = "footRightCenter";
 			
 			
 			// leg right back
 			this.legJointRight3 = new THREE.Object3D();
 			this.legJointRight3.translateZ(torsoSize[2]/2);
 			this.legJointRight3.translateX(torsoSize[0]/2-torsoSize[0]*4/5);
+			this.legJointRight3.name = "legJointRight3";
 			
 			this.tighRightBack = new THREE.Object3D();
 			this.tighRightBack.translateZ(tighSize[2]/2);
 			this.tighRightBack.translateY(+legJointSize[0]);
+			this.tighRightBack.name = "tighRightBack";
 			
 			this.jointMidRightBack = new THREE.Object3D();
 			this.jointMidRightBack.translateZ(tighSize[2]/2-legJointMid[0]);
 			this.jointMidRightBack.translateY(+legJointSize[0]);
+			this.jointMidRightBack.name = "jointMidRightBack";
 			
 			this.footRightBack = new THREE.Object3D();
 			this.footRightBack.translateY(-footSize[2]/2+legJointMid[0]/2);
 			this.footRightBack.translateZ(+tighSize[2]*1/3);
+			this.footRightBack.name = "footRightBack";
 			
 						
 			// left leg skin
@@ -118,111 +130,138 @@ define(["three"],
 			this.legJointLeft = new THREE.Object3D();
 			this.legJointLeft.translateZ(-torsoSize[2]/2);
 			this.legJointLeft.translateX(-torsoSize[0]/2+torsoSize[0]*1/5);
+			this.legJointLeft.name = "legJointLeft";
 			
 			this.tighLeftBack = new THREE.Object3D();
 			this.tighLeftBack.translateZ(-tighSize[2]/2);
 			this.tighLeftBack.translateY(+legJointSize[0]);
-
+			this.tighLeftBack.name = "tighLeftBack";
+			
 			this.jointMidLeftBack = new THREE.Object3D();
 			this.jointMidLeftBack.translateZ(-tighSize[2]/2+legJointMid[0]);
 			this.jointMidLeftBack.translateY(+legJointSize[0]);
+			this.jointMidLeftBack.name = "jointMidLeftBack";
 
 			this.footLeftBack = new THREE.Object3D();
 			this.footLeftBack.translateY(-footSize[2]/2+legJointMid[0]/2);
 			this.footLeftBack.translateZ(-tighSize[2]*1/3);
+			this.footLeftBack.name = "footLeftBack";
 			
 			
 			// leg left center
 			this.legJointLeft2 = new THREE.Object3D();
 			this.legJointLeft2.translateZ(-torsoSize[2]/2);
+			this.legJointLeft2.name = "legJointLeft2";
 			
 			this.tighLeftCenter = new THREE.Object3D();
 			this.tighLeftCenter.translateZ(-tighSize[2]/2);
 			this.tighLeftCenter.translateY(+legJointSize[0]);
+			this.tighLeftCenter.name = "tighLeftCenter";
 			
 			this.jointMidLeftCenter = new THREE.Object3D();
 			this.jointMidLeftCenter.translateZ(-tighSize[2]/2+legJointMid[0]);
 			this.jointMidLeftCenter.translateY(+legJointSize[0]);
+			this.jointMidLeftCenter.name = "jointMidLeftCenter";
 			
 			this.footLeftCenter = new THREE.Object3D();
 			this.footLeftCenter.translateY(-footSize[2]/2+legJointMid[0]/2);
 			this.footLeftCenter.translateZ(-tighSize[2]*1/3);
+			this.footLeftCenter.name = "footLeftCenter";
 			
 			
 			// leg left front
 			this.legJointLeft3 = new THREE.Object3D();
 			this.legJointLeft3.translateZ(-torsoSize[2]/2);
 			this.legJointLeft3.translateX(-torsoSize[0]/2+torsoSize[0]*4/5);
+			this.legJointLeft3.name = "legJointLeft3";
 			
 			this.tighLeftFront = new THREE.Object3D();
 			this.tighLeftFront.translateZ(-tighSize[2]/2);
 			this.tighLeftFront.translateY(+legJointSize[0]);
+			this.tighLeftFront.name = "tighLeftFront";
 			
 			this.jointMidLeftFront = new THREE.Object3D();
 			this.jointMidLeftFront.translateZ(-tighSize[2]/2+legJointMid[0]);
 			this.jointMidLeftFront.translateY(+legJointSize[0]);
+			this.jointMidLeftFront.name = "jointMidLeftFront";
 			
 			this.footLeftFront = new THREE.Object3D();
 			this.footLeftFront.translateY(-footSize[2]/2+legJointMid[0]/2);
 			this.footLeftFront.translateZ(-tighSize[2]*1/3);
+			this.footLeftFront.name = "footLeftFront";
 			
 			
 			// tail
 			this.tailJoint = new THREE.Object3D();
 			this.tailJoint.translateX(-torsoSize[0]/2);
+			this.tailJoint.name = "tailJoint";
 			
 			this.tailPart = new THREE.Object3D();
 			this.tailPart.translateX(-tailPartSize[2]/2);
 			this.tailPart.translateY(+tailPartSize[0]);
+			this.tailPart.name = "tailPart";
 			
 			this.tailMidJoint = new THREE.Object3D();
 			this.tailMidJoint.translateX(-tailPartSize[2]/2);
-			this.tailMidJoint.translateY(+tailMidJointSize[0]*1.5);			
+			this.tailMidJoint.translateY(+tailMidJointSize[0]*1.5);		
+			this.tailMidJoint.name = "tailMidJoint";
 			
 			this.tailPart2 = new THREE.Object3D();
 			this.tailPart2.translateY(+tailPart2Size[2]/2);
+			this.tailPart2.name = "tailPart2";
 			
 			this.tailMidJoint2 = new THREE.Object3D();
 			this.tailMidJoint2.translateY(+tailPart2Size[2]/2);
+			this.tailMidJoint2.name = "tailMidJoint2";
 			
 			this.tailPart3 = new THREE.Object3D();
 			this.tailPart3.translateX(+tailPart2Size[2]/2+tailMidJoint2Size[0]/2);
 			this.tailPart3.translateY(+tailPart2Size[2]/2-tailMidJoint2Size[0]);
+			this.tailPart3.name = "tailPart3";
 			
 			this.tailMidJoint3 = new THREE.Object3D();
 			this.tailMidJoint3.translateX(+tailPart3Size[2]/2-tailMidJoint3Size[0]);
 			this.tailMidJoint3.translateY(+tailMidJoint3Size[0]*3);
+			this.tailMidJoint3.name = "tailMidJoint3";
 			
 			this.tailPart4 = new THREE.Object3D();
 			this.tailPart4.translateX(+tailPart4Size[2]/2);
+			this.tailPart4.name = "tailPart4";
 			
 			this.tailMidJoint4 = new THREE.Object3D();
 			this.tailMidJoint4.translateX(+tailPart4Size[2]/2-tailMidJoint4Size[0]/3);
+			this.tailMidJoint4.name = "tailMidJoint4";
 			
 			this.tailPart5 = new THREE.Object3D();
 			this.tailPart5.translateX(+tailPart5Size[2]/3);
 			this.tailPart5.translateY(-tailPart5Size[2]/3);
+			this.tailPart5.name = "tailPart5";
 			
 			
 			// claws right
 			this.clawJointRight = new THREE.Object3D();
 			this.clawJointRight.translateX(+torsoSize[0]/2);
 			this.clawJointRight.translateZ(+torsoSize[2]*3/6);
+			this.clawJointRight.name = "clawJointRight";
 			
 			this.clawPartRight = new THREE.Object3D();
 			this.clawPartRight.translateX(+clawPartSize[0]*2);
 			this.clawPartRight.translateZ(+clawPartSize[0]*2);
+			this.clawPartRight.name = "clawPartRight";
 			
 			this.clawJointMidRight = new THREE.Object3D();
 			this.clawJointMidRight.translateX(+clawPartSize[2]/2-clawJointMidSize[0]/2);
 			this.clawJointMidRight.translateZ(+clawPartSize[2]/2-clawJointMidSize[0]/2);
+			this.clawJointMidRight.name = "clawJointMidRight";
 			
 			this.clawPart2Right = new THREE.Object3D();
 			this.clawPart2Right.translateX(+clawPart2Size[2]/2);
+			this.clawPart2Right.name = "clawPart2Right";
 			
 			this.clawPart3Right = new THREE.Object3D();
 			this.clawPart3Right.translateX(+clawJointMidSize[0]);
 			this.clawPart3Right.translateZ(-clawJointMidSize[0]);
+			this.clawPart3Right.name = "clawPart3Right";
 
 
 			
@@ -230,21 +269,26 @@ define(["three"],
 			this.clawJointLeft = new THREE.Object3D();
 			this.clawJointLeft.translateX(+torsoSize[0]/2);
 			this.clawJointLeft.translateZ(-torsoSize[2]*3/6);
+			this.clawJointLeft.name = "clawJointLeft";
 			
 			this.clawPartLeft = new THREE.Object3D();
 			this.clawPartLeft.translateX(+clawPartSize[0]*2);
 			this.clawPartLeft.translateZ(-clawPartSize[0]*2);
+			this.clawPartLeft.name = "clawPartLeft";
 			
 			this.clawJointMidLeft = new THREE.Object3D();
 			this.clawJointMidLeft.translateX(+clawPartSize[2]/2-clawJointMidSize[0]/2);
 			this.clawJointMidLeft.translateZ(-clawPartSize[2]/2+clawJointMidSize[0]/2);
+			this.clawJointMidLeft.name = "clawJointMidLeft";
 
 			this.clawPart2Left = new THREE.Object3D();
 			this.clawPart2Left.translateX(+clawPart2Size[2]/2);
+			this.clawPart2Left.name = "clawPart2Left";
 			
 			this.clawPart3Left = new THREE.Object3D();
 			this.clawPart3Left.translateX(+clawJointMidSize[0]);
 			this.clawPart3Left.translateZ(+clawJointMidSize[0]);
+			this.clawPart3Left.name = "clawPart3Left";
 			
 			
 
@@ -264,6 +308,7 @@ define(["three"],
 			this.legJointRight2.add(this.tighRightCenter);
 			this.tighRightCenter.add(this.jointMidRightCenter);
 			this.jointMidRightCenter.add(this.footRightCenter);
+			
 			
 			// leg right back
 			this.torso.add(this.legJointRight3);
@@ -320,6 +365,8 @@ define(["three"],
 			
 			
 			// this is head, torso skin
+			
+			
 			this.headSkin = new THREE.Mesh(new THREE.CubeGeometry(headSize[0],headSize[1],headSize[2]), 
 										   new THREE.MeshNormalMaterial());
 			this.torsoSkin = new THREE.Mesh(new THREE.CubeGeometry( torsoSize[0],torsoSize[1],torsoSize[2]),

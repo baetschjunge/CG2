@@ -66,15 +66,25 @@ define(["three"],
                     if(i<=segments && j<=segments) {
                         var ii = iindex;
 						
-						this.indices[ii]   = vindex;
-                        this.indices[ii+1] = vindex+(segments+1);
-                        this.indices[ii+2] = vindex+(segments+1)+1;
-                        this.indices[ii+3] = vindex+(segments+1)+1;
-                        this.indices[ii+4] = vindex+1;
-                        this.indices[ii+5] = vindex;
+						if(i!=segments){
+							this.indices[ii]   = vindex;
+							this.indices[ii+1] = vindex+(segments+1);
+							this.indices[ii+2] = vindex+(segments+1)+1;
+							this.indices[ii+3] = vindex+(segments+1)+1;
+							this.indices[ii+4] = vindex+1;
+							this.indices[ii+5] = vindex;
+						}else {
+							this.indices[ii]   = vindex;
+							this.indices[ii+1] = j +(segments+1);
+							this.indices[ii+2] = j +(segments+1)+1;
+							this.indices[ii+3] = j +(segments+1)+1;
+							this.indices[ii+4] = vindex+1;
+							this.indices[ii+5] = vindex;
+						}
 						
                     };
 				}
+				
             };
 			
             this.getPositions = function() {

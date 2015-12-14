@@ -56,32 +56,106 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
                 } else if(keyCode == 39){
                     console.log("cursor right");
                     scope.currentMesh.rotation.y += -0.05;
-                    // Cursor up
-                } else if(keycode == 66) {
-	                var nodeHead = scope.scene.getObjectByName("torus",true);
+                    // key "a"
+                } else if(keyCode == 49) {
+					console.log("key 1");
+	                var nodeHead = scope.scene.getObjectByName("jointMidRightFront",true);
+						console.log("test");
+	                	nodeHead.rotation.z += 0.05;
+                } else if(keyCode == 50) {
+					console.log("key 2");
+	                var nodeHead = scope.scene.getObjectByName("jointMidRightCenter",true);
 	                if (nodeHead) 
-	                	nodeHead.translateX(0.5);
-                }
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 51) {
+					console.log("key 3");
+	                var nodeHead = scope.scene.getObjectByName("jointMidRightBack",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 52) {
+					console.log("key 4");
+	                var nodeHead = scope.scene.getObjectByName("jointMidLeftFront",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 53) {
+					console.log("key 5");
+	                var nodeHead = scope.scene.getObjectByName("jointMidLeftCenter",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 54) {
+					console.log("key 6");
+	                var nodeHead = scope.scene.getObjectByName("jointMidLeftBack",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 55) {
+					console.log("key 7");
+	                var nodeHead = scope.scene.getObjectByName("clawsJointMidRight",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 56) {
+					console.log("key 8");
+	                var nodeHead = scope.scene.getObjectByName("clawsJointMidLeft",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 81) {
+					console.log("key Q");
+	                var nodeHead = scope.scene.getObjectByName("tailJoint",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 87) {
+					console.log("key W");
+	                var nodeHead = scope.scene.getObjectByName("tailMidJoint",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 69) {
+					console.log("key E");
+	                var nodeHead = scope.scene.getObjectByName("tailMidJoint2",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 82) {
+					console.log("key R");
+	                var nodeHead = scope.scene.getObjectByName("tailMidJoint3",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 84) {
+					console.log("key T");
+	                var nodeHead = scope.scene.getObjectByName("tailMidJoint4",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.z +=0.05;
+                } else if(keyCode == 90) {
+					console.log("Z");
+	                var nodeHead = scope.scene.getObjectByName("clawJointMidRight",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.x +=0.05;
+                } else if(keyCode == 85) {
+					console.log("key U");
+	                var nodeHead = scope.scene.getObjectByName("clawJointMidLeft",true);
+	                if (nodeHead) 
+	                	nodeHead.rotation.x +=0.05;
+						console.log(nodeHead.rotation.x);
+                } 
+				
             };
+			//q81 w87 e69 r82 t84
 
-            this.addBufferGeometry = function(bufferGeometry) {
+            this.addBufferGeometry = function(bufferGeometry){
 
                 scope.currentMesh = bufferGeometry.getMesh();
                 scope.scene.add( scope.currentMesh );
 
-            }
+            };
 			
 			this.addBufferGeometryPoints = function(bufferGeometryPoints) {
 
                 scope.currentMesh = bufferGeometryPoints.getMesh();
                 scope.scene.add( scope.currentMesh );
 
-            }
+            };
 			
 			this.addMesh = function(mesh){
 				scope.currentMesh = mesh;
 				scope.scene.add(scope.currentMesh);
-			}
+			};
 
             /*
              * drawing the scene
