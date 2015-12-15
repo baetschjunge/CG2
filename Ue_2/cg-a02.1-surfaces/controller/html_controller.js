@@ -370,20 +370,19 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 									
             }));
             
-              $("#CheckBoxAnimateLegs").click( (function() {
+              $("#CheckBoxAnimateRun").click( (function() {
 
 				var scope = scene.getScope();	
 				
 				
 				var render = function () {
 						
-						if(document.getElementById("CheckBoxAnimateLegs").checked==true)
+						if(document.getElementById("CheckBoxAnimateRun").checked==true)
 						requestAnimationFrame( render ); 
 						scope.animateLegs();
-						//scope.animateTail();
 						scope.animateClawsRun();
 						scope.animateTorsoRun();
-						//scope.animateClawHug();
+						scope.animateFace();
 						//	scene.renderer.render(scene, camera);
 
 				};	

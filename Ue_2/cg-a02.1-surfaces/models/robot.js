@@ -51,6 +51,10 @@ define(["three"],
 			var clawPart2Size = [20,1,100,10];
 			var clawPart3Size = [10,1,75,10];
 			
+			// noses
+			var noseSize = [10,3,5,3];
+			var eyeSize = [10,3,5,5];
+			
 			
 			
 			this.root = new THREE.Object3D();
@@ -66,6 +70,22 @@ define(["three"],
 			this.head.name = "head";
 			this.head.translateX(torsoSize[0]/2+headSize[0]/2);
 			this.head.translateY(headSize[1]/2);
+			
+			this.nose = new THREE.Object3D();
+			this.nose.name = "nose";
+			this.nose.translateX(headSize[0]/2+noseSize[0]/2);
+			
+			this.eyeRight = new THREE.Object3D();
+			this.eyeRight.name = "eyeRight";
+			this.eyeRight.translateX(headSize[0]/2+eyeSize[0]/2-eyeSize[3]);
+			this.eyeRight.translateZ(headSize[0]/3);
+			this.eyeRight.translateY(eyeSize[0]);
+			
+			this.eyeLeft = new THREE.Object3D();
+			this.eyeLeft.name = "eyeLeft";
+			this.eyeLeft.translateX(headSize[0]/2+eyeSize[0]/2-eyeSize[3]);
+			this.eyeLeft.translateZ(-headSize[0]/3);
+			this.eyeLeft.translateY(eyeSize[0]);
 			
 			
 			// leg right
@@ -302,6 +322,10 @@ define(["three"],
 			
 			// head
 			this.torso.add(this.head);
+			this.head.add(this.nose);
+			
+			this.head.add(this.eyeRight);
+			this.head.add(this.eyeLeft);
 			
 			// leg right front
 			this.torso.add(this.legJointRight);
@@ -373,11 +397,19 @@ define(["three"],
 			// this is head, torso skin
 			
 			
-			this.headSkin = new THREE.Mesh(new THREE.CubeGeometry(headSize[0],headSize[1],headSize[2]), 
-										   new THREE.MeshNormalMaterial());
 			this.torsoSkin = new THREE.Mesh(new THREE.CubeGeometry( torsoSize[0],torsoSize[1],torsoSize[2]),
 											new THREE.MeshNormalMaterial());
 			
+			this.headSkin = new THREE.Mesh(new THREE.CubeGeometry(headSize[0],headSize[1],headSize[2]), 
+										   new THREE.MeshNormalMaterial());
+										   
+			this.noseSkin = new THREE.Mesh(new THREE.TorusGeometry(noseSize[0], noseSize[1],noseSize[2],noseSize[3]), new THREE.MeshNormalMaterial({side: THREE.DoubleSide}));
+			this.eyeRightSkin = new THREE.Mesh(new THREE.TorusGeometry(eyeSize[0], eyeSize[1],eyeSize[2],eyeSize[3]), new THREE.MeshNormalMaterial({side: THREE.DoubleSide}));
+			this.eyeRightSkin.rotateY(Math.PI/2);
+			
+			this.eyeLeftSkin = new THREE.Mesh(new THREE.TorusGeometry(eyeSize[0], eyeSize[1],eyeSize[2],eyeSize[3]), new THREE.MeshNormalMaterial({side: THREE.DoubleSide}));
+			this.eyeLeftSkin.rotateY(-Math.PI/2);
+						
 			// right leg skin
 			// this is leg right Front skin
 			this.legJointRightSkin = new THREE.Mesh(new THREE.SphereGeometry(legJointSize[0],legJointSize[1],legJointSize[2]),
@@ -486,7 +518,9 @@ define(["three"],
 											
 			this.torso.add(this.torsoSkin);
 			this.head.add(this.headSkin);
-			
+			this.nose.add(this.noseSkin);
+			this.eyeRight.add(this.eyeRightSkin);
+			this.eyeLeft.add(this.eyeLeftSkin);
 			
 			// leg right 
 			// leg right front
@@ -574,8 +608,11 @@ define(["three"],
    this.torsoSkin = new THREE.Mesh(new THREE.ParametricGeometry(posFunc,50,50,false),
            new THREE.MeshNormalMaterial({side: THREE.DoubleSide}));
    */
-		
-		
+   
+   /*
+	this.torsoSkin = new THREE.Mesh(new THREE.TorusGeometry(13,6,10,100),
+           new THREE.MeshNormalMaterial({side: THREE.DoubleSide}));
+	*/	
 		};
 		
         return Robot;
