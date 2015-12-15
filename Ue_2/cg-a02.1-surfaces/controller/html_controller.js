@@ -427,6 +427,31 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 			     render();     
             }));
             
+            $("#CheckBoxAnimateJump").click( (function() {
+
+			    var scope = scene.getScope(); 
+			    
+			    
+			    var render = function () {
+			      
+			      if(document.getElementById("CheckBoxAnimateJump").checked==true)
+			      requestAnimationFrame( render ); 
+			     
+			      scope.animateJumpUp();
+			      // scene.renderer.render(scene, camera);
+			
+			    }; 
+			    
+			     render();     
+            }));
+            
+            
+            $("#BtnClearAll").click( (function() {
+
+			    var scope = scene.getScope(); 
+			      
+			      scope.clearAll();
+            }));
             
             
 			$("#newRobot").click( (function() {

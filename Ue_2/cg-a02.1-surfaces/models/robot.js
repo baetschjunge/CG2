@@ -99,7 +99,7 @@ define(["three"],
 			this.tighRightCenter = new THREE.Object3D();
 			this.tighRightCenter.translateZ(tighSize[2]/2);
 			this.tighRightCenter.translateY(+legJointSize[0]);
-			this.tighRightCenter.name = "tighRightCenter.name";
+			this.tighRightCenter.name = "tighRightCenter";
 			
 			this.jointMidRightCenter = new THREE.Object3D();
 			this.jointMidRightCenter.translateZ(tighSize[2]/2-legJointMid[0]);
