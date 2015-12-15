@@ -43,6 +43,8 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 			var rotateClawRight = true;
 			var rotateClawLeft = true;
 			
+			var rotateTail = true;
+			var tailState = 1;
 			
             function onDocumentKeyDown(event){
                 // Get the key code of the pressed key
@@ -248,31 +250,36 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 	                var nodeHead = scope.scene.getObjectByName("clawsJointMidLeft",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
-                } else if(keyCode == 81) {
+                } else if(keyCode == 81) { // TAIL
 					console.log("key Q");
 	                var nodeHead = scope.scene.getObjectByName("tailJoint",true);
 	                if (nodeHead) 
-	                	nodeHead.rotation.z +=0.05;
+	                	nodeHead.rotation.z -=0.05;
+	                	console.log(nodeHead.rotation.z);
                 } else if(keyCode == 87) {
 					console.log("key W");
 	                var nodeHead = scope.scene.getObjectByName("tailMidJoint",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
+	                	console.log(nodeHead.rotation.z);
                 } else if(keyCode == 69) {
 					console.log("key E");
 	                var nodeHead = scope.scene.getObjectByName("tailMidJoint2",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
+	                	console.log(nodeHead.rotation.z);
                 } else if(keyCode == 82) {
 					console.log("key R");
 	                var nodeHead = scope.scene.getObjectByName("tailMidJoint3",true);
 	                if (nodeHead) 
-	                	nodeHead.rotation.z +=0.05;
+	                	nodeHead.rotation.z -=0.05;
+	                	console.log(nodeHead.rotation.z);
                 } else if(keyCode == 84) {
 					console.log("key T");
 	                var nodeHead = scope.scene.getObjectByName("tailMidJoint4",true);
 	                if (nodeHead) 
-	                	nodeHead.rotation.z +=0.05;
+	                	nodeHead.rotation.z -=0.05;
+	                	console.log(nodeHead.rotation.z);
                 } else if(keyCode == 90) {
 					console.log("key Z");
 	                var nodeHead = scope.scene.getObjectByName("clawJointMidRight",true);
@@ -304,9 +311,48 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 								rotateClawRight = true; 
 							}
 					}	
-                } 
-				
+                } else if(keyCode == 48) {
+					console.log("key 0");
+	                var nodeHead =  scope.scene.getObjectByName("tailJoint",true);
+					var nodeHead2 = scope.scene.getObjectByName("tailMidJoint",true);
+					var nodeHead3 = scope.scene.getObjectByName("tailMidJoint2",true);
+					var nodeHead4 = scope.scene.getObjectByName("tailMidJoint3",true);
+					var nodeHead5 = scope.scene.getObjectByName("tailMidJoint4",true);
+	                
+	                
+	               if (nodeHead) {
+		                if (tailState == 1) {
+			                nodeHead.rotation.z -= 0.1;
+							nodeHead2.rotation.z += 0.04;
+							nodeHead3.rotation.z += 0.04;
+							nodeHead4.rotation.z -= 0.02;
+							nodeHead5.rotation.z -= 0.00;					
+						
+							if (nodeHead.rotation.z <= -1.5){
+								tailState = 2;	
+								}
+							} else if (tailState == 2){
+								nodeHead.rotation.z += 0.025;
+								nodeHead2.rotation.z -= 0.01;
+								nodeHead3.rotation.z -= 0.01;
+								nodeHead4.rotation.z += 0.005;
+								nodeHead5.rotation.z += 0.00;
+								
+								if (nodeHead.rotation.z >= 0){
+									tailState = 1;	
+								}
+							}
+								
+						}
+				}
+					
+                
+                 	
             };
+            
+            
+            
+            
 			//q81 w87 e69 r82 t84
 
             this.addBufferGeometry = function(bufferGeometry){
@@ -487,10 +533,46 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 		                }
 	                }   
             }
+            
+            this.animateTail = function(){
+				
+				var nodeHead =  scope.scene.getObjectByName("tailJoint",true);
+		        var nodeHead2 = scope.scene.getObjectByName("tailMidJoint",true);
+		        var nodeHead3 = scope.scene.getObjectByName("tailMidJoint2",true);
+		        var nodeHead4 = scope.scene.getObjectByName("tailMidJoint3",true);
+		        var nodeHead5 = scope.scene.getObjectByName("tailMidJoint4",true);
+				
+				
+				if (nodeHead) {
+		                if (tailState == 1) {
+			                nodeHead.rotation.z -= 0.1;
+							nodeHead2.rotation.z += 0.04;
+							nodeHead3.rotation.z += 0.04;
+							nodeHead4.rotation.z -= 0.02;
+							nodeHead5.rotation.z -= 0.00;					
+						
+							if (nodeHead.rotation.z <= -1.5){
+								tailState = 2;	
+							}
+						} else if (tailState == 2){
+							nodeHead.rotation.z += 0.025;
+							nodeHead2.rotation.z -= 0.01;
+							nodeHead3.rotation.z -= 0.01;
+							nodeHead4.rotation.z += 0.005;
+							nodeHead5.rotation.z += 0.00;
+								
+							if (nodeHead.rotation.z >= 0){
+								tailState = 1;	
+								}
+						}
+								
+				}				
+			}
+				
+			
         };
 		
-		
-
+			
 
         // this module only exports the constructor for Scene objects
         return Scene;

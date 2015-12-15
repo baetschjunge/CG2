@@ -380,23 +380,15 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 						if(document.getElementById("CheckBoxAnimateLegs").checked==true)
 						requestAnimationFrame( render ); 
 						scope.animateLegs();
-						
+						scope.animateTail();
 						//	scene.renderer.render(scene, camera);
 
-				};
-					
+				};	
 				
-					render();
-				
-				
-				
-				
-					
-				
-			
-									
+					render();					
             }));
-			
+            
+            
 			$("#newRobot").click( (function() {
 
 				var robot = new Robot();

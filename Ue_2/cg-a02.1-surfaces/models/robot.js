@@ -233,8 +233,8 @@ define(["three"],
 			this.tailMidJoint4.name = "tailMidJoint4";
 			
 			this.tailPart5 = new THREE.Object3D();
-			this.tailPart5.translateX(+tailPart5Size[2]/3);
-			this.tailPart5.translateY(-tailPart5Size[2]/3);
+			this.tailPart5.translateX(+tailPart5Size[2]/2);
+			this.tailPart5.translateY(-tailMidJoint4Size[0]/2*3);
 			this.tailPart5.name = "tailPart5";
 			
 			
@@ -436,7 +436,7 @@ define(["three"],
 			this.footLeftFrontSkin.rotateX(+Math.PI*1/6);								 
 
 			// this is the tail skin
-			this.taillegJointRightSkin = new THREE.Mesh(new THREE.SphereGeometry( tailJointSize[0] , tailJointSize[1] , tailJointSize[2]), new THREE.MeshNormalMaterial());
+			this.tailJointRightSkin = new THREE.Mesh(new THREE.SphereGeometry( tailJointSize[0] , tailJointSize[1] , tailJointSize[2]), new THREE.MeshNormalMaterial());
 			this.tailPartSkin = new THREE.Mesh(new THREE.CylinderGeometry( tailPartSize[0] , tailPartSize[1] , tailPartSize[2], tailPartSize[3]), new THREE.MeshNormalMaterial());	
 			this.tailPartSkin.rotateZ(-(2*Math.PI)/3);	
 			this.tailMidlegJointRightSkin = new THREE.Mesh(new THREE.SphereGeometry( tailMidJointSize[0] , tailMidJointSize[1] , tailMidJointSize[2]), new THREE.MeshNormalMaterial());
@@ -449,7 +449,7 @@ define(["three"],
 			this.tailPart4Skin.rotateZ(-Math.PI/2);
 			this.tailMidJoint4Skin = new THREE.Mesh(new THREE.SphereGeometry( tailMidJoint4Size[0] , tailMidJoint4Size[1] , tailMidJoint4Size[2]), new THREE.MeshNormalMaterial());		
 			this.tailPart5Skin = new THREE.Mesh(new THREE.CylinderGeometry( tailPart5Size[0] , tailPart5Size[1] , tailPart5Size[2], tailPart5Size[3]), new THREE.MeshNormalMaterial());	
-			this.tailPart5Skin.rotateZ(-Math.PI*3/4);
+			this.tailPart5Skin.rotateZ(-Math.PI*3/5);
 			
 			// claws right
 			this.clawJointRightSkin = new THREE.Mesh(new THREE.SphereGeometry( clawJointSize[0] , clawJointSize[1] , clawJointSize[2]), new THREE.MeshNormalMaterial());	
@@ -522,7 +522,7 @@ define(["three"],
 			this.footLeftFront.add(this.footLeftFrontSkin);
 			
 			//tail
-			this.tailJoint.add(this.taillegJointRightSkin);	
+			this.tailJoint.add(this.tailJointRightSkin);	
 			this.tailPart.add(this.tailPartSkin);		
 			this.tailMidJoint.add(this.tailMidlegJointRightSkin);
 			this.tailPart2.add(this.tailPart2Skin);	
