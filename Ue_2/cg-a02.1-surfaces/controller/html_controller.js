@@ -446,11 +446,11 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
             }));
             
             
-            $("#BtnClearAll").click( (function() {
+            $("#BtnClearRun").click( (function() {
 
 			    var scope = scene.getScope(); 
 			      
-			      scope.clearAll();
+			      scope.clearRun();
             }));
             
             

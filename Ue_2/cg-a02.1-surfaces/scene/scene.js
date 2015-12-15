@@ -795,7 +795,7 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 					}
 				}
 		
-			this.clearAll = function(){
+			this.clearRun = function(){
 
 				var nodeHead0 = scope.scene.getObjectByName("torso",true);
 
@@ -823,6 +823,8 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				var nodeHead17 = scope.scene.getObjectByName("tighLeftBack",true);
                 var nodeHead18 = scope.scene.getObjectByName("jointMidLeftBack",true);
 				
+				var nodeHead19 = scope.scene.getObjectByName("clawJointRight",true);
+				var nodeHead20 = scope.scene.getObjectByName("clawJointLeft",true);
 				
 				// sets states back
 				rotateLegFront = 1;
@@ -922,7 +924,14 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				nodeHead18.rotation.x = 0;
 				nodeHead18.rotation.y = 0;
 				nodeHead18.rotation.z = 0;
-											
+				
+				nodeHead19.rotation.x = 0;
+				nodeHead19.rotation.y = 0;
+				nodeHead19.rotation.z = 0;
+				
+				nodeHead20.rotation.x = 0;
+				nodeHead20.rotation.y = 0;
+				nodeHead20.rotation.z = 0;							
 			}
 			
         };
