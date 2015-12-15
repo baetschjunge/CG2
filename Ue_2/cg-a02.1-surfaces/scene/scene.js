@@ -43,8 +43,14 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 			var rotateClawRight = true;
 			var rotateClawLeft = true;
 			
-			var rotateTail = true;
 			var tailState = 1;
+			
+			var clawState = 1;
+			var clawHugState = 1;
+			
+			var torsoState = 1;
+			
+			var jumpState = 1;
 			
             function onDocumentKeyDown(event){
                 // Get the key code of the pressed key
@@ -66,150 +72,6 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
                     console.log("cursor right");
                     scope.currentMesh.rotation.y += -0.05;
                     // key "a"
-                } else if(keyCode == 89) {
-					console.log("key Y");
-	                var nodeHead =  scope.scene.getObjectByName("legJointRight",true);
-	                var nodeHead2 = scope.scene.getObjectByName("legJointRight2",true);
-	                var nodeHead3 = scope.scene.getObjectByName("legJointRight3",true);
-	                var nodeHead4 = scope.scene.getObjectByName("legJointLeft3",true);
-	                var nodeHead5 = scope.scene.getObjectByName("legJointLeft2",true);
-	                var nodeHead6 = scope.scene.getObjectByName("legJointLeft",true);
-	                
-	                if (nodeHead) {
-		                if (rotateLegFront == 1) {
-			                nodeHead.rotation.x -= 0.05;
-							nodeHead.rotation.y += 0.05;
-								
-							nodeHead4.rotation.x += 0.05;
-							nodeHead4.rotation.y -= 0.05;
-														
-						
-							if (nodeHead.rotation.x <= -0.3){
-								rotateLegFront = 2;
-								if(rotateLegBack == null){
-									rotateLegBack = 1;
-								}
-							}
-		                } else if (rotateLegFront == 2) {
-			                nodeHead.rotation.x += 0.05;
-							nodeHead.rotation.y += 0.05;												
-
-												
-							nodeHead4.rotation.x -= 0.05;
-							nodeHead4.rotation.y -= 0.05;
-											
-							
-							if (nodeHead.rotation.y >= 0.6){
-								rotateLegFront = 3;	
-								if(rotateLegCenter == null){
-									rotateLegCenter = 1;
-								}
-							}
-		                } else if (rotateLegFront == 3){
-			                nodeHead.rotation.y -= 0.05;
-			                
-			                nodeHead4.rotation.y += 0.05;
-			               		              
-			                
-							if (nodeHead.rotation.y <= 0){
-								rotateLegFront = 1;	
-								
-								nodeHead.rotation.x = 0;
-								nodeHead.rotation.y = 0;
-																
-								nodeHead4.rotation.x = 0;
-								nodeHead4.rotation.y = 0;
-								
-								}
-		                }
-		                
-		                if (rotateLegCenter == 1) {
-			               
-							
-							nodeHead2.rotation.x -= 0.05;
-							nodeHead2.rotation.y += 0.05;
-							
-							nodeHead5.rotation.x += 0.05;
-							nodeHead5.rotation.y -= 0.05;
-												
-						
-							if (nodeHead2.rotation.x <= -0.3){
-								rotateLegCenter = 2;
-							}
-		                } else if (rotateLegCenter == 2) {
-			             
-							nodeHead2.rotation.x += 0.05;
-							nodeHead2.rotation.y += 0.05;
-														
-							nodeHead5.rotation.x -= 0.05;
-							nodeHead5.rotation.y -= 0.05;
-		
-							if (nodeHead2.rotation.y >= 0.6){
-								rotateLegCenter = 3;	
-							}
-		                } else if (rotateLegCenter == 3){
-			           
-			                nodeHead2.rotation.y -= 0.05;
-			                
-			                nodeHead5.rotation.y += 0.05;
-			           
-			                
-							if (nodeHead2.rotation.y <= 0){
-								rotateLegCenter = 1;								
-								
-								nodeHead2.rotation.x = 0;
-								nodeHead2.rotation.y = 0;
-								
-								nodeHead5.rotation.x = 0;
-								nodeHead5.rotation.y = 0;
-							
-								}
-		                }
-		                
-		                if (rotateLegBack == 1) {
-			               
-							
-							nodeHead3.rotation.x -= 0.05;
-							nodeHead3.rotation.y += 0.05;
-							
-							nodeHead6.rotation.x += 0.05;
-							nodeHead6.rotation.y -= 0.05;
-							
-						
-							if (nodeHead3.rotation.x <= -0.3){
-								rotateLegBack = 2;
-							}
-		                } else if (rotateLegBack == 2) {
-			             
-							nodeHead3.rotation.x += 0.05;
-							nodeHead3.rotation.y += 0.05;
-												
-							nodeHead6.rotation.x -= 0.05;
-							nodeHead6.rotation.y -= 0.05;
-							
-							
-							if (nodeHead3.rotation.y >= 0.6){
-								rotateLegBack = 3;	
-							}
-		                } else if (rotateLegBack == 3){
-			           
-			              
-			                
-			                nodeHead3.rotation.y -= 0.05;
-			                
-			                nodeHead6.rotation.y += 0.05;
-			                
-							if (nodeHead3.rotation.y <= 0){
-								rotateLegBack = 1;	
-								
-								nodeHead3.rotation.x = 0;
-								nodeHead3.rotation.y = 0;
-								
-								nodeHead6.rotation.x = 0;
-								nodeHead6.rotation.y = 0;
-							}
-		                }
-	                }        		  		                	
                 } else if(keyCode == 49) {
 					console.log("key 2");
 	                var nodeHead = scope.scene.getObjectByName("jointMidRightFront",true);
@@ -313,37 +175,42 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 					}	
                 } else if(keyCode == 48) {
 					console.log("key 0");
-	                var nodeHead =  scope.scene.getObjectByName("tailJoint",true);
-					var nodeHead2 = scope.scene.getObjectByName("tailMidJoint",true);
-					var nodeHead3 = scope.scene.getObjectByName("tailMidJoint2",true);
+	                var nodeHead =  scope.scene.getObjectByName("legJointRight",true);
+					var nodeHead2 =  scope.scene.getObjectByName("jointMidRightFront",true);
+					var nodeHead3 =  scope.scene.getObjectByName("tighRightFront",true);
+					//var nodeHead4 =  scope.scene.getObjectByName("clawPart2Left",true);
+					//var nodeHead2 = scope.scene.getObjectByName("clawJointLeft",true);
+					/*var nodeHead3 = scope.scene.getObjectByName("tailMidJoint2",true);
 					var nodeHead4 = scope.scene.getObjectByName("tailMidJoint3",true);
 					var nodeHead5 = scope.scene.getObjectByName("tailMidJoint4",true);
-	                
+	                */
 	                
 	               if (nodeHead) {
-		                if (tailState == 1) {
-			                nodeHead.rotation.z -= 0.1;
-							nodeHead2.rotation.z += 0.04;
-							nodeHead3.rotation.z += 0.04;
-							nodeHead4.rotation.z -= 0.02;
-							nodeHead5.rotation.z -= 0.00;					
-						
-							if (nodeHead.rotation.z <= -1.5){
-								tailState = 2;	
+		                if (jumpState == 1) {
+			                nodeHead.rotation.x += 0.05;
+			                nodeHead3.position.y += 0.5;
+							nodeHead3.position.z += 0.4;
+			                
+			                nodeHead2.rotation.x -= 0.035;
+			                					
+							console.log(nodeHead.rotation.x);
+							if (nodeHead.rotation.x >= 1.45){
+								jumpState = 2;	
 								}
-							} else if (tailState == 2){
-								nodeHead.rotation.z += 0.025;
-								nodeHead2.rotation.z -= 0.01;
-								nodeHead3.rotation.z -= 0.01;
-								nodeHead4.rotation.z += 0.005;
-								nodeHead5.rotation.z += 0.00;
+							} else if (jumpState == 2){
+								nodeHead.rotation.x -= 0.05;
+								nodeHead3.position.y -= 0.5;
+								nodeHead3.position.z -= 0.4;
+			                
+								nodeHead2.rotation.x += 0.035;
 								
-								if (nodeHead.rotation.z >= 0){
-									tailState = 1;	
+								console.log(nodeHead.rotation.z);
+								if (nodeHead.rotation.x <= 0){
+									jumpState = 1;	
 								}
 							}
 								
-						}
+					}
 				}
 					
                 
@@ -545,11 +412,11 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				
 				if (nodeHead) {
 		                if (tailState == 1) {
-			                nodeHead.rotation.z -= 0.1;
-							nodeHead2.rotation.z += 0.04;
-							nodeHead3.rotation.z += 0.04;
-							nodeHead4.rotation.z -= 0.02;
-							nodeHead5.rotation.z -= 0.00;					
+			                nodeHead.rotation.z -= 0.3;
+							nodeHead2.rotation.z += 0.12;
+							nodeHead3.rotation.z += 0.12;
+							nodeHead4.rotation.z -= 0.06;
+							nodeHead5.rotation.z -= 0.0;					
 						
 							if (nodeHead.rotation.z <= -1.5){
 								tailState = 2;	
@@ -568,9 +435,97 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 								
 				}				
 			}
+		 
+			this.animateClawsRun = function(){
+		        
+		        var nodeHead =  scope.scene.getObjectByName("clawJointRight",true);
+				var nodeHead2 = scope.scene.getObjectByName("clawJointLeft",true);
+						
+		                
+		        if (nodeHead) {
+			       if (clawState == 1) {
+				      	nodeHead.rotation.z -= 0.00375;
+					  	nodeHead2.rotation.z += 0.00375;					
+						if (nodeHead.rotation.z <= -0.05){
+							clawState = 2;	
+						}
+					} else if (clawState == 2){
+						nodeHead.rotation.z += 0.00375;
+						nodeHead2.rotation.z -= 0.00375;
+						if (nodeHead.rotation.z >= 0.05){
+							clawState = 1;	
+						}
+					}				
+				}   
+			}		
+		
+			this.animateTorsoRun = function(){
 				
+				var nodeHead =  scope.scene.getObjectByName("torso",true);
+	                
+	               if (nodeHead) {
+		                if (torsoState == 1) {
+			                nodeHead.rotation.z -= 0.00075;					
+							if (nodeHead.rotation.z <= -0.01){
+								torsoState = 2;	
+								}
+							} else if (torsoState == 2){
+								nodeHead.rotation.z += 0.00075;
+								if (nodeHead.rotation.z >= 0.01){
+									torsoState = 1;	
+								}
+							}	
+						}
+			}
+			
+			this.animateClawHug = function(){
+					var nodeHead =  scope.scene.getObjectByName("clawPart3Right",true);
+					var nodeHead2 =  scope.scene.getObjectByName("clawPart2Right",true);
+					var nodeHead3 =  scope.scene.getObjectByName("clawPart3Left",true);
+					var nodeHead4 =  scope.scene.getObjectByName("clawPart2Left",true);
+	                
+	               if (nodeHead) {
+		                if (clawHugState == 1) {
+			                nodeHead.rotation.y -= 0.05;
+			                nodeHead.position.z += 0.5;
+			                nodeHead2.rotation.y += 0.015;
+			                nodeHead2.position.z -= 0.5;
+			                
+			                nodeHead3.rotation.y += 0.05;
+							nodeHead3.position.z -= 0.5;
+							nodeHead4.rotation.y -= 0.015;
+							nodeHead4.position.z += 0.5;
+			                					
+							console.log(nodeHead.translateX);
+							if (nodeHead.rotation.y <= -0.5){
+								clawHugState = 2;	
+								}
+							} else if (clawHugState == 2){
+								nodeHead.rotation.y += 0.05;
+								nodeHead.position.z -= 0.5;
+								nodeHead2.rotation.y -= 0.015;
+								nodeHead2.position.z += 0.5;
+								
+								nodeHead3.rotation.y -= 0.05;
+								nodeHead3.position.z += 0.5;
+				                nodeHead4.rotation.y += 0.015;
+				                nodeHead4.position.z -= 0.5;
+								
+								console.log(nodeHead.rotation.z);
+								if (nodeHead.rotation.y >= 0){
+									clawHugState = 1;	
+								}
+							}
+								
+					}
+			}
+		
+		
+		
+		
 			
         };
+       
 		
 			
 

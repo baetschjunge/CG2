@@ -380,13 +380,53 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 						if(document.getElementById("CheckBoxAnimateLegs").checked==true)
 						requestAnimationFrame( render ); 
 						scope.animateLegs();
-						scope.animateTail();
+						//scope.animateTail();
+						scope.animateClawsRun();
+						scope.animateTorsoRun();
+						//scope.animateClawHug();
 						//	scene.renderer.render(scene, camera);
 
 				};	
 				
 					render();					
             }));
+            
+            $("#CheckBoxAnimateTail").click( (function() {
+
+			    var scope = scene.getScope(); 
+			    
+			    
+			    var render = function () {
+			      
+			      if(document.getElementById("CheckBoxAnimateTail").checked==true)
+			      requestAnimationFrame( render ); 
+			     
+			      scope.animateTail();
+			      // scene.renderer.render(scene, camera);
+			
+			    }; 
+			    
+			     render();     
+            }));
+            
+            $("#CheckBoxAnimateClaws").click( (function() {
+
+			    var scope = scene.getScope(); 
+			    
+			    
+			    var render = function () {
+			      
+			      if(document.getElementById("CheckBoxAnimateClaws").checked==true)
+			      requestAnimationFrame( render ); 
+			     
+			      scope.animateClawHug();
+			      // scene.renderer.render(scene, camera);
+			
+			    }; 
+			    
+			     render();     
+            }));
+            
             
             
 			$("#newRobot").click( (function() {
