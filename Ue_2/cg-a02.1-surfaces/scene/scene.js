@@ -36,7 +36,9 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
             // Add a listener for 'keydown' events. By this listener, all key events will be
             // passed to the function 'onDocumentKeyDown'. There's another event type 'keypress'.
             document.addEventListener("keydown", onDocumentKeyDown, false);
-
+			
+			
+			// beginning states for animations
 			var rotateLegFront = 1;
 			var rotateLegCenter = null;
 			var rotateLegBack = null;
@@ -55,6 +57,9 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 			
 			var faceState = 0;
 			
+			var noseState = 0;
+			
+			// animations on seperate keys
             function onDocumentKeyDown(event){
                 // Get the key code of the pressed key
                 var keyCode = event.which;
@@ -74,77 +79,82 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
                 } else if(keyCode == 39){
                     console.log("cursor right");
                     scope.currentMesh.rotation.y += -0.05;
-                    // key "a"
+				// Robot
+				// LEGS
+				// key "1" animate Right Front Leg
                 } else if(keyCode == 49) {
-					console.log("key 2");
+					console.log("key 1");
 	                var nodeHead = scope.scene.getObjectByName("jointMidRightFront",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
+	            // key "2" animate Right Center Leg    	
                 } else if(keyCode == 50) {
 					console.log("key 2");
 	                var nodeHead = scope.scene.getObjectByName("jointMidRightCenter",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
+	            // key "3" animate Right Back Leg
                 } else if(keyCode == 51) {
 					console.log("key 3");
 	                var nodeHead = scope.scene.getObjectByName("jointMidRightBack",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
+             	// key "4" animate Left Front Leg
                 } else if(keyCode == 52) {
 					console.log("key 4");
 	                var nodeHead = scope.scene.getObjectByName("jointMidLeftFront",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
+	            // key "5" animate Left Center Leg
                 } else if(keyCode == 53) {
 					console.log("key 5");
 	                var nodeHead = scope.scene.getObjectByName("jointMidLeftCenter",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
+               	// key "6" animate Left Back Leg
                 } else if(keyCode == 54) {
 					console.log("key 6");
 	                var nodeHead = scope.scene.getObjectByName("jointMidLeftBack",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
-                } else if(keyCode == 55) {
-					console.log("key 7");
-	                var nodeHead = scope.scene.getObjectByName("clawsJointMidRight",true);
-	                if (nodeHead) 
-	                	nodeHead.rotation.z +=0.05;
-                } else if(keyCode == 56) {
-					console.log("key 8");
-	                var nodeHead = scope.scene.getObjectByName("clawsJointMidLeft",true);
-	                if (nodeHead) 
-	                	nodeHead.rotation.z +=0.05;
-                } else if(keyCode == 81) { // TAIL
+	            // TAIL
+				// key "Q" animate TailJoint0
+                } else if(keyCode == 81) {
 					console.log("key Q");
 	                var nodeHead = scope.scene.getObjectByName("tailJoint",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z -=0.05;
 	                	console.log(nodeHead.rotation.z);
+	            // key "W" animate TailJoint1
                 } else if(keyCode == 87) {
 					console.log("key W");
 	                var nodeHead = scope.scene.getObjectByName("tailMidJoint",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
 	                	console.log(nodeHead.rotation.z);
+	            // key "E" animate TailJoint2
                 } else if(keyCode == 69) {
 					console.log("key E");
 	                var nodeHead = scope.scene.getObjectByName("tailMidJoint2",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z +=0.05;
 	                	console.log(nodeHead.rotation.z);
+	            // key "R" animate TailJoint3
                 } else if(keyCode == 82) {
 					console.log("key R");
 	                var nodeHead = scope.scene.getObjectByName("tailMidJoint3",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z -=0.05;
 	                	console.log(nodeHead.rotation.z);
+	            // key "T" animate TailJoint4   	
                 } else if(keyCode == 84) {
 					console.log("key T");
 	                var nodeHead = scope.scene.getObjectByName("tailMidJoint4",true);
 	                if (nodeHead) 
 	                	nodeHead.rotation.z -=0.05;
 	                	console.log(nodeHead.rotation.z);
+	            // CLAWS
+	            // key "Z" animate Right Claw    	
                 } else if(keyCode == 90) {
 					console.log("key Z");
 	                var nodeHead = scope.scene.getObjectByName("clawJointMidRight",true);
@@ -159,12 +169,10 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 								rotateClawLeft = true; 
 							}
 					}
-	                
+	            // key "U" animate Left Claw    
                 } else if(keyCode == 85) {
 					console.log("key U");
 	                var nodeHead = scope.scene.getObjectByName("clawJointMidLeft",true);
-	                
-	                
 	                if (nodeHead) {
 	                	if (rotateClawRight){ 
 	                			nodeHead.rotation.x +=0.05;
@@ -176,27 +184,8 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 								rotateClawRight = true; 
 							}
 					}	
-                } else if(keyCode == 48) {
-					console.log("key 0");
-	                var nodeHead =  scope.scene.getObjectByName("nose",true);
-	                var nodeHead2 =  scope.scene.getObjectByName("eyeRight",true);
-					var nodeHead3 =  scope.scene.getObjectByName("eyeLeft",true);
-
-	               if (nodeHead) {
-	               		if (jumpState == 0) {
-			                //right
-			                nodeHead.rotation.x += 2;
-			                nodeHead2.rotation.x -= 0.05;
-					        nodeHead3.rotation.x += 0.05;
-			                				
-						}
-					}
-					
-                }
-                 	
+                } // test key 0 else if(keyCode == 48) {}    	
             };
-            
-            
             
             
 			//q81 w87 e69 r82 t84
@@ -205,14 +194,12 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 
                 scope.currentMesh = bufferGeometry.getMesh();
                 scope.scene.add( scope.currentMesh );
-
             };
 			
 			this.addBufferGeometryPoints = function(bufferGeometryPoints) {
 
                 scope.currentMesh = bufferGeometryPoints.getMesh();
                 scope.scene.add( scope.currentMesh );
-
             };
 			
 			this.addMesh = function(mesh){
@@ -228,13 +215,14 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
                 requestAnimFrame( scope.draw );
 
                 scope.renderer.render(scope.scene, scope.camera);
-
             };
 			
 			this.getScope = function() {
                 return this;
             };
             
+            
+            // animate Legs when running
             this.animateLegs = function(){
 	            	var nodeHead =  scope.scene.getObjectByName("legJointRight",true);
 	                var nodeHead2 = scope.scene.getObjectByName("legJointRight2",true);
@@ -249,8 +237,7 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 							nodeHead.rotation.y += 0.025;
 								
 							nodeHead4.rotation.x += 0.025;
-							nodeHead4.rotation.y -= 0.025;
-														
+							nodeHead4.rotation.y -= 0.025;							
 						
 							if (nodeHead.rotation.x <= -0.3){
 								rotateLegFront = 2;
@@ -261,11 +248,9 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 		                } else if (rotateLegFront == 2) {
 			                nodeHead.rotation.x += 0.025;
 							nodeHead.rotation.y += 0.025;												
-
-												
+					
 							nodeHead4.rotation.x -= 0.025;
-							nodeHead4.rotation.y -= 0.025;
-											
+							nodeHead4.rotation.y -= 0.025;			
 							
 							if (nodeHead.rotation.y >= 0.6){
 								rotateLegFront = 3;	
@@ -275,9 +260,7 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 							}
 		                } else if (rotateLegFront == 3){
 			                nodeHead.rotation.y -= 0.025;
-			                
-			                nodeHead4.rotation.y += 0.025;
-			               		              
+			                nodeHead4.rotation.y += 0.025;	              
 			                
 							if (nodeHead.rotation.y <= 0){
 								rotateLegFront = 1;	
@@ -287,25 +270,19 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 																
 								nodeHead4.rotation.x = 0;
 								nodeHead4.rotation.y = 0;
-								
 								}
 		                }
-		                
 		                if (rotateLegCenter == 1) {
-			               
-							
 							nodeHead2.rotation.x -= 0.025;
 							nodeHead2.rotation.y += 0.025;
 							
 							nodeHead5.rotation.x += 0.025;
 							nodeHead5.rotation.y -= 0.025;
 												
-						
 							if (nodeHead2.rotation.x <= -0.3){
 								rotateLegCenter = 2;
 							}
 		                } else if (rotateLegCenter == 2) {
-			             
 							nodeHead2.rotation.x += 0.025;
 							nodeHead2.rotation.y += 0.025;
 														
@@ -316,11 +293,8 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 								rotateLegCenter = 3;	
 							}
 		                } else if (rotateLegCenter == 3){
-			           
 			                nodeHead2.rotation.y -= 0.025;
-			                
 			                nodeHead5.rotation.y += 0.025;
-			           
 			                
 							if (nodeHead2.rotation.y <= 0){
 								rotateLegCenter = 1;								
@@ -333,38 +307,28 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 							
 								}
 		                }
-		                
 		                if (rotateLegBack == 1) {
-			               
-							
 							nodeHead3.rotation.x -= 0.025;
 							nodeHead3.rotation.y += 0.025;
 							
 							nodeHead6.rotation.x += 0.025;
 							nodeHead6.rotation.y -= 0.025;
 							
-						
 							if (nodeHead3.rotation.x <= -0.3){
 								rotateLegBack = 2;
 							}
 		                } else if (rotateLegBack == 2) {
-			             
 							nodeHead3.rotation.x += 0.025;
 							nodeHead3.rotation.y += 0.025;
 												
 							nodeHead6.rotation.x -= 0.025;
 							nodeHead6.rotation.y -= 0.025;
 							
-							
 							if (nodeHead3.rotation.y >= 0.6){
 								rotateLegBack = 3;	
 							}
 		                } else if (rotateLegBack == 3){
-			           
-			              
-			                
 			                nodeHead3.rotation.y -= 0.025;
-			                
 			                nodeHead6.rotation.y += 0.025;
 			                
 							if (nodeHead3.rotation.y <= 0){
@@ -380,14 +344,13 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 	                }   
             }
             
+            // animate Tail when attacking
             this.animateTail = function(){
-				
 				var nodeHead =  scope.scene.getObjectByName("tailJoint",true);
 		        var nodeHead2 = scope.scene.getObjectByName("tailMidJoint",true);
 		        var nodeHead3 = scope.scene.getObjectByName("tailMidJoint2",true);
 		        var nodeHead4 = scope.scene.getObjectByName("tailMidJoint3",true);
 		        var nodeHead5 = scope.scene.getObjectByName("tailMidJoint4",true);
-				
 				
 				if (nodeHead) {
 		                if (tailState == 1) {
@@ -410,16 +373,14 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 							if (nodeHead.rotation.z >= 0){
 								tailState = 1;	
 								}
-						}
-								
+						}			
 				}				
 			}
-		 
+			
+			// animate Claws while running
 			this.animateClawsRun = function(){
-		        
 		        var nodeHead =  scope.scene.getObjectByName("clawJointRight",true);
-				var nodeHead2 = scope.scene.getObjectByName("clawJointLeft",true);
-						
+				var nodeHead2 = scope.scene.getObjectByName("clawJointLeft",true);		
 		                
 		        if (nodeHead) {
 			       if (clawState == 1) {
@@ -437,9 +398,9 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 					}				
 				}   
 			}		
-		
+			
+			// animate Torso while running
 			this.animateTorsoRun = function(){
-				
 				var nodeHead =  scope.scene.getObjectByName("torso",true);
 	                
 	               if (nodeHead) {
@@ -453,10 +414,11 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 								if (nodeHead.rotation.z >= 0.01){
 									torsoState = 1;	
 								}
-							}	
-						}
+						}	
+					}
 			}
 			
+			// animate Claw Hug
 			this.animateClawHug = function(){
 					var nodeHead =  scope.scene.getObjectByName("clawPart3Right",true);
 					var nodeHead2 =  scope.scene.getObjectByName("clawPart2Right",true);
@@ -475,7 +437,6 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 							nodeHead4.rotation.y -= 0.015;
 							nodeHead4.position.z += 0.5;
 			                					
-							console.log(nodeHead.translateX);
 							if (nodeHead.rotation.y <= -0.5){
 								clawHugState = 2;	
 								}
@@ -490,18 +451,15 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				                nodeHead4.rotation.y += 0.015;
 				                nodeHead4.position.z -= 0.5;
 								
-								console.log(nodeHead.rotation.z);
 								if (nodeHead.rotation.y >= 0){
 									clawHugState = 1;	
 								}
-							}
-								
+							}		
 					}
 			}
-		
+			
+			// animate Jump Up
 			this.animateJumpUp = function() {
-				
-					
 	                var nodeHead =  scope.scene.getObjectByName("legJointRight",true);
 	                var nodeHead2 =  scope.scene.getObjectByName("tighRightFront",true);
 					var nodeHead3 =  scope.scene.getObjectByName("jointMidRightFront",true);
@@ -532,7 +490,6 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 					var nodeHead21 = scope.scene.getObjectByName("clawJointRight",true);
 					var nodeHead22 = scope.scene.getObjectByName("clawJointLeft",true);
 					
-	                //var nodeHead23 = scope.scene.getObjectByName("torso",true);
 	               if (nodeHead) {
 	               		if (jumpState == 0) {
 			                //right
@@ -569,9 +526,6 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 					        nodeHead21.rotation.z = 0;
 					        nodeHead22.rotation.z = 0;
 					        
-					        //nodeHead23.position.y = 0;
-					        				
-							console.log(nodeHead.rotation.x);
 							if (nodeHead.rotation.x <= -0.35){
 								jumpState = 1;	
 								}
@@ -609,9 +563,7 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 					        //claws
 					        nodeHead21.rotation.z -= 0.01;
 					        nodeHead22.rotation.z -= 0.01;
-					        
-					        //nodeHead23.position.y += 30;
-							//console.log(nodeHead.rotation.x);
+
 							if (nodeHead.rotation.x >= 1.45){
 								jumpState = 2;	
 								}
@@ -649,21 +601,20 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 								//claws
 								nodeHead21.rotation.z += 0.005;
 								nodeHead22.rotation.z += 0.005;
-								
-								//nodeHead23.position.y -= 15;
-								//console.log(nodeHead.rotation.z);
+
 								if (nodeHead.rotation.x <= 0){
 									jumpState = 0;	
 								}
-							}
-								
+							}	
 					}
-				}
-				
+			}
+			
+			// animate Face	
 			this.animateFace = function(){
-				var nodeHead =  scope.scene.getObjectByName("nose",true);
-                var nodeHead2 =  scope.scene.getObjectByName("eyeRight",true);
-				var nodeHead3 =  scope.scene.getObjectByName("eyeLeft",true);
+				var nodeHead = scope.scene.getObjectByName("nose",true);
+                var nodeHead2 = scope.scene.getObjectByName("eyeRight",true);
+				var nodeHead3 = scope.scene.getObjectByName("eyeLeft",true);
+				var nodeHead4 = scope.scene.getObjectByName("hat",true);
 
                 if (nodeHead) {
                		if (jumpState == 0) {
@@ -671,13 +622,13 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 		                nodeHead.rotation.x += 2;
 		                nodeHead2.rotation.x -= 0.05;
 				        nodeHead3.rotation.x += 0.05;
-		                				
-					}
+				        nodeHead4.rotation.y += 0.05;
+				    }
 				}
 			}	
-		
+			
+			// clear Run Animation
 			this.clearRun = function(){
-
 				var nodeHead0 = scope.scene.getObjectByName("torso",true);
 
 				var nodeHead =  scope.scene.getObjectByName("legJointRight",true);
@@ -707,6 +658,8 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				var nodeHead19 = scope.scene.getObjectByName("clawJointRight",true);
 				var nodeHead20 = scope.scene.getObjectByName("clawJointLeft",true);
 				
+				var nodeHead21 = scope.scene.getObjectByName("nose",true);
+				
 				// sets states back
 				rotateLegFront = 1;
 				rotateLegCenter = null;
@@ -721,18 +674,17 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				
 				jumpState = 0;
 				
+				noseState = 0;
 				
+				// torso
 				nodeHead0.rotation.x = 0;
 				nodeHead0.rotation.y = 0;
 				nodeHead0.rotation.z = 0;
 				
-				// right
-				/*
-				nodeHead2.position.x = 0;
-				nodeHead2.position.y = 0;
-				nodeHead2.position.z = 0;
-				*/
+				// nose
+				nodeHead21.position.x = 55;
 				
+				// right
 				nodeHead.rotation.x = 0;
 				nodeHead.rotation.y = 0;
 				nodeHead.rotation.z = 0;
@@ -806,6 +758,7 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				nodeHead18.rotation.y = 0;
 				nodeHead18.rotation.z = 0;
 				
+				// claws
 				nodeHead19.rotation.x = 0;
 				nodeHead19.rotation.y = 0;
 				nodeHead19.rotation.z = 0;
@@ -815,14 +768,23 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				nodeHead20.rotation.z = 0;							
 			}
 			
+			// animate shooting the nose	
+			this.animateShot = function(){
+				var nodeHead =  scope.scene.getObjectByName("nose",true);
+					
+				if (nodeHead) {
+                	if (noseState == 0){ 
+                		nodeHead.position.x += 50;
+                		
+                		if (nodeHead.position.x >= 1000){
+			                nodeHead.position.x = 55;	
+			                }	
+                		} 	
+				}
+			}	
         };
-       
-		
-			
 
         // this module only exports the constructor for Scene objects
         return Scene;
 
     })); // define
-
-    

@@ -56,7 +56,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#ellipsoid").hide();
 			}));
 			
-
+			// create random pointcloud
             $("#btnNewRandom").click( (function() {
 
                 var numPoints = parseInt($("#numItems").attr("value"));
@@ -68,7 +68,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                 scene.addBufferGeometryPoints(bufferGeometryRandom);
             }));
 
-
+			// create band
             $("#btnNewBand").click( (function() {
 
                 var config = {
@@ -87,13 +87,14 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                 scene.addBufferGeometry(bufferGeometryBand);
             }));
 			
+			// create ellipsoid
 			$("#btnNewEllipsoid").click( (function() {
 
 
                 var config = {
                     segments : parseInt($("#numSegmentsEllipsoid").attr("value")),
                     umin : 0,
-                    umax : 2*Math.PI,
+                    umax : 2*Math.PI+0.125,
                     vmin : 0,
                     vmax : Math.PI
                 };
@@ -121,11 +122,9 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				  bufferGeometryParametric2.addAttribute("color", parametric.getColors());
 
                 scene.addBufferGeometry(bufferGeometryParametric);
-             //   scene.addBufferGeometry(bufferGeometryParametric2);
-                
-
             }));
 			
+			// create p.surface
 			$("#btnNewParametric").click( (function() {
 
                 var config = {
@@ -143,7 +142,6 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                     return [x,y,z];
                 };
 
-
               var parametric = new Parametric(posFunc, config);
 			  
 			  var bufferGeometryParametric = new BufferGeometry();
@@ -155,11 +153,9 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				  bufferGeometryParametric2.addAttribute("color", parametric.getColors());
 				  
                 scene.addBufferGeometry(bufferGeometryParametric);
-               // scene.addBufferGeometry(bufferGeometryParametric2);
-                
-
             }));
 			
+			// create pyramide
 			$("#btnNewParametric2").click( (function() {
 
 
@@ -178,7 +174,6 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                     return [x,y,z];
                 };
 
-
               var parametric = new Parametric(posFunc, config);
 			  
 			 var bufferGeometryParametric = new BufferGeometry();
@@ -190,11 +185,9 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				  bufferGeometryParametric2.addAttribute("color", parametric.getColors());
 				  
                   scene.addBufferGeometry(bufferGeometryParametric);
-				 // scene.addBufferGeometry(bufferGeometryParametric2);
-                
-
             }));
 			
+			// create torus
 			$("#btnNewParametric3").click( (function() {
 
                 var config = {
@@ -212,7 +205,6 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                     return [x,y,z];
                 };
 
-
               var parametric = new Parametric(posFunc, config);
 			  
 			  var bufferGeometryParametric = new BufferGeometry();
@@ -225,9 +217,6 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				  
 				console.log(parametric.getIndices());
                 scene.addBufferGeometry(bufferGeometryParametric);
-              //  scene.addBufferGeometry(bufferGeometryParametric2);
-                
-
             }));
             
 			// rotationcheckbox
@@ -241,15 +230,12 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 						requestAnimationFrame( render ); 
 						scope.currentMesh.rotation.x += 0.01; 
 						scope.currentMesh.rotation.y += 0.01; 
-						
-						//	scene.renderer.render(scene, camera);
 
 				};
 					
 				if(checked){
 					render();
-				}
-									
+				}						
             }));
             
 			// wireframe checkbox
@@ -263,8 +249,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 					} else {
 					
 						scope.currentMesh.material.wireframe = false;
-					}
-									
+					}						
             }));
 			
 			// wireframe checkbox ellipsoid
@@ -291,9 +276,6 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 						requestAnimationFrame( render ); 
 						scope.currentMesh.rotation.x += 0.04; 
 						scope.currentMesh.rotation.y += 0.04; 
-						
-						//	scene.renderer.render(scene, camera);
-
 				};
 					
 				if(checked){
@@ -306,9 +288,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
             $("#CheckBoxPoints").click( (function() {
 
 			    var checked = $("#CheckBoxPoints").attr("checked");
-				var scope = scene.getScope();	
-				
-									
+				var scope = scene.getScope();											
             }));
 			
 			// wireframe checkbox
@@ -322,8 +302,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 					} else {
 					
 						scope.currentMesh.material.wireframe = false;
-					}
-									
+					}									
             }));
             
             //solidcheckbox
@@ -337,15 +316,12 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 						requestAnimationFrame( render ); 
 						scope.currentMesh.rotation.x += 0.04; 
 						scope.currentMesh.rotation.y += 0.04; 
-						
-						//	scene.renderer.render(scene, camera);
 
 				};
 					
 				if(checked){
 					render();
-				}
-									
+				}									
             }));
 
 			// pointscheckbox
@@ -359,18 +335,16 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 						requestAnimationFrame( render ); 
 						scope.currentMesh.rotation.x += 0.04; 
 						scope.currentMesh.rotation.y += 0.04; 
-						
-						//	scene.renderer.render(scene, camera);
 
 				};
 					
 				if(checked){
 					render();
-				}
-									
+				}									
             }));
             
-              $("#CheckBoxAnimateRun").click( (function() {
+            // animate running of robot
+            $("#CheckBoxAnimateRun").click( (function() {
 
 				var scope = scene.getScope();	
 				
@@ -383,13 +357,13 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 						scope.animateClawsRun();
 						scope.animateTorsoRun();
 						scope.animateFace();
-						//	scene.renderer.render(scene, camera);
-
+						
 				};	
 				
 					render();					
             }));
             
+            // animate attacking tail
             $("#CheckBoxAnimateTail").click( (function() {
 
 			    var scope = scene.getScope(); 
@@ -401,13 +375,13 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 			      requestAnimationFrame( render ); 
 			     
 			      scope.animateTail();
-			      // scene.renderer.render(scene, camera);
-			
+
 			    }; 
 			    
 			     render();     
             }));
             
+            // animate claw hugging
             $("#CheckBoxAnimateClaws").click( (function() {
 
 			    var scope = scene.getScope(); 
@@ -419,32 +393,41 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 			      requestAnimationFrame( render ); 
 			     
 			      scope.animateClawHug();
-			      // scene.renderer.render(scene, camera);
-			
+
 			    }; 
 			    
 			     render();     
             }));
             
+            // animate jumping up
             $("#CheckBoxAnimateJump").click( (function() {
-
 			    var scope = scene.getScope(); 
-			    
-			    
 			    var render = function () {
 			      
 			      if(document.getElementById("CheckBoxAnimateJump").checked==true)
 			      requestAnimationFrame( render ); 
 			     
 			      scope.animateJumpUp();
-			      // scene.renderer.render(scene, camera);
-			
 			    }; 
 			    
 			     render();     
             }));
             
+            // animate shooting
+            $("#CheckBoxAnimateShot").click( (function() {
+			    var scope = scene.getScope(); 
+			    var render = function () {
+			      
+			      if(document.getElementById("CheckBoxAnimateShot").checked==true)
+			      requestAnimationFrame( render ); 
+			     
+			      scope.animateShot();
+			    }; 
+			    
+			     render();     
+            }));
             
+            // clear run movement
             $("#BtnClearRun").click( (function() {
 
 			    var scope = scene.getScope(); 
@@ -452,10 +435,12 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 			      scope.clearRun();
             }));
             
-            
+            // create new robot
 			$("#newRobot").click( (function() {
 				
-				 var config = {
+				// parametric surfaces
+				// pyramide
+				var config = {
                     segments : parseInt($("#numSegmentsPara").attr("value")),
                     umin : -Math.PI,
                     umax : Math.PI,
@@ -469,30 +454,45 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                     var z = eval("Math.cos(u+v)*200");
                     return [x,y,z];
                 };
+                
+                // torus
+                var config2 = {
+                    segments : parseInt($("#numSegmentsPara").attr("value")),
+                    umin : 0,
+                    umax : 2*Math.PI + 0.13,
+                    vmin : 0,
+                    vmax : 2*Math.PI
+                };
+				
+				var posFunc2 = function(u,v) {
+                    var x = eval("((5+2*Math.cos(v))*Math.cos(u))*50");
+                    var y = eval("((5+2*Math.cos(v))*Math.sin(u))*50");
+                    var z = eval("2*Math.sin(v)*50");
+                    return [x,y,z];
+                };
 
-
-              var parametric = new Parametric(posFunc, config);
+              var parametric = new Parametric(posFunc, config); // pyramide
+              var parametric2 = new Parametric(posFunc2, config2); // torus
 			  
+			  // pyramide
 			  var bufferGeometryParametric = new BufferGeometry();
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
 				  bufferGeometryParametric.setIndex(parametric.getIndices());
 			  
+			  // torus
+			  var bufferGeometryParametric2 = new BufferGeometry();
+                  bufferGeometryParametric2.addAttribute("position", parametric2.getPositions());
+                  bufferGeometryParametric2.addAttribute("color", parametric2.getColors());
+				  bufferGeometryParametric2.setIndex(parametric2.getIndices());
 				
 				
-				var robot = new Robot(bufferGeometryParametric);
-				scene.addMesh(robot.getMesh());
-				
-									
+				var robot = new Robot(bufferGeometryParametric,bufferGeometryParametric2);
+				scene.addMesh(robot.getMesh());						
             }));
         };
 
         // return the constructor function
         return HtmlController;
 
-
     })); // require
-
-
-
-            
