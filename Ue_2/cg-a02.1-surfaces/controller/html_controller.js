@@ -454,10 +454,35 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
             
             
 			$("#newRobot").click( (function() {
+				
+				 var config = {
+                    segments : parseInt($("#numSegmentsPara").attr("value")),
+                    umin : -Math.PI,
+                    umax : Math.PI,
+                    vmin : -Math.PI,
+                    vmax : Math.PI
+                };
+				
+				var posFunc = function(u,v) {
+                    var x = eval("Math.cos(u)*200");
+                    var y = eval("Math.cos(v)*200");
+                    var z = eval("Math.cos(u+v)*200");
+                    return [x,y,z];
+                };
 
-				var robot = new Robot();
+
+              var parametric = new Parametric(posFunc, config);
+			  
+			  var bufferGeometryParametric = new BufferGeometry();
+                  bufferGeometryParametric.addAttribute("position", parametric.getPositions());
+                  bufferGeometryParametric.addAttribute("color", parametric.getColors());
+				  bufferGeometryParametric.setIndex(parametric.getIndices());
+			  
+				
+				
+				var robot = new Robot(bufferGeometryParametric);
 				scene.addMesh(robot.getMesh());
-				console.log(robot);
+				
 									
             }));
         };
