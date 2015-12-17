@@ -683,6 +683,8 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				
 				// nose
 				nodeHead21.position.x = 55;
+				nodeHead21.scale.set(1,1,1);
+				nodeHead21.rotation.set(0,0,0);
 				
 				// right
 				nodeHead.rotation.x = 0;
@@ -774,10 +776,14 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 					
 				if (nodeHead) {
                 	if (noseState == 0){ 
-                		nodeHead.position.x += 50;
+                		nodeHead.position.x += 25;
+                		nodeHead.scale.x += 0.02;
+                		nodeHead.scale.y += 0.02;
+                		nodeHead.scale.z += 0.02;
                 		
                 		if (nodeHead.position.x >= 1000){
-			                nodeHead.position.x = 55;	
+			                nodeHead.position.x = 55;
+			                nodeHead.scale.set(1,1,1);	
 			                }	
                 		} 	
 				}
