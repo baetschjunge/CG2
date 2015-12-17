@@ -777,9 +777,9 @@ define(["three", "util", "shaders", "BufferGeometry","BufferGeometryPoints", "ra
 				if (nodeHead) {
                 	if (noseState == 0){ 
                 		nodeHead.position.x += 25;
-                		nodeHead.scale.x += 0.02;
-                		nodeHead.scale.y += 0.02;
-                		nodeHead.scale.z += 0.02;
+                		nodeHead.scale.x += 0.04;
+                		nodeHead.scale.y += 0.04;
+                		nodeHead.scale.z += 0.04;
                 		
                 		if (nodeHead.position.x >= 1000){
 			                nodeHead.position.x = 55;
