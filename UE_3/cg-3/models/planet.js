@@ -10,6 +10,7 @@ define(["three", "shaders"],
             this.root = new THREE.Object3D();
 
             // load and create required textures
+			var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('textures/earth_at_night_2048.jpg') } );
             
             var scope = this;
 
@@ -18,7 +19,8 @@ define(["three", "shaders"],
             
             // hint:
             // texture can be assigned only when it is loaded completely, e.g. like this
-            material.uniforms.daytimeTexture.value   = textureName;
+			
+			//  material.uniforms.daytimeTexture.value   = textureName;
             
             scope.mesh = new THREE.Mesh( new THREE.SphereGeometry(400, 100,100), material );
             scope.mesh.name = "planet";

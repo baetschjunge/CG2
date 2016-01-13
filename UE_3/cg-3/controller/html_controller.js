@@ -11,8 +11,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","parametric","robot"],
-    (function($,BufferGeometry,BufferGeometryPoints, Random, Band,Parametric,Robot) {
+define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","parametric","robot","planet","explosion"],
+    (function($,BufferGeometry,BufferGeometryPoints, Random, Band,Parametric,Robot,Planet,Explosion) {
         "use strict";
 
         /*
@@ -26,12 +26,14 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
             $("#band").hide();
 			$("#ellipsoid").hide();
 			$("#planet").hide();
+			$("#explosion").hide();
 			$("#parametric").show();
 
             $("#btnRandom").click( (function() {
                 $("#band").hide();
 				$("#parametric").hide();
 				$("#ellipsoid").hide();
+				$("#explosion").hide();
 				$("#planet").hide();
 				$("#random").show();
             }));
@@ -41,6 +43,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#parametric").hide();
 				$("#ellipsoid").hide();
 				$("#planet").hide();
+				$("#explosion").hide();
                 $("#band").show();
 				
             }));
@@ -57,6 +60,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                 $("#band").hide();
 				$("#parametric").show();
 				$("#planet").hide();
+				$("#explosion").hide();
 				$("#ellipsoid").hide();
 			}));
 			
@@ -65,6 +69,16 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
                 $("#band").hide();
 				$("#parametric").hide();
 				$("#planet").show();
+				$("#explosion").hide();
+				$("#ellipsoid").hide();
+			}));
+			
+			$("#btnExplosion").click( (function() {
+                $("#random").hide();
+                $("#band").hide();
+				$("#parametric").hide();
+				$("#planet").hide();
+				$("#explosion").show();
 				$("#ellipsoid").hide();
 			}));
 			
@@ -502,6 +516,20 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				var robot = new Robot(bufferGeometryParametric,bufferGeometryParametric2);
 				scene.addMesh(robot.getMesh());						
             }));
+			
+			$("#btnNewPlanet").click( (function() {
+				var planet = new Planet();
+						scene . addMesh( planet . getMesh () ) ;
+				var aLight = new THREE.AmbientLight( color ); 
+						scene.addLight( aLight );
+				var dlight = new THREE. DirectionalLight ( color , intensity ) ; 
+					dlight .name = "dLight";
+				//	dlight.position.set(−1,0,3).normalize();
+						scene.addLight( dlight ); 
+				
+					
+            }));
+			
         };
 
         // return the constructor function
