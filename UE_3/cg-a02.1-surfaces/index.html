@@ -1,0 +1,232 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <!--
+     *
+     * JavaScript / WebGL teaching framwork
+     * (C)opyright Kristian Hildebrand, khildebrand@beuth-hochschule.de
+	 * changes by Benjamin Bleckmann, Josef Strunk
+    -->
+
+    <title>CG2 A2: WebGL / Surfaces</title>
+
+    <!-- import main module using RequireJS -->
+    <script data-main="app.js" src="../lib/require.js"></script>
+
+    <!-- import style sheet -->
+    <link rel="stylesheet" type="text/css" media="screen" href="style/style.css">
+
+</head>
+
+<body>
+
+  <!-- this element will be used to diplay errors -->
+  <pre id="error"></pre>
+
+  <!-- centered region with drawing canvas and parameter area -->
+  <div align="center">
+
+      <div id="drawing_container" width="1000" height="600"></div>
+
+    <div id="param_area" >
+				Robot:	<button id="newRobot" type="button">Create Robot</button>
+				Animate <br>
+						<input id="CheckBoxAnimateRun" type="checkbox">Run</input><br>
+						<input id="CheckBoxAnimateClaws" type="checkbox">Claws</input><br>
+						<input id="CheckBoxAnimateTail" type="checkbox">Tail</input><br>
+						<input id="CheckBoxAnimateJump" type="checkbox">Jump</input><br>
+						<input id="CheckBoxAnimateShot" type="checkbox">Shot</input><br>
+						<button id="BtnClearRun" type="button">Clear Run</button><br><br>
+						<br>
+						<br>
+
+        <button id="btnRandom"   type="button"   >Random</button>
+        <button id="btnBand" type="button"   >Band</button>
+        <button id="btnEllipsoid" type="button"   >Ellipsoid</button>
+        <button id="btnParametric" type="button"   >Parametric</button>
+        <button id="btnPlanet" type="button"   >Planet</button>
+        <button id="btnExplosion" type="button"   >Explosion</button>
+		
+		
+
+        <!-- add more here... -->
+        <h3>Selected Object:</h3>
+        
+        
+        <table id="random">
+            <tr>
+                <td>Number of Items:</td>
+                <td><input id="numItems" class="objParam" type="number" min="1" max="10000" value="1000">
+            </tr>
+            <tr>
+                <td><button id="btnNewRandom"   type="button"   >Create Random</button></td>
+            </tr>
+        </table>
+        <table id="band">
+            <tr>
+                <td>Number of Segments:</td>
+                <td><input id="numSegments" class="objParam" type="number" min="1" max="10000" value="1000">
+            </tr>
+            <tr>
+                <td>Radius:</td>
+                <td><input id="radius" class="objParam" type="number" min="1" max="1000" value="300">
+            </tr>
+            <tr>
+                <td>Height:</td>
+                <td><input id="height" class="objParam" type="number" min="1" max="1000" value="100">
+            </tr>
+            <tr>
+                <td><button id="btnNewBand"   type="button">Create Band</button></td>
+            </tr>
+			
+        </table>
+		   <table id="ellipsoid">
+			 <tr>
+				<td>Wireframe:
+				</td>
+				<td>
+				<input id="CheckBoxWireframeElli" type="checkbox"></input>
+				</td>
+			</tr>
+        
+			<tr>
+				<td>Solid:
+				</td>
+				<td>
+				<input id="CheckBoxSolidElli" type="checkbox"></input>
+				</td>
+			</tr>
+			<tr>
+				<td>Points:
+				</td>
+				<td>
+				<input id="CheckBoxPointsElli" type="checkbox"></input>
+				</td>
+			</tr>
+			 <tr>
+                <td>Konstante a:</td>
+                <td><input id="constA" class="objParam" type="number" min="1" max="1000" value="2">
+            </tr>
+			 <tr>
+                <td>Konstante b:</td>
+                <td><input id="constB" class="objParam" type="number" min="1" max="1000" value="2">
+            </tr>
+			 <tr>
+                <td>Konstante c:</td>
+                <td><input id="constC" class="objParam" type="number" min="1" max="1000" value="2">
+            </tr>
+			 <tr>
+                <td>Segmente:</td>
+                <td><input id="numSegmentsEllipsoid" class="objParam" type="number" min="1" max="1000" value="50">
+            </tr>
+			<tr>
+                <td><button id="btnNewEllipsoid"   type="button">Create Ellipsoid</button></td>
+            </tr>
+			
+        </table>
+		
+		<table id="parametric">
+			<tr>
+				<td>Wireframe:
+				</td>
+				<td>
+				<input id="CheckBoxWireframe" type="checkbox"></input>
+				</td>
+			</tr>
+        
+			<tr>
+				<td>Solid:
+				</td>
+				<td>
+				<input id="CheckBoxSolid" type="checkbox"></input>
+				</td>
+			</tr>
+			<tr>
+				<td>Points:
+				</td>
+				<td>
+				<input id="CheckBoxPoints" type="checkbox"></input>
+				</td>
+			</tr>
+			<tr>
+                <td>x:</td>
+              <td><input id="x" class="objParam" type="String"  value="u*150">
+               
+            </tr>
+			<tr>
+                <td>y:</td>
+              <td><input id="y" class="objParam" type="String"  value="v*150">
+            </tr>
+			<tr>
+                <td>z:</td>
+                <td><input id="z" class="objParam" type="String" value="((1/3)*Math.pow(u,3) + (1/2)*Math.pow(v,2))*150">
+            </tr>
+			<tr>
+                <td>Number of Segments:</td>
+                <td><input id="numSegmentsPara" class="objParam" type="number" min="1" max="10000" value="50">
+            </tr>
+			<tr>
+                <td>u min:</td>
+                <td><input id="numUmin" class="objParam" type="number"  max="10000" value="-2">
+            </tr>
+			<tr>
+                <td>u max:</td>
+                <td><input id="numUmax" class="objParam" type="number"  max="10000" value="2">
+            </tr>
+			<tr>
+                <td>v min:</td>
+                <td><input id="numVmin" class="objParam" type="number"  max="10000" value="-2">
+            </tr>
+			<tr>
+                <td>v max</td>
+                <td><input id="numVmax" class="objParam" type="number"  max="10000" value="2">
+            </tr>
+			<tr> 
+				
+			</tr>
+			<tr> 
+				<td><button id="btnNewParametric" type="button">Create Parametric Surface</button></td>
+				<td><button id="btnNewParametric2" type="button">Create Pyramide</button></td>
+				<td><button id="btnNewParametric3" type="button">Create Torus</button></td>
+			</tr>
+			
+		</table>
+		
+		 <table id="planet">
+			<tr>
+				<td>Clouds:
+				</td>
+				<td>
+					<input id="CheckBoxClouds" type="checkbox"></input>
+				</td>
+			</tr>
+			<tr>
+				<td>Day Texture:
+				</td>
+				<td>
+					<input id="CheckBoxDayTexture" type="checkbox"></input>
+				</td>
+			</tr>
+			<tr>
+				<td>NightTexture:
+				</td>
+				<td>
+					<input id="CheckBoxNightTexture" type="checkbox"></input>
+				</td>
+			</tr>
+			<tr>
+                <td><button id="btnNewPlanet"   type="button">Create Planet</button></td>
+            </tr>
+        </table>
+		
+		Rotation: <input id="CheckBoxRotation" type="checkbox"> </input>
+
+    </div>
+
+
+
+  </div>
+
+</body>
+</html>
