@@ -1,13 +1,17 @@
-precision mediump float;
 
-
-// uniform lights (we only have the sun)
-uniform vec3 directionalLightColor[1];
-uniform vec3 directionalLightDirection[1];
-
+//represent the ambient Light
 uniform vec3 ambientLightColor[1];
 
+//represent the Directional Light
+
+uniform vec3 directionalLightDirection[MAX_DIR_LIGHTS];
+uniform vec3 directionalLightColor[MAX_DIR_LIGHTS];
+
 // uniform material constants k_a, k_d, k_s, alpha
+uniform vec3 phongAmbientMaterial;
+uniform vec3 phongDiffuseMaterial;
+uniform vec3 phongSpecularMaterial;
+uniform float phongShininessMaterial;
 
 // uniform sampler2D textures
 
@@ -18,7 +22,27 @@ uniform vec3 ambientLightColor[1];
 varying vec4 ecPosition;
 varying vec3 ecNormal;
 varying vec2 vUv;
+varying vec3 viewDir;
 
+//result from Vertex Shader
+varying vec3 fragColor;
+
+
+//define the phong function from the lecture
+vec3 phong(vec3 p,  vec3 n, vec3 v, vec3 lightDir, vec3 lightColor){
+    if(dot(v,n) < 0.0)
+        return vec3(0, 0, 0); // back-face
+        //lightDir definieren anscheinend nur ambient light
+    vec3 toLight = normalize(-lightDir);
+    vec3 reflectLight = reflect(-toLight, n);
+    float ndots = max( dot(toLight,n), 0.0);
+    float rdotv = max( dot(reflectLight, v), 0.0);
+    vec3 ambi = phongAmbientMaterial * ambientLightColor[0];
+    vec3 diff = phongDiffuseMaterial * ndots * lightColor;
+    vec3 spec = phongSpecularMaterial * pow(rdotv, phongShininessMaterial ) * lightColor;
+
+    return ambi + diff + spec;
+}
 
 void main() {
 
@@ -27,7 +51,7 @@ void main() {
     //vec3 color = texture2D(textureUniform, texCoord).rgb;
    
     // normalize normal after projection
-    
+
     // do we use a perspective or an orthogonal projection matrix?
     //bool usePerspective = projectionMatrix[2][3] != 0.0;
     // for perspective mode, the viewing direction (in eye coords) points
@@ -43,9 +67,9 @@ void main() {
     //       e.g. color = pow(color, vec3(0.6))*2.0;
     
     // vector from light to current point
-    vec3 l = normalize(directionalLightDirection[0]);
+    //vec3 l = normalize(directionalLightDirection[0]);
 
-    
+    /*
     // diffuse contribution
     vec3 diffuseCoeff = (daytimeTextureBool == 1 )? dayCol : diffuseMaterial;
     // clouds at day?
@@ -60,6 +84,15 @@ void main() {
 
     vec3 color = ambient + diffuse + specular;
 
-    gl_FragColor = vec4(color, 1.0);
+    // simply use interpolated colors computed in vertex shader
+    gl_FragColor = vec4(vColor, 1.0);
+
+    */
+
+    vec3 colornew = phong(ecPosition.xyz,ecNormal, viewDir, directionalLightDirection[0], directionalLightColor[0]);
+
+
+    //for testing the shader
+    gl_FragColor = vec4(colornew, 1);
 
 }

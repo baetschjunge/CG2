@@ -25,14 +25,20 @@ define(["three"],
             var radius = config.radius || 300;
             var height = config.height || 100;
 
-            this.positions = new Float32Array( 2*segments * 3);
-            this.colors = new Float32Array( 2*segments * 3 );
+            this.positions = new Float32Array( 2 * segments * 3);
+            this.colors = new Float32Array( 2 * segments * 3 );
+            //3.array länge = anzahl dreiecke * 3
+            //füllen mit richtigen indizeis, reihenfolge + indizies
+
+            //new indicies Array
+            //this.indicies = new Uint32Array( segments * segments * 3);
 
             var color = new THREE.Color();
 
             for(var i=0; i<this.positions.length; i+=6) {
 
                 // X and Z coordinates are on a circle around the origin
+                //var t = (i/segments)*Math.PI*2;
                 var t = (i/this.positions.length)*Math.PI*2;
                 var x = Math.sin(t) * radius;
                 var z = Math.cos(t) * radius;
@@ -49,7 +55,6 @@ define(["three"],
                 this.positions[ i + 3 ] = x;
                 this.positions[ i + 4 ] = y1;
                 this.positions[ i + 5 ] = z;
-
 
                 color.setRGB( 1,0,0 );
 
@@ -71,6 +76,12 @@ define(["three"],
                 return this.colors;
             };
 
+            /*
+            //getter for indicies array
+            this.getArrayIndicies = function(){
+                return this.indicies;
+            };
+            */
         };
 
         return Band;

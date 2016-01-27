@@ -25,9 +25,9 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
             $("#random").hide();
             $("#band").hide();
 			$("#ellipsoid").hide();
-			$("#planet").hide();
+			$("#planet").show();
 			$("#explosion").hide();
-			$("#parametric").show();
+			$("#parametric").hide();
 
             $("#btnRandom").click( (function() {
                 $("#band").hide();
@@ -202,7 +202,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 
               var parametric = new Parametric(posFunc, config);
 			  
-			 var bufferGeometryParametric = new BufferGeometry();
+			 var  bufferGeometryParametric = new BufferGeometry();
                   bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                   bufferGeometryParametric.addAttribute("color", parametric.getColors());
 				  bufferGeometryParametric.setIndex(parametric.getIndices());
@@ -519,13 +519,17 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 			
 			$("#btnNewPlanet").click( (function() {
 				var planet = new Planet();
-						scene . addMesh( planet . getMesh () ) ;
+						scene.addMesh( planet.getMesh () ) ;
+						
+				var color = new THREE.Color(1,0,0);
+				var intensity = 1;
 				var aLight = new THREE.AmbientLight( color ); 
 						scene.addLight( aLight );
-				var dlight = new THREE. DirectionalLight ( color , intensity ) ; 
-					dlight .name = "dLight";
-				//	dlight.position.set(−1,0,3).normalize();
-						scene.addLight( dlight ); 
+				var dLight = new THREE. DirectionalLight ( color , intensity ) ; 
+					dLight.name = "dLight";
+					//dLight.position.set( −1, 0, −0.3 ).normalize();
+					dLight.position.set(-1, 0, -0.3).normalize();
+					scene.addLight( dLight ); 
 				
 					
             }));
