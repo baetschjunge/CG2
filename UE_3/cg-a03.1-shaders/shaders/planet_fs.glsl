@@ -13,6 +13,8 @@ uniform vec3 phongDiffuseMaterial;
 uniform vec3 phongSpecularMaterial;
 uniform float phongShininessMaterial;
 
+uniform sampler2D dayTexture; 
+
 // uniform sampler2D textures
 
 // three js only supports int no bool
@@ -48,7 +50,7 @@ void main() {
 
 
     // get color from different textures
-    //vec3 color = texture2D(textureUniform, texCoord).rgb;
+    vec3 colorDay = texture2D(dayTexture, vUv).rgb;
    
     // normalize normal after projection
 
@@ -91,8 +93,10 @@ void main() {
 
     vec3 colornew = phong(ecPosition.xyz,ecNormal, viewDir, directionalLightDirection[0], directionalLightColor[0]);
 
+	vec3 dieFarbe = dot (colornew, colorDay);
 
     //for testing the shader
-    gl_FragColor = vec4(colornew, 1);
+    gl_FragColor = vec4(dieFarbe, 1);
+	
 
 }

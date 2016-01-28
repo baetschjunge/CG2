@@ -12,8 +12,10 @@ varying vec3 viewDir;
 void main() {
 
     //multiply with a vertex with 3 coordinates an 1 additional parameter
-    vec4 ecPosition = modelViewMatrix * vec4(position, 1.0);
-    vec3 ecNormal = normalMatrix * normal;
+    ecPosition = modelViewMatrix * vec4(position, 1.0);
+    ecNormal = normalMatrix * normal;
+	
+	vUv = uv;
 
     //perspective or orthogonal projection
     bool useOrtho = projectionMatrix[2][3] < 0.1;

@@ -28,6 +28,8 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 			$("#planet").show();
 			$("#explosion").hide();
 			$("#parametric").hide();
+			$("#robot_div").hide();
+		
 
             $("#btnRandom").click( (function() {
                 $("#band").hide();
@@ -36,6 +38,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#explosion").hide();
 				$("#planet").hide();
 				$("#random").show();
+				$("#robot_div").hide();
             }));
 
             $("#btnBand").click( (function() {
@@ -45,6 +48,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#planet").hide();
 				$("#explosion").hide();
                 $("#band").show();
+				$("#robot_div").hide();
 				
             }));
 			
@@ -62,6 +66,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#planet").hide();
 				$("#explosion").hide();
 				$("#ellipsoid").hide();
+				$("#robot_div").hide();
 			}));
 			
 			$("#btnPlanet").click( (function() {
@@ -71,6 +76,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#planet").show();
 				$("#explosion").hide();
 				$("#ellipsoid").hide();
+				$("#robot_div").hide();
 			}));
 			
 			$("#btnExplosion").click( (function() {
@@ -80,6 +86,17 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#planet").hide();
 				$("#explosion").show();
 				$("#ellipsoid").hide();
+				$("#robot_div").hide();
+			}));
+			
+			$("#btnRobot").click( (function() {
+                $("#random").hide();
+                $("#band").hide();
+				$("#parametric").hide();
+				$("#planet").hide();
+				$("#explosion").hide();
+				$("#ellipsoid").hide();
+				$("#robot_div").show();
 			}));
 			
 			// create random pointcloud
@@ -521,17 +538,34 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				var planet = new Planet();
 						scene.addMesh( planet.getMesh () ) ;
 						
-				var color = new THREE.Color(1,0,0);
+				var color = new THREE.Color(1,1,0);
 				var intensity = 1;
 				var aLight = new THREE.AmbientLight( color ); 
 						scene.addLight( aLight );
 				var dLight = new THREE. DirectionalLight ( color , intensity ) ; 
 					dLight.name = "dLight";
-					//dLight.position.set( −1, 0, −0.3 ).normalize();
 					dLight.position.set(-1, 0, -0.3).normalize();
 					scene.addLight( dLight ); 
 				
 					
+            }));
+			
+			 $("#CheckBoxClouds").click( (function() {
+				var scope = scene.getScope();
+			    if(document.getElementById("CheckBoxClouds").checked==true){
+					console.log("yo");
+				}
+				else{
+					console.log("yo");
+				};
+            }));
+			 $("#CheckBoxDayTexture").click( (function() {
+			
+			   
+            }));
+			
+			 $("#CheckBoxNightTexture").click( (function() {
+			      
             }));
 			
         };
