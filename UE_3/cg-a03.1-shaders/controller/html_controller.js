@@ -553,14 +553,20 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 			 $("#CheckBoxClouds").click( (function() {
 				var scope = scene.getScope();
 			    if(document.getElementById("CheckBoxClouds").checked==true){
-					console.log("yo");
+					scope.material.uniforms.cloudTextureBool.value=1;
 				}
 				else{
-					console.log("yo");
+					scope.material.uniforms.cloudTextureBool.value=0;					
 				};
             }));
 			 $("#CheckBoxDayTexture").click( (function() {
-			
+				var scope = scene.getScope();
+			    if(document.getElementById("CheckBoxDayTexture").checked==true){
+					scope.material.uniforms.dayTimeTextureBool.value=1;
+				}
+				else{
+					scope.material.uniforms.dayTimeTextureBool.value=0;					
+				};
 			   
             }));
 			

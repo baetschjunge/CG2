@@ -27,6 +27,8 @@ define(["three", "shaders"],
 							phongShininessMaterial:  { type: 'f', value: 16.0},
 							
 							dayTexture: 			 { type: 't' , value: null },
+							cloudTexture: 			 { type: 't' , value: null },
+							nightTexture: 			 { type: 't' , value: null },
 							
 						}
 					]
@@ -43,6 +45,8 @@ define(["three", "shaders"],
             //Define the texture for the planet with path
             //var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture(loader) } );
             material.uniforms.dayTexture.value = THREE.ImageUtils.loadTexture("textures/earth_month04.jpg");
+            material.uniforms.cloudTexture.value = THREE.ImageUtils.loadTexture("textures/earth_clouds_2048.jpg");
+            material.uniforms.nightTexture.value = THREE.ImageUtils.loadTexture("textures/earth_at_night_2048.jpg");
 
 
             scope.mesh = new THREE.Mesh( new THREE.SphereGeometry(600, 100,100), material );

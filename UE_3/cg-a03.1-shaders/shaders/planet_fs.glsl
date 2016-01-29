@@ -13,9 +13,16 @@ uniform vec3 phongDiffuseMaterial;
 uniform vec3 phongSpecularMaterial;
 uniform float phongShininessMaterial;
 
-uniform sampler2D dayTexture; 
+uniform int daytimeTextureBool;
+uniform int cloudsTextureBool;
 
 // uniform sampler2D textures
+
+uniform sampler2D dayTexture; 
+uniform sampler2D nightTexture; 
+uniform sampler2D cloudTexture; 
+
+
 
 // three js only supports int no bool
 // if you want a boolean value in the shader, use int
@@ -31,7 +38,7 @@ varying vec3 fragColor;
 
 
 //define the phong function from the lecture
-vec3 phong(vec3 p,  vec3 n, vec3 v, vec3 lightDir, vec3 lightColor){
+vec3 phong(vec3 p,  vec3 n, vec3 v, vec3 lightDir, vec3 lightColor,vec3 colorClouds,vec3 colorDay,vec3 colorNight){
     if(dot(v,n) < 0.0)
         return vec3(0, 0, 0); // back-face
         //lightDir definieren anscheinend nur ambient light
@@ -39,8 +46,20 @@ vec3 phong(vec3 p,  vec3 n, vec3 v, vec3 lightDir, vec3 lightColor){
     vec3 reflectLight = reflect(-toLight, n);
     float ndots = max( dot(toLight,n), 0.0);
     float rdotv = max( dot(reflectLight, v), 0.0);
-    vec3 ambi = phongAmbientMaterial * ambientLightColor[0];
-    vec3 diff = phongDiffuseMaterial * ndots * lightColor;
+	
+    vec3 ambi = colorNight * ambientLightColor[0];
+	// nacht
+	
+	vec3 diffuseCoeff = (daytimeTextureBool == 1 )? colorDay : phongDiffuseMaterial;
+    // clouds at day?
+    if(cloudsTextureBool == 1) {
+        diffuseCoeff = (1.0-colorClouds)*diffuseCoeff + colorClouds*vec3(1,1,1);
+    }
+	
+	//vec3 diffuse =  diffuseCoeff * directionalLightColor[0] * dot(n,l);
+	
+    vec3 diff = diffuseCoeff * ndots * lightColor;
+	//tag
     vec3 spec = phongSpecularMaterial * pow(rdotv, phongShininessMaterial ) * lightColor;
 
     return ambi + diff + spec;
@@ -50,7 +69,9 @@ void main() {
 
 
     // get color from different textures
-    vec3 colorDay = texture2D(dayTexture, vUv).rgb;
+    vec3 colorDay    = texture2D(dayTexture, vUv).rgb;
+	vec3 colorNight  = texture2D(nightTexture, vUv).rgb;
+	vec3 colorClouds = texture2D(cloudTexture, vUv).rgb;
    
     // normalize normal after projection
 
@@ -67,36 +88,38 @@ void main() {
 
     // Note: the texture value might have to get rescaled (gamma corrected)
     //       e.g. color = pow(color, vec3(0.6))*2.0;
-    
-    // vector from light to current point
-    //vec3 l = normalize(directionalLightDirection[0]);
-
     /*
+    // vector from light to current point
+    vec3 l = normalize(directionalLightDirection[0]);
+
+    
     // diffuse contribution
-    vec3 diffuseCoeff = (daytimeTextureBool == 1 )? dayCol : diffuseMaterial;
+    vec3 diffuseCoeff = (daytimeTextureBool == 1 )? colorDay : phongDiffuseMaterial;
     // clouds at day?
     if(cloudsTextureBool == 1) {
-        diffuseCoeff = (1.0-cloudsCol)*diffuseCoeff + cloudsCol*vec3(1,1,1);
+        diffuseCoeff = (1.0-colorClouds)*diffuseCoeff + colorClouds*vec3(1,1,1);
     }
     // final diffuse term for daytime
-    vec3 diffuse =  diffuseCoeff * directionalLightColor[0] * ndotl;
+    vec3 diffuse =  diffuseCoeff * directionalLightColor[0] * dot(vec3(1,1,1),l);
 
     // ambient part contains lights; modify depending on time of day
     // when ndotl == 1.0 the ambient term should be zero
 
+	
     vec3 color = ambient + diffuse + specular;
 
     // simply use interpolated colors computed in vertex shader
-    gl_FragColor = vec4(vColor, 1.0);
+    gl_FragColor = vec4(color, 1.0);
+	*/
 
-    */
+    
 
-    vec3 colornew = phong(ecPosition.xyz,ecNormal, viewDir, directionalLightDirection[0], directionalLightColor[0]);
+    
+	vec3 colornew = phong(ecPosition.xyz,ecNormal, viewDir, directionalLightDirection[0], directionalLightColor[0],colorClouds,colorDay,colorNight);
 
-	vec3 dieFarbe = dot (colornew, colorDay);
 
     //for testing the shader
-    gl_FragColor = vec4(dieFarbe, 1);
+    gl_FragColor = vec4(colornew, 1);
 	
 
 }
