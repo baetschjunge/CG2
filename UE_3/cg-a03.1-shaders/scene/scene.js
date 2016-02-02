@@ -22,6 +22,7 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band", "paramet
 
             // the scope of the object instance
             var scope = this;
+			var start = Date.now()
 
             scope.renderer = renderer;
             scope.t = 0.0;
@@ -99,6 +100,12 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band", "paramet
                     nodeHead.rotation.y += 0.08;
                 }
             }
+			
+			this.animateExplosion = function(){
+				scope.currentMesh.children[0].material.uniforms[ 'time' ].value = .00025 * ( Date.now() - start );
+
+			}
+			
         };
 
         // this module only exports the constructor for Scene objects

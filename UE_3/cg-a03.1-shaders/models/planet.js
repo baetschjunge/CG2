@@ -21,7 +21,7 @@ define(["three", "shaders"],
 					[
 						THREE.UniformsLib['lights'],
 						{
-							phongDiffuseMaterial:    { type: 'c', value: new THREE.Color(1,0,0)},
+							phongDiffuseMaterial:    { type: 'c', value: new THREE.Color(1,1,1)},
 							phongSpecularMaterial:   { type: 'c', value: new THREE.Color(0.7, 0.7, 0.7)},
 							phongAmbientMaterial:    { type: 'c', value: new THREE.Color(0.8, 0.2, 0.2)},
 							phongShininessMaterial:  { type: 'f', value: 16.0},
@@ -30,9 +30,9 @@ define(["three", "shaders"],
 							cloudTexture: 			 { type: 't' , value: null },
 							nightTexture: 			 { type: 't' , value: null },
 							
-							cloudsTextureBool:       { type: 'i' , value: $('checkBoxCloudsTexture').is(':checked')},
-							dayTimeTextureBool:		 { type: 'i' , value: $('checkBoxDayTexture').is(':checked')},
-							nightTextureBool:		 { type: 'i' , value: $('checkBoxNightTexture').is(':checked')}
+							cloudsTextureBool:       { type: 'i' , value: $('checkBoxCloudsTexture').is('checked')},
+							dayTimeTextureBool:		 { type: 'i' , value: $('checkBoxDayTexture').is('checked')},
+							nightTextureBool:		 { type: 'i' , value: $('checkBoxNightTexture').is('checked')}
 						}
 					]
                 ),
@@ -63,15 +63,34 @@ define(["three", "shaders"],
 			
 			this.changeTexture = function(tex){
 				switch(tex){
-					case 'day' 	 : material.uniforms.dayTimeTextureBool.value = $('#checkBoxDayTexture').is(':checked');
+					case 'day' 	 : {if (material.uniforms.dayTimeTextureBool.value == 0){
+										material.uniforms.dayTimeTextureBool.value = 1;
+									}else {
+										material.uniforms.dayTimeTextureBool.value = 0;
+									} 
+								  }
 									break;
-					case 'clouds': material.uniforms.cloudsTextureBool.value = $('#checkBoxCloudTexture').is(':checked');
+					case 'clouds': {if (material.uniforms.cloudsTextureBool.value == 0){
+										material.uniforms.cloudsTextureBool.value = 1;
+									}else {
+										material.uniforms.cloudsTextureBool.value = 0;
+									} 
+								  }
 									break;
-					case 'night' : material.uniforms.nightTextureBool.value = $('#checkBoxNightTexture').is(':checked');
+					case 'night' :  {if (material.uniforms.nightTextureBool.value == 0){
+										 material.uniforms.nightTextureBool.value = 1;
+									}else {
+										 material.uniforms.nightTextureBool.value = 0;
+									} 
+								  }
 									break;
 					default:  console.log("error changeTexture");
 				}	
 				material.needsUpdate = true;
+			};
+			
+			this.getTextures = function(){
+				return material.uniforms.dayTimeTextureBool.value;
 			};
         }; // constructor
 

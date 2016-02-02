@@ -271,8 +271,8 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 						
 						if(document.getElementById("CheckBoxRotation").checked==true)
 						requestAnimationFrame( render ); 
-						scope.currentMesh.rotation.x += 0.01; 
-						scope.currentMesh.rotation.y += 0.01; 
+						//scope.currentMesh.rotation.x += 0.01; 
+						scope.currentMesh.rotation.y += 0.005; 
 
 				};
 					
@@ -280,6 +280,26 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 					render();
 				}						
             }));
+			
+			$("#CheckBoxAnimateExplosion").click( (function() {
+				
+				var checked = $("#CheckBoxAnimateExplosion").attr("checked");
+				var scope = scene.getScope();	
+				var render = function () {
+						
+					if(document.getElementById("CheckBoxAnimateExplosion").checked==true){
+						requestAnimationFrame( render ); 
+						scene.animateExplosion();	
+					}
+						
+
+				};
+					
+				if(checked){
+					render();
+				}					
+            }));
+			
             
 			// wireframe checkbox
 			$("#CheckBoxWireframe").click( (function() {
@@ -540,7 +560,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 						scene.addMesh( planet.getMesh () ) ;
 						
 				var color = new THREE.Color(1,1,1);
-				var intensity = 0.5;
+				var intensity = 1;
 				var aLight = new THREE.AmbientLight( color ); 
 						scene.addLight( aLight );
 				var dLight = new THREE. DirectionalLight ( color , intensity ) ; 
@@ -550,6 +570,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 					
 			    $("#CheckBoxDayTexture").change(function() {
 					planet.changeTexture("day");
+					console.log(planet.getTextures());
 				});
 				
 				$("#CheckBoxClouds").change( function() {
@@ -560,6 +581,22 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#CheckBoxNightTexture").change( function() {
 					planet.changeTexture("night");
 				});
+				
+            }));
+			
+			$("#btnNewExplosion").click( (function() {
+				var explosion = new Explosion();
+						scene.addMesh( explosion.getMesh () ) ;
+						
+				var color = new THREE.Color(1,1,1);
+				var intensity = 1;
+				var aLight = new THREE.AmbientLight( color ); 
+						scene.addLight( aLight );
+				var dLight = new THREE. DirectionalLight ( color , intensity ) ; 
+					dLight.name = "dLight";
+					dLight.position.set(-1, 0, -0.3).normalize();
+					scene.addLight( dLight ); 
+					
 				
             }));
 			
