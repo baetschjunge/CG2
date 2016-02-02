@@ -12,9 +12,10 @@ uniform vec3 phongAmbientMaterial;
 uniform vec3 phongDiffuseMaterial;
 uniform vec3 phongSpecularMaterial;
 uniform float phongShininessMaterial;
-
-uniform int daytimeTextureBool;
+			
+uniform int dayTimeTextureBool;
 uniform int cloudsTextureBool;
+uniform int nightTextureBool;
 
 // uniform sampler2D textures
 
@@ -47,22 +48,22 @@ vec3 phong(vec3 p,  vec3 n, vec3 v, vec3 lightDir, vec3 lightColor,vec3 colorClo
     float ndots = max( dot(toLight,n), 0.0);
     float rdotv = max( dot(reflectLight, v), 0.0);
 	
-    vec3 ambi = colorNight * ambientLightColor[0];
+    // when ndotl == 1.0 the ambient term should be zero
 	// nacht
 	
-	vec3 diffuseCoeff = (daytimeTextureBool == 1 )? colorDay : phongDiffuseMaterial;
+	vec3 ambi = color * ambientLightColor[0];
+	
+	vec3 diffuseCoeff = (dayTimeTextureBool == 1 )? colorDay : phongDiffuseMaterial;
     // clouds at day?
-    if(cloudsTextureBool == 1) {
+   if(cloudsTextureBool == 1) {
         diffuseCoeff = (1.0-colorClouds)*diffuseCoeff + colorClouds*vec3(1,1,1);
     }
 	
-	//vec3 diffuse =  diffuseCoeff * directionalLightColor[0] * dot(n,l);
+	vec3 diff =  diffuseCoeff * directionalLightColor[0] * ndots;
 	
-    vec3 diff = diffuseCoeff * ndots * lightColor;
-	//tag
     vec3 spec = phongSpecularMaterial * pow(rdotv, phongShininessMaterial ) * lightColor;
 
-    return ambi + diff + spec;
+    return (1.0 - ndots) * ambi + ndots + diff + spec;
 }
 
 void main() {
@@ -117,7 +118,7 @@ void main() {
     
 	vec3 colornew = phong(ecPosition.xyz,ecNormal, viewDir, directionalLightDirection[0], directionalLightColor[0],colorClouds,colorDay,colorNight);
 
-
+	
     //for testing the shader
     gl_FragColor = vec4(colornew, 1);
 	

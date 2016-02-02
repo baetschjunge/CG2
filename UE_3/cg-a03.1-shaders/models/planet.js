@@ -30,6 +30,9 @@ define(["three", "shaders"],
 							cloudTexture: 			 { type: 't' , value: null },
 							nightTexture: 			 { type: 't' , value: null },
 							
+							cloudsTextureBool:       { type: 'i' , value: $('checkBoxCloudsTexture').is(':checked')},
+							dayTimeTextureBool:		 { type: 'i' , value: $('checkBoxDayTexture').is(':checked')},
+							nightTextureBool:		 { type: 'i' , value: $('checkBoxNightTexture').is(':checked')}
 						}
 					]
                 ),
@@ -57,6 +60,19 @@ define(["three", "shaders"],
             this.getMesh = function() {
                 return this.root;
             };
+			
+			this.changeTexture = function(tex){
+				switch(tex){
+					case 'day' 	 : material.uniforms.dayTimeTextureBool.value = $('#checkBoxDayTexture').is(':checked');
+									break;
+					case 'clouds': material.uniforms.cloudsTextureBool.value = $('#checkBoxCloudTexture').is(':checked');
+									break;
+					case 'night' : material.uniforms.nightTextureBool.value = $('#checkBoxNightTexture').is(':checked');
+									break;
+					default:  console.log("error changeTexture");
+				}	
+				material.needsUpdate = true;
+			};
         }; // constructor
 
         return Planet;

@@ -534,45 +534,39 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				scene.addMesh(robot.getMesh());						
             }));
 			
+			
 			$("#btnNewPlanet").click( (function() {
 				var planet = new Planet();
 						scene.addMesh( planet.getMesh () ) ;
 						
-				var color = new THREE.Color(1,1,0);
-				var intensity = 1;
+				var color = new THREE.Color(1,1,1);
+				var intensity = 0.5;
 				var aLight = new THREE.AmbientLight( color ); 
 						scene.addLight( aLight );
 				var dLight = new THREE. DirectionalLight ( color , intensity ) ; 
 					dLight.name = "dLight";
 					dLight.position.set(-1, 0, -0.3).normalize();
 					scene.addLight( dLight ); 
-				
 					
+			    $("#CheckBoxDayTexture").change(function() {
+					planet.changeTexture("day");
+				});
+				
+				$("#CheckBoxClouds").change( function() {
+					planet.changeTexture("clouds");
+				
+				});
+			
+				$("#CheckBoxNightTexture").change( function() {
+					planet.changeTexture("night");
+				});
+				
             }));
 			
-			 $("#CheckBoxClouds").click( (function() {
-				var scope = scene.getScope();
-			    if(document.getElementById("CheckBoxClouds").checked==true){
-					scope.material.uniforms.cloudTextureBool.value=1;
-				}
-				else{
-					scope.material.uniforms.cloudTextureBool.value=0;					
-				};
-            }));
-			 $("#CheckBoxDayTexture").click( (function() {
-				var scope = scene.getScope();
-			    if(document.getElementById("CheckBoxDayTexture").checked==true){
-					scope.material.uniforms.dayTimeTextureBool.value=1;
-				}
-				else{
-					scope.material.uniforms.dayTimeTextureBool.value=0;					
-				};
-			   
-            }));
+			 
 			
-			 $("#CheckBoxNightTexture").click( (function() {
-			      
-            }));
+			
+			 
 			
         };
 
