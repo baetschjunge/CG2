@@ -10,9 +10,11 @@ uniform float time;
 //varying 
 //varying 
 
+// a random function to break the gradient a bit so it looks more natural
 float random( vec3 scale, float seed ) {
     return fract( sin( dot( gl_FragCoord.xyz + seed, scale ) ) * 43758.5453 + seed ) ;
 }
+
 
 void main() {
 
@@ -31,13 +33,13 @@ void main() {
             Explosion texture
         */
         // get a random offset
-            float r = .01 * random( vec3( 12.9898, 78.233, 151.7182 ), 0.0 );
+            float r = .01 * random( vec3( 13.78989, 150.7348, 15.87742 ), 0.0 );
             // lookup vertically in the texture, using noise and offset
             // to get the right RGB colour
-            vec2 tPos = vec2( 0, 0.8 - 1.3 * noise + r );
+            vec2 tPos = vec2( 0, -0.25 + 2.5 * noise + r);
             vec4 color = texture2D( explosion, tPos );
 
-            gl_FragColor = vec4( color.rgb, 1.0 );
-
+            //gl_FragColor = vec4(vec3(1.0) - color.rgb, color.a);
+			gl_FragColor = vec4( color.rgb, 1.0 );
 }
 	

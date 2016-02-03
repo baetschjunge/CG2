@@ -26,13 +26,13 @@ define(["jquery", "three", "shaders"],
                 uniforms: THREE.UniformsUtils.merge([
                     THREE.UniformsLib['lights'],
                     {
-                        diffuseMaterial: {type: 'c', value: new THREE.Color(1, 0, 0)},
-                        specularMaterial: {type: 'c', value: new THREE.Color(0.7, 0.7, 0.7)},
-                        ambientMaterial: {type: 'c', value: new THREE.Color(0.8, 0.2, 0.2)},
-                        shininessMaterial: {type: 'f', value: 16.0},
-                        explosion:{type: "t", value:null},
-                        //topoTexture:{type: "t", value: null},
-                        time: {type: "f", value: 0.0}
+                        diffuseMaterial: 			{type: 'c', value: new THREE.Color(1, 0, 0)},
+                        specularMaterial: 			{type: 'c', value: new THREE.Color(0.7, 0.7, 0.7)},
+                        ambientMaterial: 			{type: 'c', value: new THREE.Color(0.8, 0.2, 0.2)},
+                        shininessMaterial: 			{type: 'f', value: 16.0},
+                        explosion:					{type: "t", value:null},
+                        //topoTexture:				{type: "t", value: null},
+                        time: 						{type: "f", value: 0.0}
                     }]),
                 vertexShader: Shaders.getVertexShader('explosion'),
                 fragmentShader: Shaders.getFragmentShader('explosion'),
@@ -57,7 +57,7 @@ define(["jquery", "three", "shaders"],
             );
 
 
-            scope.mesh = new THREE.Mesh( new THREE.SphereGeometry( 300, 50, 50 ), material );
+            scope.mesh = new THREE.Mesh( new THREE.SphereGeometry( 300, 100, 100 ), material );
             scope.mesh.name = "explosion";
             scope.root.add(scope.mesh);
 

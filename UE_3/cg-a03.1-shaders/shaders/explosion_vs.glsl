@@ -200,8 +200,8 @@ float pnoise(vec3 P, vec3 rep)
   float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
   return 2.2 * n_xyz;
 }
-/*
 
+/*
 float noise3D( vec3 p ) {
     float t = -0.5;
     for (float f = 1.0 ; f <= 10.0 ; f++ ){
@@ -213,7 +213,7 @@ float noise3D( vec3 p ) {
 
 */
 
-float turbulence( vec3 p ) {
+float noise3D( vec3 p ) {
     float w = 100.0;
     float t = -.5;
     for (float f = 1.0 ; f <= 10.0 ; f++ ){
@@ -253,9 +253,9 @@ void main() {
     vUv = uv;
 
     // add time to the noise parameters so it's animated
-    noise = 10.0 *  -.10 * turbulence( .5 * normal + time );
+    noise = 10.0 *  -.10 * noise3D( .5 * normal + time );
     float b = 5.0 * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
-    float displacement = - noise*200.0 + b;
+    float displacement = - noise*180.0 + b;
 
     vec3 newPosition = position + normal * displacement;
     gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );

@@ -77,6 +77,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#explosion").hide();
 				$("#ellipsoid").hide();
 				$("#robot_div").hide();
+				$("#CheckBoxRotate").show();
 			}));
 			
 			$("#btnExplosion").click( (function() {
@@ -87,6 +88,7 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
 				$("#explosion").show();
 				$("#ellipsoid").hide();
 				$("#robot_div").hide();
+				$("#CheckBoxRotate").hide();
 			}));
 			
 			$("#btnRobot").click( (function() {
@@ -263,13 +265,13 @@ define(["jquery", "BufferGeometry", "BufferGeometryPoints", "random", "band","pa
             }));
             
 			// rotationcheckbox
-			$("#CheckBoxRotation").click( (function() {
+			$("#CheckBoxRotate").click( (function() {
 
-			    var checked = $("#CheckBoxRotation").attr("checked");
+			    var checked = $("#CheckBoxRotate").attr("checked");
 				var scope = scene.getScope();	
 				var render = function () {
 						
-						if(document.getElementById("CheckBoxRotation").checked==true)
+						if(document.getElementById("CheckBoxRotate").checked==true)
 						requestAnimationFrame( render ); 
 						//scope.currentMesh.rotation.x += 0.01; 
 						scope.currentMesh.rotation.y += 0.005; 
