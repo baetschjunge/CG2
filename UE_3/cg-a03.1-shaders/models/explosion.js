@@ -25,14 +25,18 @@ define(["jquery", "three", "shaders"],
             var material = new THREE.ShaderMaterial({
                 uniforms: THREE.UniformsUtils.merge([
                     THREE.UniformsLib['lights'],
-                    {
+                    {	/*
                         diffuseMaterial: 			{type: 'c', value: new THREE.Color(1, 0, 0)},
                         specularMaterial: 			{type: 'c', value: new THREE.Color(0.7, 0.7, 0.7)},
                         ambientMaterial: 			{type: 'c', value: new THREE.Color(0.8, 0.2, 0.2)},
-                        shininessMaterial: 			{type: 'f', value: 16.0},
+                        shininessMaterial: 			{type: 'f', value: 16.0}, */
                         explosion:					{type: "t", value:null},
+                        
                         //topoTexture:				{type: "t", value: null},
-                        time: 						{type: "f", value: 0.0}
+                        time: 						{type: "f", value: 0.0},
+                        colorScale:					{type: "f", value: parseFloat($("#colorScaleExplosion").attr("value"))},	//1.7
+                        freqScale:					{type: "f", value: parseFloat($("#freqScaleExplosion").attr("value"))},		//-1.0
+                        weight:						{type: "f", value: parseFloat($("#weightExplosion").attr("value"))}		//180.0
                     }]),
                 vertexShader: Shaders.getVertexShader('explosion'),
                 fragmentShader: Shaders.getFragmentShader('explosion'),
@@ -43,6 +47,7 @@ define(["jquery", "three", "shaders"],
             var loader = new THREE.TextureLoader();
 
             loader.load("textures/explosion.png" ,
+//            loader.load("textures/earth1.jpg" ,
                 function ( texture ){
                     material.uniforms.explosion.value = texture;
                 },

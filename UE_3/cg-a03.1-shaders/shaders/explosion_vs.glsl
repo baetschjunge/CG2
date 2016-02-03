@@ -3,10 +3,9 @@
 //varying 
 //varying 
 
-/*
+
 uniform float weight;
 uniform float freqScale;
-*/
 uniform float time;
 varying vec2 vUv;
 varying float noise;
@@ -214,7 +213,6 @@ float noise3D( vec3 p ) {
 */
 
 float noise3D( vec3 p ) {
-    float w = 100.0;
     float t = -.5;
     for (float f = 1.0 ; f <= 10.0 ; f++ ){
         float power = pow( 2.0, f );
@@ -251,13 +249,22 @@ void main() {
     // gl_Position = ...
 
     vUv = uv;
-
+    
     // add time to the noise parameters so it's animated
-    noise = 10.0 *  -.10 * noise3D( .5 * normal + time );
+    // compute noise value using noise3d which is parameterized by a vec3, e.g.
+    // a normal (scaled by a scalar controlling the frequency - high, low frequencies)
+    // when adding a uniform variable 'time' to that value it is getting animated
+	// -1.0 fs
+    noise = freqScale * noise3D( .5 * normal + time );
+    
     float b = 5.0 * pnoise( 0.05 * position + vec3( 2.0 * time ), vec3( 100.0 ) );
-    float displacement = - noise*180.0 + b;
-
+    //float weight = 180.0;
+    float displacement = - noise * weight + b;
+    // compute new position as a displacement of the sphere vertex position
+    // plus its normal scaled by displacement value
+    // transform the output correctly
     vec3 newPosition = position + normal * displacement;
+    // assign varying variables for vertex shader
     gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 
 }

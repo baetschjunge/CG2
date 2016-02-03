@@ -32,11 +32,13 @@ void main() {
         /*
             Explosion texture
         */
+        //float colorScale = 1.7;
         // get a random offset
             float r = .01 * random( vec3( 13.78989, 150.7348, 15.87742 ), 0.0 );
             // lookup vertically in the texture, using noise and offset
             // to get the right RGB colour
-            vec2 tPos = vec2( 0, -0.25 + 2.5 * noise + r);
+            // vec2 tPos = vec2( 0, -0.25 + 2.25 * noise + r);
+            vec2 tPos = vec2( 0, colorScale * noise + r);
             vec4 color = texture2D( explosion, tPos );
 
             //gl_FragColor = vec4(vec3(1.0) - color.rgb, color.a);

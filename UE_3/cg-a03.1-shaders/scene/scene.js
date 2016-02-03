@@ -101,8 +101,9 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band", "paramet
                 }
             }
 			
+			// time for animating the explosion
 			this.animateExplosion = function(){
-				scope.currentMesh.children[0].material.uniforms[ 'time' ].value = .00025 * ( Date.now() - start );
+				scope.currentMesh.children[0].material.uniforms[ 'time' ].value = .00035 * ( Date.now() - start );
 
 			}
 			
