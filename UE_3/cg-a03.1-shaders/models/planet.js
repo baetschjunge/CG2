@@ -30,9 +30,9 @@ define(["three", "shaders"],
 							cloudTexture: 			 { type: 't' , value: null },
 							nightTexture: 			 { type: 't' , value: null },
 							
-							cloudsTextureBool:       { type: 'i' , value: $('checkBoxCloudsTexture').is('checked')},
-							dayTimeTextureBool:		 { type: 'i' , value: $('checkBoxDayTexture').is('checked')},
-							nightTextureBool:		 { type: 'i' , value: $('checkBoxNightTexture').is('checked')}
+							cloudsTextureBool:       { type: 'i' , value: $('checkBoxCloudsTexture').is(':checked') ? 1:0},
+							dayTimeTextureBool:		 { type: 'i' , value: $('checkBoxDayTexture').is(':checked') ? 1:0},
+							nightTextureBool:		 { type: 'i' , value: $('checkBoxNightTexture').is(':checked')? 1:0}
 						}
 					]
                 ),
